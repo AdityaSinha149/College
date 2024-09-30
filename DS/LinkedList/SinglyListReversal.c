@@ -1,9 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-
-#include <stdio.h>
-#include <stdlib.h>
-
 // Define Node structure
 typedef struct Node {
     int val;
