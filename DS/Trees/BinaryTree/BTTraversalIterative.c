@@ -64,43 +64,54 @@ void preorderIterative(node* root) {
     printf("NULL\n");
 }
 
+typedef struct {
+    node* node;
+    int flag;
+} Stack;
+
 // Iterative Postorder Traversal
 void postorderIterative(node* root) {
+    Stack stack[20];
+    int top = -1;
+    node* cur = root;
+
+    while (1) {
+        while (cur != NULL) {
+            stack[++top].node = cur;
+            stack[top].flag = 1;
+            cur = cur->left;
+        }
+
+        while (top != -1 && stack[top].flag < 0) {
+            cur = stack[top--].node;
+            printf("%d -> ", cur->val);
+            if (top == -1){
+                printf("NULL\n");
+                return;
+            }
+        }
+
+        if (top != -1) {
+            cur = stack[top].node;
+            cur = cur->right;
+            stack[top].flag = -1;
+        }
+    }
+}
+
+void levelorderIterative(node* root) {
     if (root == NULL) return;
-    
-    node* current = root;
-    node* prev = NULL;
-    
-    push(current);
-    
-    while (!isEmpty()) {
-        current = stack[top];
-        
-        // Traverse down the tree
-        if (prev == NULL || prev->left == current || prev->right == current) {
-            if (current->left) {
-                push(current->left);
-            } else if (current->right) {
-                push(current->right);
-            } else {
-                pop();
-                printf("%d -> ", current->val);
-            }
-        }
-        // If moving up the tree
-        else if (current->left == prev) {
-            if (current->right) {
-                push(current->right);
-            } else {
-                pop();
-                printf("%d -> ", current->val);
-            }
-        } else if (current->right == prev) {
-            pop();
-            printf("%d -> ", current->val);
-        }
-        
-        prev = current;
+
+    node* queue[100];
+    int front = 0, rear = 0;
+    queue[rear++] = root;
+
+    while (front < rear) {
+        node* current = queue[front++];
+        printf("%d -> ", current->val);
+
+        if (current->left) queue[rear++] = current->left;
+        if (current->right) queue[rear++] = current->right;
     }
 
     printf("NULL\n");
@@ -125,6 +136,10 @@ int main() {
 
     printf("Postorder traversal (Iterative): ");
     postorderIterative(root);
+    printf("\n");
+
+    printf("Levelorder traversal (Iterative): ");
+    levelorderIterative(root);
     printf("\n");
 
     return 0;
