@@ -1,4 +1,77 @@
 /*
+Consider the following schema: 
+Employee (EmpNo, EmpName, Gender, Salary, Address, DNo) 
+Department (DeptNo, DeptName, Location) 
+*/
+
+--1. Create Employee table with following constraints: 
+-- Make EmpNo as Primary key. 
+-- Do not allow EmpName, Gender, Salary and Address to have null values. 
+-- Allow Gender to have one of the two values: ‘M’, ‘F’. 
+create table employee(
+    empno number(5) primary key,
+    empname varchar(20),
+    gender char(1) check (gender in ('M', 'F')) not null,
+    salary number(10,2) not null,
+    address varchar(50) not null,
+    dno number(5)
+);
+
+--2. Create Department table with following: 
+-- Make DeptNo as Primary key 
+-- Make DeptName as candidate key 
+create table studepartment(
+    deptno number(5) primary key,
+    deptname varchar(20) unique,
+    location varchar(20)
+);
+
+--3. Make DNo of Employee as foreign key which refers to DeptNo of Department.
+alter table employee 
+add constraint fk_dno foreign key(dno) references department(deptno);
+
+--4. Insert few tuples into Employee and Department which satisfies the above constraints. 
+insert into department values(1,'IT','Bangalore');
+insert into department values(2,'HR','Mysore');
+insert into department values(3,'Finance','Mangalore');
+insert into department values(4,'Admin','Chennai');
+insert into department values(5,'Sales','Hyderabad');
+insert into employee values(1,'John','M',1000,'Bangalore',1);
+insert into employee values(2,'Doe','F',2000,'Mysore',2);
+insert into employee values(3,'Jane','F',3000,'Mangalore',3);
+insert into employee values(4,'Dane','M',4000,'Chennai',4);
+insert into employee values(5,'Dane','M',5000,'Hyderabad',5);
+
+--5. Try to insert few tuples into Employee and Department which violates some of the 
+--above constraints. 
+insert into department values(1,'IT','Bangalore');
+--ORA-00001: unique constraint (SYSTEM.SYS_C0010001) violated
+insert into employee values(1,'John','M',1000,'Bangalore',1);
+--ORA-00001: unique constraint (SYSTEM.SYS_C0010000) violated
+insert into employee values(6,'Dane','M',5000,'Hyderabad',5);
+--ORA-02291: integrity constraint (SYSTEM.FK_DNO) violated - parent key not found
+insert into employee values(7,'Dane','M',5000,'Hyderabad',6);
+--ORA-02291: integrity constraint (SYSTEM.FK_DNO) violated - parent key not found
+
+--6. Try to modify/delete a tuple which violates a constraint. 
+--(Ex: Drop a department tuple which has one or more employees) 
+delete from department where deptno=1;
+--ORA-02292: integrity constraint (SYSTEM.FK_DNO) violated - parent key must
+--be found in the table
+
+--7. Modify the foreign key constraint of Employee table such that whenever a department 
+--tuple is deleted, the employees belonging to that department will also be deleted. 
+alter table employee
+add constraint fk_dno foreign key(dno) 
+references department(deptno) on delete cascade;
+
+--Naming Constraints: 
+--8. Create a named constraint to set the default salary to 10000 and test the constraint by  
+--inserting a new record.
+alter table employee
+add constraint default_salary default 10000 for salary;
+
+/*
 University Database Schema: 
 Student (ID, name,dept-name, tot-cred) 
 Instructor(ID, name, dept-name, salary) 
@@ -44,7 +117,7 @@ where id not in (select id from teaches);
 
 --15. Find the student names, course names, and the year, for all students those who have 
 --attended classes in room-number 101. 
-select distinct student.name,course.title,section.year
+select student.name,course.title,section.year
 from student,takes,section,course
 where student.id=takes.id and takes.course_id=course.course_id
     and takes.sec_id=section.sec_id and section.room_number=101
@@ -63,7 +136,7 @@ select distinct t.name,t.salary inst_salary
 from instructor t,instructor s
 where t.salary>s.salary and s.dept_name='Comp. Sci.';
 
---18. Find the names of all instructors whose department name includes the substring ‘ch’.   
+--18. Find the names of all instructors whose department name includes the substring ‘e’.   
 select name
 from instructor
 where name like '%e%';
@@ -72,3 +145,39 @@ where name like '%e%';
 select name,length(name) as name_length
 from student;
 
+--20. List the department names and 3 characters from 3rd position of each department name 
+select dept_name,substr(dept_name,3,3)
+from department;
+
+--21. List the instructor names in upper case. 
+select upper(name)
+from instructor;
+
+--22. Replace NULL with value1(say 0) for a column in any of the table 
+select NVL(salary,0) as salary
+from instructor;
+
+--23. Display the salary and salary/3 rounded to nearest hundred from Instructor. 
+select salary,round(salary/300,0)*100 as salary_rounded
+from instructor;
+
+--Add date of birth column (DOB) to Employee Table. Insert appropriate DOB values 
+--for different employees and try the exercise problems given below: 
+alter table employee
+add dob varchar(10);
+insert into employee(name,salary,dept_name,dob)
+values('John',1000,'IT','01-01-1990');
+insert into employee(name,salary,dept_name,dob)
+values('Doe',2000,'HR','02-02-1991');
+insert into employee(name,salary,dept_name,dob)
+values('Jane',3000,'Finance','03-03-1992');
+insert into employee(name,salary,dept_name,dob)
+values('Dane',4000,'Admin','04-04-1993');
+insert into employee(name,salary,dept_name,dob)
+
+--24. Display the birth date of all the employees in the following format: 
+-- ‘DD-MON-YYYY’ 
+select to_date(dob,'dd-mm-yyyy') as dob
+from employee;
+-- ‘DD-MON-YY’ 
+-- ‘DD-MM-YY’ 
