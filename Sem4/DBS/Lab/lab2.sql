@@ -27,8 +27,9 @@ create table studepartment(
 );
 
 --3. Make DNo of Employee as foreign key which refers to DeptNo of Department.
-alter table employee 
-add constraint fk_dno foreign key(dno) references department(deptno);
+alter table employee
+add constraint fk_dno foreign key (dno)
+references studepartment (deptno);
 
 --4. Insert few tuples into Employee and Department which satisfies the above constraints. 
 insert into department values(1,'IT','Bangalore');
@@ -165,19 +166,33 @@ from instructor;
 --for different employees and try the exercise problems given below: 
 alter table employee
 add dob varchar(10);
-insert into employee(name,salary,dept_name,dob)
-values('John',1000,'IT','01-01-1990');
-insert into employee(name,salary,dept_name,dob)
-values('Doe',2000,'HR','02-02-1991');
-insert into employee(name,salary,dept_name,dob)
-values('Jane',3000,'Finance','03-03-1992');
-insert into employee(name,salary,dept_name,dob)
-values('Dane',4000,'Admin','04-04-1993');
-insert into employee(name,salary,dept_name,dob)
+
+UPDATE employee SET DOB = TO_DATE('1985-03-25', 'YYYY-MM-DD') WHERE EMPNO = 1;
+UPDATE employee SET DOB = TO_DATE('1990-07-12', 'YYYY-MM-DD') WHERE EMPNO = 2;
+UPDATE employee SET DOB = TO_DATE('1987-11-05', 'YYYY-MM-DD') WHERE EMPNO = 3;
+UPDATE employee SET DOB = TO_DATE('1992-01-22', 'YYYY-MM-DD') WHERE EMPNO = 4;
+UPDATE employee SET DOB = TO_DATE('1989-09-09', 'YYYY-MM-DD') WHERE EMPNO = 5;
+UPDATE employee SET DOB = TO_DATE('1988-06-15', 'YYYY-MM-DD') WHERE EMPNO = 6;
+UPDATE employee SET DOB = TO_DATE('1991-12-30', 'YYYY-MM-DD') WHERE EMPNO = 7;
+
+
 
 --24. Display the birth date of all the employees in the following format: 
 -- ‘DD-MON-YYYY’ 
-select to_date(dob,'dd-mm-yyyy') as dob
-from employee;
+SELECT EMPNO, EMPNAME, TO_CHAR(DOB, 'DD-MON-YYYY') AS DOB
+FROM employee;
+
 -- ‘DD-MON-YY’ 
+SELECT EMPNO, EMPNAME, TO_CHAR(DOB, 'DD-MON-YY') AS DOB
+FROM employee;
+
 -- ‘DD-MM-YY’ 
+SELECT EMPNO, EMPNAME, TO_CHAR(DOB, 'DD-MM-YY') AS DOB
+FROM employee;
+
+--25. List the employee names and the year (fully spelled out) in which they are born 
+‘YEAR’
+ SELECT EMPNAME, TO_CHAR(DOB, 'YYYY') AS YEAR FROM employee;
+
+‘Year’ 
+‘year’
