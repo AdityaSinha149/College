@@ -139,10 +139,59 @@ where not exists((select course_id
 --Test for Absence of Duplicate Tuples 
 
 --15. Find all courses that were offered at most once in 2009. 
+select course_id
+from teaches
+where year=2009
+group by course_id
+having count(*)<=1;
+
+--16. Find all the students who have opted at least two courses offered by CSE department.
 select distinct c.course_id
 from course c
 where 1>= (select count(s2.course_id)
             from section s2
-            where c.course_id=s2.course_id and year='2009');
+            where c.course_id=s2.course_id and s2.yeat=2009);
 
---16. Find all the students who have opted at least two courses offered by CSE department.
+--17. Find the average instructors salary of those departments where the average salary is 
+--greater than 42000 
+select dept_name,avg(salary)
+from instructor
+group by dept_name
+having avg(salary)>42000;
+
+--18. Create a view all_courses consisting of course sections offered by Physics 
+--department in the Fall 2009, with the building and room number of each section. 
+create view all_courses as
+select course_id,sec_id,building,room_number
+from section
+where course_id in (select course_id
+                    from course
+                    where dept_name='Physics')
+    and semester='Fall' and year=2009;
+
+--see the view
+select * from all_courses;
+
+--what is a veiw
+--A view is a virtual table based on the result-set of an SQL statement.
+--A view contains rows and columns, just like a real table. The fields in a view are fields from one or more real tables in the database.
+--You can add SQL functions, WHERE, and JOIN statements to a view and present the data as if the data were coming from one single table.
+
+--can we do operations on veiw
+--Yes, we can do operations on view. We can create a view from one or more tables and we can use the view as a table in the database. We can also perform operations like select, insert, update, delete on the view.
+
+--19. Select all the courses from all_courses view. 
+select * from all_courses;
+
+--20. Create a view department_total_salary consisting of department name and total 
+--salary of that department.
+create view department_total_salary as
+select dept_name,sum(salary) as total_salary
+from instructor
+group by dept_name;
+
+--how to see all veiws/tables in sql plus
+--To see all the tables in the database, you can use the following command in SQL*Plus:
+--SELECT table_name FROM user_tables;
+--To see all the views in the database, you can use the following command in SQL*Plus:
+select view_name from user_views;
