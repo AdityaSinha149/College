@@ -27,6 +27,16 @@ select course.course_id
 from course,takes
 where course.course_id = takes.course_id and semester='Spring' and year=2010;
 
+--OR
+
+select course_id
+from section
+where semester='Fall' and year=2009
+union all
+select course_id
+from section
+where semester='Spring' and year=2010;
+
 --INTERSECT (Use intersect all to retain duplicates): 
 --2. Find courses that ran in Fall 2009 and in spring 2010 
 select course.course_id
@@ -125,7 +135,7 @@ and exists(select *
             from course s,takes
             where c.course_id=s.course_id and s.course_id = takes.course_id and semester='Spring' and year=2010);
 
---14. Find all students who have taken all courses offered in the Biology department. 
+--**14. Find all students who have taken all courses offered in the Biology department. 
 select s.id
 from student s
 where not exists((select course_id
@@ -138,21 +148,21 @@ where not exists((select course_id
 
 --Test for Absence of Duplicate Tuples 
 
---15. Find all courses that were offered at most once in 2009. 
+--**15. Find all courses that were offered at most once in 2009. 
 select course_id
 from teaches
 where year=2009
 group by course_id
 having count(*)<=1;
 
---16. Find all the students who have opted at least two courses offered by CSE department.
+--**16. Find all the students who have opted at least two courses offered by CSE department.
 select distinct c.course_id
 from course c
 where 1>= (select count(s2.course_id)
             from section s2
             where c.course_id=s2.course_id and s2.yeat=2009);
 
---17. Find the average instructors salary of those departments where the average salary is 
+--*17. Find the average instructors salary of those departments where the average salary is 
 --greater than 42000 
 select dept_name,avg(salary)
 from instructor
@@ -195,3 +205,27 @@ group by dept_name;
 --SELECT table_name FROM user_tables;
 --To see all the views in the database, you can use the following command in SQL*Plus:
 select view_name from user_views;
+
+--Additional Exercise:
+
+--1. Find the names of all departments with instructor and remove duplicates. 
+select distinct dept_name,name
+from instructor;
+
+--2. For all instructors who have taught some course, find their names and the course ID 
+--of the courses they taught. 
+select instructor.name,course_id
+from instructor,teaches
+where instructor.id = teaches.id;
+
+--3. Find all the instructors with the courses they taught.
+select instructor.name,title
+from instructor,teaches,course
+where instructor.id = teaches.id and course.course_id = teaches.course_id;
+
+--*4. List all the students with student name, department name, advisor name and the number 
+--of courses registered. 
+select s.name,s.dept_name,i.name,count(t.course_id)
+from student s,advisor a,instructor i,takes t
+where s.id=a.s_id and a.i_id=i.id and s.id=t.id
+group by s.name,s.dept_name,i.name;
