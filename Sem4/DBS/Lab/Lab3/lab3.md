@@ -196,7 +196,7 @@ where not exists((select course_id
 
 ### Test for Absence of Duplicate Tuples
 
-<span style="color:red">**15. Find all courses that were offered at most once in 2009.**</span>
+<span style="color:red">** **15. Find all courses that were offered at most once in 2009.**</span>
 
 ```sql
 select course_id
@@ -206,7 +206,7 @@ group by course_id
 having count(*)<=1;
 ```
 
-<span style="color:red">**16. Find all the students who have opted at least two courses offered by CSE department.**</span>
+<span style="color:red">** **16. Find all the students who have opted at least two courses offered by CSE department.**</span>
 
 ```sql
 select distinct c.course_id
@@ -216,7 +216,7 @@ where 1>= (select count(s2.course_id)
             where c.course_id=s2.course_id and s2.yeat=2009);
 ```
 
-<span style="color:blue">**17. Find the average instructors salary of those departments where the average salary is greater than 42000.**</span>
+<span style="color:blue">* **17. Find the average instructors salary of those departments where the average salary is greater than 42000.**</span>
 
 ```sql
 select dept_name,avg(salary)
@@ -307,7 +307,7 @@ from instructor,teaches,course
 where instructor.id = teaches.id and course.course_id = teaches.course_id;
 ```
 
-<span style="color:blue">**4. List all the students with student name, department name, advisor name, and the number of courses registered.**</span>
+<span style="color:blue">* **4. List all the students with student name, department name, advisor name, and the number of courses registered.**</span>
 
 ```sql
 select s.name,s.dept_name,i.name,count(t.course_id)

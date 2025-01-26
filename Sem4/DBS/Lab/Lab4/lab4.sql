@@ -99,7 +99,7 @@ having count(id) in(
     group by sec_id
 );
 
---11. Find the names of all instructors who teach all students that belong to ‘CSE’ 
+--*11. Find the names of all instructors who teach all students that belong to ‘CSE’ 
 --department.
 
 select name

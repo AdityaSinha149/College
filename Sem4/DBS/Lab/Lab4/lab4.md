@@ -19,9 +19,9 @@ Prereq (course-id, prereq-id)
 
 ## Queries on UNIVERSITY Database
 
-### Group By
+### **Group By**
 
-#### 1. Find the number of students in each course.
+#### **1. Find the number of students in each course.**
 
 ```sql
 select course_id, count(id) as "Number of Students"
@@ -32,19 +32,19 @@ group by course_id;
 **OR**
 
 ```sql
-select title,count(id)
-from student,course
+select title, count(id)
+from student, course
 where student.dept_name = course.dept_name
 group by title;
 ```
 
-#### <span style="color:blue">2. Find those departments where the average number of students is greater than 10.</span>
+#### <span style="color: blue">* **2. Find those departments where the average number of students is greater than 10.**</span>
 
 ```sql
 SELECT dept_name, AVG(count) AS avg_count
 FROM (
     SELECT c.dept_name, COUNT(t.id) AS count
-    FROM takes t,course c
+    FROM takes t, course c
     where t.course_id = c.course_id
     GROUP BY t.course_id
 ) temp
@@ -52,34 +52,34 @@ GROUP BY dept_name
 HAVING AVG(count) > 1;
 ```
 
-#### 3. Find the total number of courses in each department.
+#### **3. Find the total number of courses in each department.**
 
 ```sql
-select dept_name,count(title)
+select dept_name, count(title)
 from course
 group by dept_name;
 ```
 
-#### 4. Find the names and average salaries of all departments whose average salary is greater than 42000.
+#### **4. Find the names and average salaries of all departments whose average salary is greater than 42000.**
 
 ```sql
-select dept_name,avg(salary)
+select dept_name, avg(salary)
 from instructor
 group by dept_name;
 ```
 
-#### 5. Find the enrolment of each section that was offered in Spring 2009.
+#### **5. Find the enrolment of each section that was offered in Spring 2009.**
 
 ```sql
-select course_id,sec_id,count(id)
+select course_id, sec_id, count(id)
 from takes
 where semester = 'Spring' and year = 2009
-group by course_id,sec_id;
+group by course_id, sec_id;
 ```
 
-### Ordering the Display of Tuples (Use ORDER BY ASC/DESC)
+### **Ordering the Display of Tuples (Use ORDER BY ASC/DESC)**
 
-#### 6. List all the courses with prerequisite courses, then display course id in increasing order.
+#### **6. List all the courses with prerequisite courses, then display course id in increasing order.**
 
 ```sql
 select *
@@ -87,7 +87,7 @@ from prereq
 order by course_id;
 ```
 
-#### 7. Display the details of instructors sorting the salary in decreasing order.
+#### **7. Display the details of instructors sorting the salary in decreasing order.**
 
 ```sql
 select *
@@ -95,9 +95,9 @@ from instructor
 order by salary desc;
 ```
 
-### Derived Relations
+### **Derived Relations**
 
-#### 8. Find the maximum total salary across the departments.
+#### **8. Find the maximum total salary across the departments.**
 
 ```sql
 select max(sum(salary)) as "Max Salary"
@@ -105,45 +105,46 @@ from instructor
 group by dept_name;
 ```
 
-#### <span style="color:red">9. Find the average instructors’ salaries of those departments where the average salary is greater than 42000.</span>
+#### <span style="color: red">** **9. Find the average instructors’ salaries of those departments where the average salary is greater than 42000.**</span>
 
 ```sql
 select avg(salary) as avg_salary
 from instructor
-where dept_name in(
+where dept_name in (
     select dept_name
     from instructor
     group by dept_name
-    having avg(salary)>42000
+    having avg(salary) > 42000
 );
 ```
 
-#### 10. Find the sections that had the maximum enrolment in Spring 2010.
+#### **10. Find the sections that had the maximum enrolment in Spring 2010.**
 
 ```sql
 select sec_id
 from takes
-where semester='Spring' and year=2010
+where semester = 'Spring' and year = 2010
 group by sec_id
-having count(id) in(
+having count(id) in (
     select max(count(id))
     from takes
-    where semester='Spring' and year=2010
+    where semester = 'Spring' and year = 2010
     group by sec_id
 );
 ```
 
-#### <span style="color:red">11. Find the names of all instructors who teach all students that belong to ‘CSE’ department.
+#### <span style="color: blue">* **11. Find the names of all instructors who teach all students that belong to ‘CSE’ department.**
 
 ```sql
 select name
 from instructor i
-where not exists(
+where not exists (
     select id
     from student
-    where dept_name='Comp. Sci.'
+    where dept_name = 'Comp. Sci.'
     minus
     select t1.id
-    from takes t1,teaches t2
-    where t1.course_id=t2.course_id and t2.id=i.id
+    from takes t1, teaches t2
+    where t1.course_id = t2.course_id and t2.id = i.id
 );
+```
