@@ -213,7 +213,7 @@ select distinct c.course_id
 from course c
 where 1>= (select count(s2.course_id)
             from section s2
-            where c.course_id=s2.course_id and s2.yeat=2009);
+            where c.course_id=s2.course_id and s2.year=2009);
 ```
 
 <span style="color:blue">* **17. Find the average instructors salary of those departments where the average salary is greater than 42000.**</span>
