@@ -17,11 +17,11 @@ Prereq (course-id, prereq-id)
 
 --Group By:
 --1. Find the number of students in each course. 
-select course_id, count(id) as "Number of Students"
+select course_id, count(distinct id) as "Number of Students"
 from takes
 group by course_id;
 
---OR
+--Wrong ->
 
 select title,count(id)
 from student,course
@@ -37,7 +37,14 @@ FROM (
     GROUP BY t.course_id
 ) temp
 GROUP BY dept_name
-HAVING AVG(count) > 1;
+HAVING AVG(count) > 10;
+
+QUESTION CORRECTED -
+--2. Find those departments where the number of students are greater than 10.
+select dept_name,count(id) 
+from student
+group by dept_name
+having count(id)>10;
 
 --3. Find the total number of courses in each department. 
 select dept_name,count(title)
@@ -48,13 +55,14 @@ group by dept_name;
 --greater than 42000. 
 select dept_name,avg(salary)
 from instructor
-group by dept_name;
+group by dept_name
+having avg(salary)>42000;
 
 --5. Find the enrolment of each section that was offered in Spring 2009. 
-select course_id,sec_id,count(id)
+select sec_id,count(id)
 from takes
 where semester = 'Spring' and year = 2009
-group by course_id,sec_id;
+group by sec_id;
 
 --Ordering the display of Tuples (Use ORDER BY ASC/DESC):
 
@@ -76,6 +84,19 @@ select max(sum(salary)) as "Max Salary"
 from instructor
 group by dept_name;
 
+with max_sum as(
+    select max(sum(salary)) as max
+    from instructor
+    group by dept_name
+)
+select dept_name,sum(salary) as max_salary
+from instructor
+group by dept_name
+having sum(salary) = (
+    select max
+    from max_sum
+);
+
 --**9. Find the average instructors’ salaries of those departments where the average 
 --salary is greater than 42000. 
 select avg(salary) as avg_salary
@@ -88,20 +109,19 @@ where dept_name in(
 );
 
 --10. Find the sections that had the maximum enrolment in Spring 2010 
-select sec_id
+select sec_id,count(id)
 from takes
 where semester='Spring' and year=2010
-group by sec_id
+group by sec_id,course_id
 having count(id) in(
     select max(count(id))
     from takes
     where semester='Spring' and year=2010
-    group by sec_id
+    group by sec_id,course_id
 );
 
 --*11. Find the names of all instructors who teach all students that belong to ‘CSE’ 
 --department.
-
 select name
 from instructor i
 where not exists(
@@ -111,5 +131,48 @@ where not exists(
     minus
     select t1.id
     from takes t1,teaches t2
-    where t1.course_id=t2.course_id and t2.id=i.id
+    where t1.course_id=t2.course_id and t1.sec_id=t2.sec_id 
+        and t1.semester=t2.semester and t1.year=t2.year 
+        and t2.id=i.id
 );
+
+--12. Find the average salary of those department where the average salary is greater 
+--than 50000 and total number of instructors in the department are more than 5.
+select dept_name,avg(Salary) as avg_salary
+from instructor
+group by dept_name
+having avg(salary)>50000 and count(id)>5;
+
+--With Clause:
+
+--13. Find all departments with the maximum budget.
+with dept_total_table as(
+    select dept_name,sum(salary) as total_salary
+    from instructor
+    group by dept_name
+)
+select dept_name
+from dept_total_table
+group by dept_name
+having total_salary = max(total_salary);
+
+--14. Find all departments where the total salary is greater than the average of the total 
+--salary at all departments.
+with dept_avg_table as(
+    select avg(salary) as avg_salary
+    from instructor
+    group by dept_name
+)
+select dept_name,sum(salary) as total_salary
+from instructor
+group by dept_name
+having sum(salary) > all(
+    select avg_salary
+    from dept_avg_table
+);
+
+--(Use ROLLBACK (and SAVEPOINT) to undo the effect of any modification on database before COMMIT)
+--15. Transfer all the students from CSE department to IT department.
+
+--16. Increase salaries of instructors whose salary is over $100,000 by 3%, and all
+--others receive a 5% raise
