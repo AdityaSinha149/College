@@ -99,6 +99,17 @@ having sum(salary) = (
     from max_sum
 );
 
+--OR
+
+select dept_name,sum(salary) as max_salary
+from instructor
+group by dept_name
+having sum(salary) = (
+    select max(sum(salary)) as max
+    from instructor
+    group by dept_name
+);
+
 --**9. Find the average instructors’ salaries of those departments where the average 
 --salary is greater than 42000. 
 select avg(salary) as avg_salary
