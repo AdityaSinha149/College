@@ -148,27 +148,28 @@ having avg(salary)>50000 and count(id)>5;
 --With Clause:
 
 --13. Find all departments with the maximum budget.
-with dept_total_table as(
-    select dept_name,sum(salary) as total_salary
-    from instructor
-    group by dept_name
+with max_budget(max) as(
+    select max(budget)
+    from department
 )
 select dept_name
-from dept_total_table
-group by dept_name
-having total_salary = max(total_salary);
+from department
+where budget in(
+    select max
+    from max_budget
+);
 
 --14. Find all departments where the total salary is greater than the average of the total 
 --salary at all departments.
 with dept_avg_table as(
-    select avg(salary) as avg_salary
+    select avg(sum(salary)) as avg_salary
     from instructor
     group by dept_name
 )
 select dept_name,sum(salary) as total_salary
 from instructor
 group by dept_name
-having sum(salary) > all(
+having sum(salary) all(
     select avg_salary
     from dept_avg_table
 );
