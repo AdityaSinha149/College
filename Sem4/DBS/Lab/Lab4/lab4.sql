@@ -84,6 +84,8 @@ select max(sum(salary)) as "Max Salary"
 from instructor
 group by dept_name;
 
+--OR IF HAVE TO PRINT BOTH NAME AND SALARY
+
 with max_sum as(
     select max(sum(salary)) as max
     from instructor
