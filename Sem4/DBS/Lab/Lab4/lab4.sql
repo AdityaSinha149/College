@@ -180,7 +180,7 @@ with dept_avg_table as(
 select dept_name,sum(salary) as total_salary
 from instructor
 group by dept_name
-having sum(salary) all(
+having sum(salary)> all(
     select avg_salary
     from dept_avg_table
 );
