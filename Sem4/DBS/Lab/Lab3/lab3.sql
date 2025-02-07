@@ -155,6 +155,17 @@ where year=2009
 group by course_id
 having count(*)<=1;
 
+--OR
+
+select T.course_id
+from course T
+where (
+    select count(R.course_id)
+    from section R
+    where T.course_id= R.course_id 
+    and R.year = 2009
+) <=1;
+
 --**16. Find all the students who have opted at least two courses offered by CSE department.
 select distinct c.course_id
 from course c
@@ -168,6 +179,27 @@ select dept_name,avg(salary)
 from instructor
 group by dept_name
 having avg(salary)>42000;
+
+--OR
+
+select dept_name, avg_salary
+from (
+    select dept_name, avg (salary) as avg_salary
+    from instructor
+    group by dept_name
+)
+where avg_salary > 42000;
+
+--OR
+
+select dept_name, avg_salary
+from (
+    select dept_name, avg (salary) as avg_salary
+    from instructor
+    group by dept_name
+) dept_avg
+where avg_salary > 42000;
+
 
 --18. Create a view all_courses consisting of course sections offered by Physics 
 --department in the Fall 2009, with the building and room number of each section. 

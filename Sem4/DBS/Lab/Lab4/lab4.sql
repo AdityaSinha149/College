@@ -23,10 +23,10 @@ group by course_id;
 
 --Wrong ->
 
-select title,count(id)
+select course_id,count(id)
 from student,course
 where student.dept_name = course.dept_name
-group by title;
+group by course_id;
 
 --*2. Find those departments where the average number of students are greater than 10. 
 SELECT dept_name, AVG(count) AS avg_count
@@ -180,10 +180,26 @@ with dept_avg_table as(
 select dept_name,sum(salary) as total_salary
 from instructor
 group by dept_name
-having sum(salary) all(
+having sum(salary)> all(
     select avg_salary
     from dept_avg_table
 );
+
+--OR
+
+with dept_total (dept_name, value) as (
+    select dept_name, sum(salary)
+    from instructor
+    group by dept_name
+),
+    dept_total_avg(value) as (
+    select avg(value)
+    from dept_total
+)
+select dept_name,dept_total.value
+from dept_total, dept_total_avg
+where dept_total.value > dept_total_avg.value;
+
 
 --(Use ROLLBACK (and SAVEPOINT) to undo the effect of any modification on database before COMMIT)
 --15. Transfer all the students from CSE department to IT department.
