@@ -5,14 +5,10 @@ typedef struct Node {
     int val;
     struct Node* left;
     struct Node* right;
-}Node;
+} Node;
 
 Node* createNode(int val) {
     Node* newNode = (Node*)malloc(sizeof(Node));
-    if (!newNode) {
-        printf("Memory allocation failed!\n");
-        return NULL;
-    }
     newNode->val = val;
     newNode->left = newNode->right = NULL;
     return newNode;
@@ -20,10 +16,10 @@ Node* createNode(int val) {
 
 Node* createBinaryTree() {
     int val;
-    printf("Enter node val (enter -1 for no node): ");
+    printf("Enter node value (enter -1 for no node): ");
     scanf("%d", &val);
 
-    if (val == -1)return NULL;
+    if (val == -1) return NULL;
 
     Node* newNode = createNode(val);
 
@@ -36,22 +32,24 @@ Node* createBinaryTree() {
     return newNode;
 }
 
-int dfs(Node* root,int a){
-    if(root->val==a)return 1;
-    return dfs(root->left,a)||dfs(root->right,a);
+int dfs(Node* root, int a) {
+    if (root == NULL) return 0;
+    if (root->val == a) return 1;
+    return dfs(root->left, a) || dfs(root->right, a);
 }
 
-int cca(Node* root, int a, int b) {
-    if (root == NULL) return -1;
+Node* cca(Node* root, int a, int b) {
+    if (root == NULL) return NULL;
 
-    int left = dfs(root->left, a) + dfs(root->left, b);
-    int right = dfs(root->right, a) + dfs(root->right, b);
+    if (root->val == a || root->val == b) return root;
 
-    if (left + right == 1) return root->val;
-    if (left == 2) return cca(root->left, a, b);
-    if (right == 2) return cca(root->right, a, b);
-    return -1;
+    Node* leftLCA = cca(root->left, a, b);
+    Node* rightLCA = cca(root->right, a, b);
+    if (leftLCA != NULL && rightLCA != NULL) return root;
+
+    return (leftLCA != NULL) ? leftLCA : rightLCA;
 }
+
 void freeTree(Node* root) {
     if (root == NULL) return;
     freeTree(root->left);
@@ -67,13 +65,12 @@ int main() {
         printf("Enter two node values to find their lowest common ancestor: ");
         scanf("%d %d", &a, &b);
 
-        int ancestor = cca(root, a, b);
-        if (ancestor != -1)
-            printf("Lowest Common Ancestor of %d and %d is %d\n", a, b, ancestor);
+        Node* ancestor = cca(root, a, b);
+        if (ancestor != NULL)
+            printf("Lowest Common Ancestor of %d and %d is %d\n", a, b, ancestor->val);
         else
             printf("No common ancestor found\n");
     }
-
     freeTree(root);
 
     return 0;
