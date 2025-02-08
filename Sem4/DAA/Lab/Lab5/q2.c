@@ -3,9 +3,9 @@
 
 typedef struct Node {
     int val;
-    Node* left;
-    Node* right;
-}Node;
+    struct Node* left;
+    struct Node* right;
+} Node;
 
 Node* createNode(int val) {
     Node* newNode = (Node*)malloc(sizeof(Node));
@@ -20,10 +20,10 @@ Node* createNode(int val) {
 
 Node* createBinaryTree() {
     int val;
-    printf("Enter node val (enter -1 for no node): ");
+    printf("Enter node value (enter -1 for no node): ");
     scanf("%d", &val);
 
-    if (val == -1)return NULL;
+    if (val == -1) return NULL;
 
     Node* newNode = createNode(val);
 
@@ -36,9 +36,10 @@ Node* createBinaryTree() {
     return newNode;
 }
 
-int dfs(Node* root,int a){
-    if(root->val==a)return 1;
-    return dfs(root->left,a)||dfs(root->right,a);
+int dfs(Node* root, int a) {
+    if (root == NULL) return 0;
+    if (root->val == a) return 1;
+    return dfs(root->left, a) || dfs(root->right, a);
 }
 
 int cca(Node* root, int a, int b) {
@@ -56,7 +57,16 @@ int cca(Node* root, int a, int b) {
 int main() {
     Node* root = createBinaryTree();
 
-    free(root);
+    int a, b;
+    printf("Enter two node values to find their lowest common ancestor: ");
+    scanf("%d %d", &a, &b);
 
+    int ancestor = cca(root, a, b);
+    if (ancestor != -1)
+        printf("Lowest Common Ancestor of %d and %d is %d\n", a, b, ancestor);
+    else
+        printf("No common ancestor found\n");
+
+    free(root);
     return 0;
 }
