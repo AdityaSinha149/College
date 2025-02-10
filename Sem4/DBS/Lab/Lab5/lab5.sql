@@ -154,7 +154,17 @@ select *
 from salSum, maxSal, minSal, avgSal;
 
 --11.
+select pnumber,pname,count(essn)
+from project,works_on
+where pnumber=pno
+group by pnumber,pname;
 
+--12.
+select pnumber,pname,count(essn)
+from project,works_on
+where pnumber=pno
+group by pnumber,pname
+having count(essn)>2;
 
 --13. 
 with more_than_5(dno) as(
