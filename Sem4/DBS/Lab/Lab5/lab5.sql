@@ -60,12 +60,12 @@ select fname,minit,lname
 from employee e,dependent d
 where ssn=essn and fname=dependent_name and e.sex=d.sex;
 
---8.
+--8. Retrieve the names of employees who have no dependents. 
 SELECT e.fname || ' ' || e.minit || ' ' || e.lname AS employee_name
 FROM employee e
 WHERE e.ssn NOT IN (SELECT d.essn FROM dependent d);
 
---Not 8 but better. 
+--Not 8 but better. Retrieve the names of employees who are not supervisor to anyone. 
 with supervisor(ssn) as(
     select distinct ssn
     from employee
@@ -130,14 +130,15 @@ If ssn = 789 → ⚠️ UNKNOWN (because NULL exists in the set)
 → Since not in must be fully TRUE for a row to be included, it excludes all rows!
 */
 
---9.
+--9. List the names of managers who have at least one dependent.
 SELECT DISTINCT e.fname || ' ' || e.minit || ' ' || e.lname AS manager_name
 FROM employee e JOIN department d
 ON e.ssn = d.mgr_ssn
 WHERE e.ssn IN (SELECT essn FROM dependent);
 
 
---10.
+--10. Find the sum of the salaries of all employees, the maximum salary, the minimum 
+--salary, and the average salary. 
 with salSum as (
     select sum(salary) as total_salary from employee
 ),
@@ -153,20 +154,24 @@ avgSal as (
 select * 
 from salSum, maxSal, minSal, avgSal;
 
---11.
+--11. For each project, retrieve the project number, the project name, and the number 
+--of employees who work on that project. 
 select pnumber,pname,count(essn)
 from project,works_on
 where pnumber=pno
 group by pnumber,pname;
 
---12.
+--12. For each project on which more than two employees work, retrieve the project 
+--number, the project name, and the number of employees who work on the 
+--project. 
 select pnumber,pname,count(essn)
 from project,works_on
 where pnumber=pno
 group by pnumber,pname
 having count(essn)>2;
 
---13. 
+--13. For each department that has more than five employees, retrieve the department 
+--number and the number of its employees who are making more than 40,000. 
 with more_than_5(dno) as(
     select dno
     from employee
