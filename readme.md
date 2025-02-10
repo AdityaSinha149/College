@@ -2,8 +2,9 @@
 
   ## Structure  
 
-  - **Semesters (`Sems/`)**  
+- **College**
+  - **Sems/**  
     - **Subjects/**  
-      - **Slides/** *(Lecture slides and notes)*  
-      - **Labs/** *(Lab assignments and experiments)*  
+      - **Slides/** *(Lecture slides)*  
+      - **Labs/** *(Lab codes)*  
       - **Pyqs/** *(Previous year questions)*
