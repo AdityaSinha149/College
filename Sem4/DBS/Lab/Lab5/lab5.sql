@@ -173,3 +173,7 @@ with more_than_5(dno) as(
     group by dno
     having count(dno)>5
 )
+select employee.dno,count(ssn)
+from employee,more_than_5
+where employee.dno=more_than_5.dno and salary>40000
+group by employee.dno;
