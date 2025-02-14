@@ -60,8 +60,8 @@ int main() {
     Node* root = createBinaryTree();
 
     int a, b;
-    while (1) {
-        printf("Enter two node values to find their lowest common ancestor: ");
+    while (a>0 && b>0) {
+        printf("Enter two node values to find their lowest common ancestor(negative value to exit): ");
         scanf("%d %d", &a, &b);
 
         int ancestor = cca(root, a, b);
