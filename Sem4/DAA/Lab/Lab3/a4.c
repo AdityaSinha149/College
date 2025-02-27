@@ -1,36 +1,34 @@
 #include <stdio.h>
+#include <string.h>
 
-int isPartitionPossible(int arr[], int n, int sum) {
-    if (sum == 0) return 1;
-    if (n == 0 || sum < 0) return 0;
-    return isPartitionPossible(arr, n - 1, sum - arr[n - 1]) || isPartitionPossible(arr, n - 1, sum);
-}
-
-int canPartition(int arr[], int n) {
-    int sum = 0;
-    for (int i = 0; i < n; i++)
-        sum += arr[i];
-
-    if (sum % 2 != 0)
-        return 0;
-
-    return isPartitionPossible(arr, n, sum / 2);
+void bubbleSort(char arr[][100], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (strcmp(arr[j], arr[j + 1]) > 0) {
+                char temp[100];
+                strcpy(temp, arr[j]);
+                strcpy(arr[j], arr[j + 1]);
+                strcpy(arr[j + 1], temp);
+            }
+        }
+    }
 }
 
 int main() {
     int n;
-    printf("Enter number of elements: ");
+    printf("Enter number of strings: ");
     scanf("%d", &n);
 
-    int arr[n];
-    printf("Enter elements: ");
+    char arr[n][100];
+    printf("Enter strings:\n");
     for (int i = 0; i < n; i++)
-        scanf("%d", &arr[i]);
+        scanf("%s", arr[i]);
 
-    if (canPartition(arr, n))
-        printf("Partition possible\n");
-    else
-        printf("Partition not possible\n");
+    bubbleSort(arr, n);
+
+    printf("Sorted strings:\n");
+    for (int i = 0; i < n; i++)
+        printf("%s\n", arr[i]);
 
     return 0;
 }
