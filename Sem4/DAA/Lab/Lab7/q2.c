@@ -138,25 +138,21 @@ int main() {
     inorder(root);
     printf("\n");
 
-    while (1) {
-        printf("Enter the node to find predecessor and successor (-1 to exit): ");
-        scanf("%d", &key);
-        if (key == -1)
-            break;
+    printf("Enter the node to find predecessor and successor: ");
+    scanf("%d", &key);
 
-        TreeNode *pre = NULL, *suc = NULL;
-        findPreSuc(root, key, &pre, &suc);
+    TreeNode *pre = NULL, *suc = NULL;
+    findPreSuc(root, key, &pre, &suc);
 
-        if (pre != NULL)
-            printf("Predecessor: %d\n", pre->data);
-        else
-            printf("No Predecessor\n");
+    if (pre != NULL)
+        printf("Predecessor: %d\n", pre->data);
+    else
+        printf("No Predecessor\n");
 
-        if (suc != NULL)
-            printf("Successor: %d\n", suc->data);
-        else
-            printf("No Successor\n");
-    }
+    if (suc != NULL)
+        printf("Successor: %d\n", suc->data);
+    else
+        printf("No Successor\n");
 
     return 0;
 }
