@@ -2,6 +2,8 @@
 #include<stdlib.h>
 #include<string.h>
 
+int op=0;
+
 void makeShift(char*text,char*pattern,int shift[]){
     int m=strlen(pattern);
     int n=strlen(text);
@@ -10,7 +12,7 @@ void makeShift(char*text,char*pattern,int shift[]){
         shift[i]=m;
 
     for(int i=0;i<m-1;i++)
-        shift[(unsigned char)pattern[i]]=m-i-1;
+        shift[pattern[i]]=m-i-1;
 }
 
 int stringMatching(char*text,char*pattern){
@@ -22,11 +24,14 @@ int stringMatching(char*text,char*pattern){
     int i=m-1;
     while(i<n){
         int k=0;
-        while(k<m && pattern[m-1-k] == text[i-k])
+        op++;
+        while(k<m && pattern[m-1-k] == text[i-k]){
             k++;
+            op++;
+        }
 
         if(k==m)return i-m+1;
-        i+=shift[(unsigned char)text[i]];
+        i+=shift[text[i]];
     }
     return -1;
 }
@@ -43,5 +48,7 @@ int main(){
         printf("Pattern found at position %d\n",pos);
     else
         printf("Pattern not found\n");
+
+    printf("op:%d",op);
     return 0;
 }
