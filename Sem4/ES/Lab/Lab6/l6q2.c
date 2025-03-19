@@ -4,12 +4,12 @@ unsigned int counter = 0x00000010;
 unsigned int j;
 
 void configure_SW2() {
-    LPC_PINCON->PINSEL4 &= (0xFCFFFFFF);
+    LPC_PINCON->PINSEL4 &= (0xFCFFFFFF); //not important
     LPC_GPIO2->FIODIR &= 0xFFFFFFFF;
 }
 
 void configure_LEDs() {
-    LPC_PINCON->PINSEL0 &= 0xFF0000FF;
+    LPC_PINCON->PINSEL0 &= 0xFF0000FF; //not important
     LPC_GPIO0->FIODIR |= 0x00000FF0;
 }
 

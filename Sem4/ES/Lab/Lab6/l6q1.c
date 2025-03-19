@@ -1,6 +1,5 @@
 #include <lpc17xx.h>
 
-unsigned int i;
 unsigned long led = 0x00000010;
 unsigned int j;
 
@@ -8,7 +7,7 @@ int main() {
     SystemInit();
     SystemCoreClockUpdate();
 
-    LPC_PINCON->PINSEL0 &= 0XFF0000FF;
+    LPC_PINCON->PINSEL0 &= 0XFF0000FF; //not important
     LPC_GPIO0->FIODIR |= 0X00000FF0;
 
     while(1) {
@@ -22,4 +21,5 @@ int main() {
 
         for (j = 0; j < 1000; j++);
     }
+    return 0;
 }
