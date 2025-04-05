@@ -13,6 +13,7 @@ void makeShift(char*text,char*pattern,int shift[]){
 
     for(int i=0;i<m-1;i++)
         shift[pattern[i]]=m-i-1;
+    //text never used can be removed
 }
 
 int stringMatching(char*text,char*pattern){
@@ -24,11 +25,7 @@ int stringMatching(char*text,char*pattern){
     int i=m-1;
     while(i<n){
         int k=0;
-        op++;
-        while(k<m && pattern[m-1-k] == text[i-k]){
-            k++;
-            op++;
-        }
+        while(k<m && pattern[m-1-k] == text[i-k]) k++;
 
         if(k==m)return i-m+1;
         i+=shift[text[i]];
@@ -49,6 +46,5 @@ int main(){
     else
         printf("Pattern not found\n");
 
-    printf("op:%d",op);
     return 0;
 }
