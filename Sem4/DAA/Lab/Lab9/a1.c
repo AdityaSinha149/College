@@ -14,32 +14,40 @@ void badCharHeuristic(char* pattern, int badChar[]) {
 
 void goodSuffixHeuristic(char* pattern, int goodSuffix[]) {
     int m = strlen(pattern);
-    int i = m, j = m + 1;
-    int border[m + 1];
-    border[i] = j;
+    int i, j;
 
-    // Build border positions
+    int suffix[m + 1];
+    for (i = 0; i <= m; i++) {
+        goodSuffix[i] = m;
+        suffix[i] = 0;
+    }
+
+    // Step 1: Compute suffix[] such that suffix[i] is the length
+    // of the longest suffix of pattern[0..i] which is also a prefix
+    i = m;
+    j = m + 1;
+    suffix[m] = m + 1;
+
     while (i > 0) {
         while (j <= m && pattern[i - 1] != pattern[j - 1])
-            j = border[j];
+            j = suffix[j];
         i--;
         j--;
-        border[i] = j;
+        suffix[i] = j;
     }
 
-    // Initialize goodSuffix
-    for (int i = 0; i <= m; i++)
-        goodSuffix[i] = m;
+    // Step 2: Use suffix[] to fill goodSuffix[]
+    for (i = 0; i < m; i++) {
+        goodSuffix[i] = m - suffix[0];
+    }
 
-    // Update goodSuffix table using borders
-    j = border[0];
-    for (int i = 0; i < m; i++) {
-        if (goodSuffix[i] == m)
-            goodSuffix[i] = j;
-        if (i == j)
-            j = border[j];
+    for (i = 0; i < m; i++) {
+        int len = m - suffix[i];
+        if (goodSuffix[len] == m - suffix[0])
+            goodSuffix[len] = i;
     }
 }
+
 
 int boyerMooreSearch(char* text, char* pattern) {
     int n = strlen(text);
