@@ -24,6 +24,6 @@ case $condition in
       d_pos=$(( -d ))
       real=$(echo "scale=2; (-1)*$b / (2 * $a)" | bc -l)
       imag=$(echo "scale=2; sqrt($d_pos) / (2 * $a)" | bc -l)
-      echo "Complex roots: ${real}+${imag}i and ${real}-${imag}i"
+      echo "Complex roots: $real+${imag}i and $real-${imag}i"
       ;;
 esac
