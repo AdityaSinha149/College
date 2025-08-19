@@ -12,11 +12,13 @@ int main(){
             perror("fork failed");
             exit(1);
         case 0 :
-            printf("Child running\n");
+            printf("Running Q1 in child\n");
+            execlp("./q1", "q1", (char *)0);
+            printf("Child Completed\n");
             break;
         default :
             wait(&status);
-            printf("Parent running : Child completed with status %d\n", status);
+            printf("Parent's Parent running : Child completed with status %d\n", status);
     }
     return 0;
 }
