@@ -5,10 +5,10 @@
 #include<sys/types.h>
 #include<sys/socket.h>
 #include<netinet/in.h>
-#include<arpa/inet.h>   // for inet_pton
+#include<arpa/inet.h> 
 
-#define PORT 8080
-#define IP "172.16.48.109"
+#define PORT 10200
+#define IP "10.154.184.195"
 
 int main() {
     int sock = 0;
@@ -36,7 +36,7 @@ int main() {
     }
 
     printf("Enter message for server: ");
-    scanf("%1023[^\n]", msg);   // read full line including spaces
+    scanf("%1023[^\n]", msg);
 
     send(sock, msg, strlen(msg), 0);
     printf("Message sent to server: %s\n", msg);
