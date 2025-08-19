@@ -18,11 +18,8 @@ int main() {
             exit(0);
 
         default:
-            // Parent directly execs ps without waiting for child
             printf("Parent now running ps to show zombie...\n");
             execlp("ps", "ps", "-elf", (char *)0);
-
-            perror("execlp failed");
             exit(1);
     }
 
