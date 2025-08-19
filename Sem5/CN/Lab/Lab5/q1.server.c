@@ -1,13 +1,15 @@
-#include<stdio.h>
+#include <stdio.h>
 #include <stdlib.h>
-#include<string.h>
+#include <string.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
 #include <stdbool.h>
-#include<sys/types.h>
-#include<sys/socket.h>
-#include<netinet/in.h>
 
 #define PORT 10200
-#define IP "172.16.48.109"
+#define IP "10.154.184.195"
 
 void remove_duplicates(char *buffer) {
     if (buffer == NULL) return;
