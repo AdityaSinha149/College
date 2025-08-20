@@ -9,7 +9,7 @@
 #include <stdbool.h>
 
 #define PORT 10200
-#define IP "10.154.184.195"
+#define IP "10.52.10.63"
 
 void remove_duplicates(char *buffer) {
     if (buffer == NULL) return;
@@ -39,11 +39,10 @@ void remove_duplicates(char *buffer) {
     strcpy(buffer, temp);
 }
 
-
 int main() {
     int server_fd, new_socket;
     struct sockaddr_in address;
-    int addrlen = sizeof(address);
+    socklen_t addrlen = sizeof(address);
     char buffer[1024] = {0};
 
     server_fd = socket(AF_INET, SOCK_STREAM, 0);
@@ -53,15 +52,20 @@ int main() {
     }
 
     address.sin_family = AF_INET;
-    address.sin_addr.s_addr = inet_addr(IP);
     address.sin_port = htons(PORT);
+
+    // Use inet_pton instead of inet_addr
+    if(inet_pton(AF_INET, IP, &address.sin_addr) <= 0){
+        perror("Invalid address / Address not supported");
+        exit(1);
+    }
 
     if(bind(server_fd, (struct sockaddr*)&address, sizeof(address)) < 0){
         perror("bind failed");
         exit(1);
     }
 
-    printf("Server is listening on port %d\n", PORT);
+    printf("Server is listening on %s:%d\n", IP, PORT);
     fflush(stdout);  // ensure message prints immediately
 
     if(listen(server_fd, 3) < 0){
@@ -70,14 +74,14 @@ int main() {
         exit(1);
     }
     
-    new_socket = accept(server_fd, (struct sockaddr*)&address, (socklen_t*)&addrlen);
+    new_socket = accept(server_fd, (struct sockaddr*)&address, &addrlen);
     if(new_socket < 0){
         perror("accept failed");
         close(server_fd);
         exit(1);
     }
-    while(1){
 
+    while(1){
         int valread = read(new_socket, buffer, sizeof(buffer)-1);
         if(valread > 0){
             buffer[valread] = '\0';
@@ -90,4 +94,6 @@ int main() {
             send(new_socket, buffer, strlen(buffer), 0);
         }
     }
+
+    return 0;
 }
