@@ -30,23 +30,32 @@ int main() {
         exit(1);
     }
 
+    printf("Trying to connect to server %s:%d\n", IP, PORT);
+    fflush(stdout);
+
+    
     if (connect(sock, (struct sockaddr*)&serv_addr, sizeof(serv_addr)) < 0) {
         perror("Connection Failed");
         exit(1);
     }
+    while(1){
+        printf("Enter message for server: ");
 
-    printf("Enter message for server: ");
-    scanf("%1023[^\n]", msg);
+        fgets(msg, sizeof(msg), stdin);
+        msg[strcspn(msg, "\r\n")] = 0; // remove newline and carriage return
 
-    send(sock, msg, strlen(msg), 0);
-    printf("Message sent to server: %s\n", msg);
+        send(sock, msg, strlen(msg), 0);
 
-    int valread = read(sock, buffer, sizeof(buffer)-1);
-    if (valread > 0) {
-        buffer[valread] = '\0';
-        printf("Server: %s\n", buffer);
+        if (strcmp(msg, "STOP") == 0) {
+            printf("STOP sent. Closing client.\n");
+            break;
+        }
+
+        memset(buffer, 0, sizeof(buffer));
+        int valread = read(sock, buffer, sizeof(buffer)-1);
+        if (valread > 0) {
+            buffer[valread] = '\0';
+            printf("Server: %s\n", buffer);
+        }
     }
-
-    close(sock);
-    return 0;
 }

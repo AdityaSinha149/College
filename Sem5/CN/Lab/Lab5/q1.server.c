@@ -40,7 +40,7 @@ void remove_duplicates(char *buffer) {
 }
 
 
-int main(){
+int main() {
     int server_fd, new_socket;
     struct sockaddr_in address;
     int addrlen = sizeof(address);
@@ -52,39 +52,42 @@ int main(){
         exit(1);
     }
 
-    address.sin_addr.s_addr = inet_addr(IP);
     address.sin_family = AF_INET;
+    address.sin_addr.s_addr = inet_addr(IP);
     address.sin_port = htons(PORT);
 
-    if(bind(server_fd,(struct sockaddr*)&address, sizeof(address)) < 0){
+    if(bind(server_fd, (struct sockaddr*)&address, sizeof(address)) < 0){
         perror("bind failed");
         exit(1);
     }
+
+    printf("Server is listening on port %d\n", PORT);
+    fflush(stdout);  // ensure message prints immediately
 
     if(listen(server_fd, 3) < 0){
         perror("listen failed");
         close(server_fd);
         exit(1);
     }
-
-    printf("Server is listening on port : %d ip : %s socket %d", PORT, IP, server_fd);
-
+    
     new_socket = accept(server_fd, (struct sockaddr*)&address, (socklen_t*)&addrlen);
     if(new_socket < 0){
         perror("accept failed");
         close(server_fd);
         exit(1);
     }
+    while(1){
 
-    read(new_socket, buffer, sizeof(buffer));
-    if(strcmp(buffer, "STOP") == 0){
-        close(new_socket);
-        close(server_fd);
+        int valread = read(new_socket, buffer, sizeof(buffer)-1);
+        if(valread > 0){
+            buffer[valread] = '\0';
+            if(strcmp(buffer, "STOP") == 0){
+                close(new_socket);
+                close(server_fd);
+                break;
+            }
+            remove_duplicates(buffer);
+            send(new_socket, buffer, strlen(buffer), 0);
+        }
     }
-
-    remove_duplicates(buffer);
-
-    send(new_socket, buffer, sizeof(buffer), 0);
-
-
 }
