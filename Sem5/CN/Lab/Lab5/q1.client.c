@@ -1,14 +1,14 @@
-#include<stdio.h>
-#include<string.h>
-#include<stdlib.h>
-#include<unistd.h>
-#include<sys/types.h>
-#include<sys/socket.h>
-#include<netinet/in.h>
-#include<arpa/inet.h> 
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h> 
 
 #define PORT 10200
-#define IP "10.154.184.195"
+#define IP "10.52.10.63"
 
 int main() {
     int sock = 0;
@@ -18,13 +18,14 @@ int main() {
 
     sock = socket(AF_INET, SOCK_STREAM, 0);
     if (sock < 0) {
-        perror("socket failed");
+        perror("Socket creation failed");
         exit(1);
     }
 
     serv_addr.sin_family = AF_INET;
     serv_addr.sin_port = htons(PORT);
 
+    // Use inet_pton instead of inet_addr
     if (inet_pton(AF_INET, IP, &serv_addr.sin_addr) <= 0) {
         perror("Invalid address/ Address not supported");
         exit(1);
@@ -33,14 +34,13 @@ int main() {
     printf("Trying to connect to server %s:%d\n", IP, PORT);
     fflush(stdout);
 
-    
     if (connect(sock, (struct sockaddr*)&serv_addr, sizeof(serv_addr)) < 0) {
         perror("Connection Failed");
         exit(1);
     }
+
     while(1){
         printf("Enter message for server: ");
-
         fgets(msg, sizeof(msg), stdin);
         msg[strcspn(msg, "\r\n")] = 0; // remove newline and carriage return
 
@@ -58,4 +58,7 @@ int main() {
             printf("Server: %s\n", buffer);
         }
     }
+
+    close(sock);
+    return 0;
 }
