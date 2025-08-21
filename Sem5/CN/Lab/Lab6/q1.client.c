@@ -8,7 +8,7 @@
 #include <arpa/inet.h>
 
 #define PORT 10200
-#define IP "10.52.0.141"
+#define IP "10.154.184.195"
 
 int main(){
     int client;
