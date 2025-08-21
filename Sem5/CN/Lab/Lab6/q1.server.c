@@ -8,7 +8,7 @@
 #include <arpa/inet.h>
 
 #define PORT 10200
-#define IP "10.154.184.195"
+#define IP "10.203.228.195"
 
 int eval(int a, char op, int b){
     switch(op){
