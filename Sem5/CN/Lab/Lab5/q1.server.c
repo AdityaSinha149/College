@@ -9,7 +9,7 @@
 #include <stdbool.h>
 
 #define PORT 10200
-#define IP "10.52.10.63"
+#define IP "10.203.228.195"
 
 void remove_duplicates(char *buffer) {
     if (buffer == NULL) return;
