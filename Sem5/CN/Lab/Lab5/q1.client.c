@@ -8,7 +8,7 @@
 #include <arpa/inet.h> 
 
 #define PORT 10200
-#define IP "10.52.10.63"
+#define IP "10.203.228.195"
 
 int main() {
     int sock = 0;
