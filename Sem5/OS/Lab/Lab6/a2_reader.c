@@ -1,37 +1,51 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
+#include "a2_common.h"
 #include <fcntl.h>
-#include <sys/stat.h>
-#include <errno.h>
-
-#define FIFO_REQ "/tmp/fifo_req"
-#define FIFO_RSP "/tmp/fifo_rsp"
-
-typedef struct {
-    char type;  // 'R' or 'W'
-    int action; // 1=request, 0=release
-    int pid;
-} message;
+#include <unistd.h>
+#include <stdio.h>
+#include <string.h>
 
 int main() {
-    int fd_req = open(FIFO_REQ, O_WRONLY);
-    int fd_rsp = open(FIFO_RSP, O_RDONLY);
-    if (fd_req == -1 || fd_rsp == -1) { perror("open"); exit(1); }
+    ensure_fifo("fifo_rr");
+    ensure_fifo("fifo_c");
 
-    message msg = {'R', 1, getpid()};
-    write(fd_req, &msg, sizeof(msg));
+    pid_t pid = getpid();
+    char reply_name[REPLY_NAME_LEN];
+    snprintf(reply_name, sizeof(reply_name), "/tmp/fifo_rr_%d", pid);
+    ensure_fifo(reply_name);
 
-    int ack;
-    read(fd_rsp, &ack, sizeof(ack));
-    printf("Reader %d: Reading...\n", getpid());
-    sleep(15);
+    message req;
+    memset(&req,0,sizeof(req));
+    req.pid = pid;
+    req.action = 'R';
+    strncpy(req.reply, reply_name, sizeof(req.reply)-1);
 
-    msg.action = 0;
-    write(fd_req, &msg, sizeof(msg));
-    printf("Reader %d: Done reading.\n", getpid());
+    int fdw = open("/tmp/fifo_rr", O_WRONLY);
+    if(fdw == -1) { perror("open fifo_rr"); unlink(reply_name); return 1; }
+    write(fdw, &req, sizeof(req));
+    close(fdw);
+    printf("Reader %d: requested permission\n", pid);
 
-    close(fd_req);
-    close(fd_rsp);
+    int fdr = open(reply_name, O_RDONLY);
+    if(fdr == -1) { perror("open reply fifo"); unlink(reply_name); return 1; }
+    message resp;
+    if(read(fdr, &resp, sizeof(resp)) != sizeof(resp)) { perror("read resp"); close(fdr); unlink(reply_name); return 1; }
+    close(fdr);
+    unlink(reply_name);
+
+    if(resp.action == 'G') {
+        printf("Reader %d: granted — reading now (20s)\n", pid);
+        sleep(20);
+
+        message rel;
+        memset(&rel,0,sizeof(rel));
+        rel.pid = pid;
+        rel.action = 'r';
+        int fdw2 = open("/tmp/fifo_rr", O_WRONLY);
+        if(fdw2 != -1) { write(fdw2, &rel, sizeof(rel)); close(fdw2); }
+        printf("Reader %d: released\n", pid);
+    } else {
+        printf("Reader %d: denied (writer active or waiting)\n", pid);
+    }
+
     return 0;
 }
