@@ -13,7 +13,7 @@ typedef struct {
 } shared_mem;
 
 int main() {
-    int shmid = shmget(IPC_PRIVATE, sizeof(shared_mem), 0666 | IPC_CREAT);
+    int shmid = shmget(0666, sizeof(shared_mem), 0666 | IPC_CREAT);
     if (shmid == -1) {
         perror("shmget");
         exit(EXIT_FAILURE);
@@ -55,9 +55,7 @@ int main() {
     else {
         // CHILD PROCESS
         // Wait for parent
-        while (shm->flag != 1) {
-            usleep(1000);
-        }
+        while (shm->flag != 1);
 
         printf("Child: Received '%c'\n", shm->data[0]);
         char c = shm->data[0];
