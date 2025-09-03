@@ -32,6 +32,11 @@ int win(char board[3][3], int n) {
         if(board[j][3-j-1] != n) f = 1;
     if(f == 0) return 1;
 
+    for(int i = 0; i < 3; i++)
+        for(int j = 0; j < 3; j++)
+            if(board[i][j] = 0) f = 1;
+    if(f == 1) return -1;
+
     return 0;
 }
 
@@ -97,6 +102,12 @@ int main() {
             msg->over = 1;
             printf("You won\n");
             snprintf(msg->win_msg, sizeof(msg->win_msg), "Player %d won\n", n);
+            break;
+        }
+
+        if(win(msg->data, n) == -1) {
+            msg->over = 1;
+            snprintf(msg->win_msg, sizeof(msg->win_msg), "Its a tie", n);
             break;
         }
 
