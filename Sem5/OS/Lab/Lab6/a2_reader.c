@@ -10,7 +10,7 @@ int main() {
 
     pid_t pid = getpid();
     char reply_name[REPLY_NAME_LEN];
-    snprintf(reply_name, sizeof(reply_name), "/tmp/fifo_rr_%d", pid);
+    snprintf(reply_name, sizeof(reply_name), "fifo_rr_%d", pid);
     ensure_fifo(reply_name);
 
     message req;
@@ -19,7 +19,7 @@ int main() {
     req.action = 'R';
     strncpy(req.reply, reply_name, sizeof(req.reply)-1);
 
-    int fdw = open("/tmp/fifo_rr", O_WRONLY);
+    int fdw = open("fifo_rr", O_WRONLY);
     if(fdw == -1) { perror("open fifo_rr"); unlink(reply_name); return 1; }
     write(fdw, &req, sizeof(req));
     close(fdw);
@@ -40,7 +40,7 @@ int main() {
         memset(&rel,0,sizeof(rel));
         rel.pid = pid;
         rel.action = 'r';
-        int fdw2 = open("/tmp/fifo_rr", O_WRONLY);
+        int fdw2 = open("fifo_rr", O_WRONLY);
         if(fdw2 != -1) { write(fdw2, &rel, sizeof(rel)); close(fdw2); }
         printf("Reader %d: released\n", pid);
     } else {
