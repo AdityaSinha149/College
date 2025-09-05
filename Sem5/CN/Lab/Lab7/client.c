@@ -6,13 +6,19 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
-#include <signal.h>
 
 #define PORT 10200
-#define IP "10.52.6.57"
+#define IP "10.55.4.245"
 
+struct client_info {
+    int fd;         // socket fd
+    int key[16];    // encryption key
+    int key_len;    // key length
+};
+
+// simple encrypt/decrypt functions
 void encrypt(char *msg, int *key, int key_len) {
-    int i, j = 0;
+    int i, j = 0; key_len += 1;
     for (i = 0; msg[i] != '\0'; i++) {
         msg[i] = (msg[i] + key[j]) % 256;
         j = (j + 1) % key_len;
@@ -20,7 +26,7 @@ void encrypt(char *msg, int *key, int key_len) {
 }
 
 void decrypt(char *msg, int *key, int key_len) {
-    int i, j = 0;
+    int i, j = 0; key_len += 1;
     for (i = 0; msg[i] != '\0'; i++) {
         msg[i] = (msg[i] - key[j] + 256) % 256;
         j = (j + 1) % key_len;
@@ -28,108 +34,89 @@ void decrypt(char *msg, int *key, int key_len) {
 }
 
 int main() {
-    int server;
-    struct sockaddr_in server_addr, client_addr;
-    socklen_t server_len = sizeof(server_addr);
-    socklen_t client_len = sizeof(client_addr);
-    
-    // create socket
-    server = socket(AF_INET, SOCK_STREAM, 0);
-    if (server < 0) {
-        perror("socket error");
-        exit(1);
-    }
+    struct client_info client;
+    struct sockaddr_in server_addr, local_addr;
+    socklen_t server_len = sizeof(server_addr), local_len = sizeof(local_addr);
 
-    // setup server addr
+    client.fd = socket(AF_INET, SOCK_STREAM, 0);
+    if (client.fd < 0) { perror("socket"); exit(1); }
+
     server_addr.sin_family = AF_INET;
     server_addr.sin_port = htons(PORT);
     if (inet_pton(AF_INET, IP, &server_addr.sin_addr) <= 0) {
-        perror("invalid ip address");
-        exit(1);
+        perror("invalid ip"); exit(1);
     }
 
-    // connect to server
-    if (connect(server, (struct sockaddr *)&server_addr, server_len) < 0) {
-        perror("Connection failed");
-        close(server);
-        exit(1);
+    if (connect(client.fd, (struct sockaddr *)&server_addr, server_len) < 0) {
+        perror("connect"); close(client.fd); exit(1);
     }
-    
-    getsockname(server, (struct sockaddr*)&client_addr, &client_len);
 
-    char ip[16];
-    inet_ntop(AF_INET, &client_addr.sin_addr, ip, sizeof(ip));
-    int port = ntohs(client_addr.sin_port);
+    // get local IP and port
+    getsockname(client.fd, (struct sockaddr *)&local_addr, &local_len);
+    char ip[16]; inet_ntop(AF_INET, &local_addr.sin_addr, ip, sizeof(ip));
+    int port = ntohs(local_addr.sin_port);
 
-    printf("%s:%d\n", ip,port);
-    int key[16];
-    int key_len = 0;
-
-    //build key from IP
+    // build key from IP and port
+    client.key_len = 0;
     char *token = strtok(ip, ".");
-    while (token) {
-        key[key_len++] = atoi(token);
-        token = strtok(NULL, ".");
-    }
+    while (token) { client.key[client.key_len++] = atoi(token); token = strtok(NULL, "."); }
 
-    //add port to key
-    while (port) {
-        key[key_len++] = port % 100;
-        port /= 100;
-    }
+    int temp_port = port;
+    while (temp_port) { client.key[client.key_len++] = temp_port % 100; temp_port /= 100; }
 
-    //change to n form
-    int net_key_len = htonl(key_len);
+    // send key length
+    int net_key_len = htonl(client.key_len);
+    send(client.fd, &net_key_len, sizeof(int), 0);
 
-    //send key
-    if (send(server, &net_key_len, sizeof(int), 0) != sizeof(int)) {
-    perror("send key length");
-    exit(1);
-    }
-
-    // send exactly 16 ints (pre-zeroed)
-    int net_key[16] = {0};
-    for (int i = 0; i < key_len; i++) {
-        net_key[i] = htonl(key[i]);
-        send(server, &net_key[i], sizeof(int), 0);
+    // send key
+    for (int i = 0; i < client.key_len; i++) {
+        int net_k = htonl(client.key[i]);
+        send(client.fd, &net_k, sizeof(int), 0);
     }
 
     pid_t pid = fork();
     if (pid == 0) {
-        //client's child sends msgs to server's child
-        while (1) {
-            char buff[1024];
-            if (!fgets(buff, sizeof(buff), stdin)) break;
-
-            encrypt(buff, key, key_len); //encrypt
-            send(server, buff, strlen(buff), 0);
-            
-            if (strncmp(buff, "bye", 3) == 0) break; //exit
+        // child: send messages to server
+        char buff[1024];
+        while (fgets(buff, sizeof(buff), stdin)) {
+            encrypt(buff, client.key, client.key_len);
+            send(client.fd, buff, strlen(buff), 0);
+            if (strncmp(buff, "bye", 3) == 0) break;
         }
-        kill(getppid(), SIGTERM);
-        return 0;
+        exit(0);
     } else {
-        //client's parent listen to other clients' children
+        // parent: receive messages from server
         char buff[1024];
         while (1) {
-            int n = recv(server, buff, sizeof(buff)-1, 0);
+            int net_msg_len, n;
+            n = recv(client.fd, &net_msg_len, sizeof(int), 0);
             if (n <= 0) break;
-            buff[n] = '\0';
+            int msg_len = ntohl(net_msg_len);
 
-            //receive decryption key
-            int dkey_len;
-            int dkey[16];
-            recv(server, &dkey_len, sizeof(int), 0);
-            recv(server, dkey, 16 * sizeof(int), 0);
-            dkey_len = ntohl(dkey_len);
-            for(int i = 0; i < dkey_len; i++){
-                dkey[i] = ntohl(dkey[i]);
-                printf("%d ", dkey[i]);
+            int total = 0;
+            while (total < msg_len) {
+                n = recv(client.fd, buff + total, msg_len - total, 0);
+                if (n <= 0) break;
+                total += n;
             }
-            decrypt(buff, dkey, dkey_len); //decrypt
-            printf("> %s\n", buff);
+            buff[total] = '\0';
+
+            // receive key length
+            int net_key_len2;
+            recv(client.fd, &net_key_len2, sizeof(int), 0);
+            int dkey_len = ntohl(net_key_len2);
+
+            // receive key
+            int dkey[16];
+            for (int i = 0; i < dkey_len; i++) {
+                int net_k; recv(client.fd, &net_k, sizeof(int), 0);
+                dkey[i] = ntohl(net_k);
+            }
+
+            decrypt(buff, dkey, dkey_len);
+            printf("> %s", buff);
         }
     }
 
-    close(server);
+    close(client.fd);
 }
