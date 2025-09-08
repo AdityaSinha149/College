@@ -4,6 +4,7 @@ struct client {
     int clientFD;
     struct sockaddr_in clientAddr;
     int key[16];
+    char name[1024];
 };
 
 struct client clients[1024];
@@ -17,7 +18,7 @@ void receiveAndPrintIncomingDataOnNewThread(struct client currClient);
 
 void *receiveAndPrintIncomingData(void *arg);
 
-void sendToAllOtherClients(char *msg, int senderFD);
+void sendToAllOtherClients(char *msg, int senderFD, char * senderName);
 
 int main() {
     int serverFD = makeIP4Socket();
@@ -57,10 +58,10 @@ struct client acceptIncomingClient(int serverFD) {
         perror("accept error : ");
         exit(1);
     }
-
     struct client currClient;
     currClient.clientAddr = clientAddr;
     currClient.clientFD = clientFD;
+    recv(clientFD, currClient.name, sizeof(currClient.name), 0);
     return currClient;
 }
 
@@ -73,17 +74,17 @@ void receiveAndPrintIncomingDataOnNewThread(struct client currClient) {
 }
 
 void *receiveAndPrintIncomingData(void *arg) {
-    char buff[1024];
+    struct msg currMsg;
     struct client currClient = *((struct client*)arg);
     free(arg); // free after copying
     int clientFD = currClient.clientFD;
 
     while(1) {
-        ssize_t n = recv(clientFD, buff, 1024, 0);
+        ssize_t n = recv(clientFD, &currMsg, sizeof(currMsg), 0);
+        
         if(n > 0) {
-            buff[n] = 0;
-            printf("%s\n", buff);
-            sendToAllOtherClients(buff, clientFD);
+            printf("%s\n", currMsg.msg);
+            sendToAllOtherClients(currMsg.msg, clientFD, currMsg.name);
         } else if(n == 0) {
             printf("Client disconnected.\n");
             close(clientFD);
@@ -93,7 +94,7 @@ void *receiveAndPrintIncomingData(void *arg) {
     return NULL;
 }
 
-void sendToAllOtherClients(char *msg, int senderFD) {
+void sendToAllOtherClients(char *msg, int senderFD, char * senderName) {
     for(int i = 0; i < clientCount; i++) {
         if(clients[i].clientFD == -1) continue;
 
@@ -102,7 +103,10 @@ void sendToAllOtherClients(char *msg, int senderFD) {
             clients[i].clientFD = -1;
         } 
         else if(clients[i].clientFD != senderFD) {
-            send(clients[i].clientFD, msg, strlen(msg), 0);
+            struct msg currMsg;
+            strcpy(currMsg.msg, msg);
+            strcpy(currMsg.name, senderName);
+            send(clients[i].clientFD, &currMsg, sizeof(currMsg), 0);
         }
     }
 }
