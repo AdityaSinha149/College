@@ -59,5 +59,6 @@ void sendMessageToServer(int client) {
         char msg[1024];
         sprintf(msg, "%s : %s", name, buff);
         send(client, msg, strlen(msg), 0);
+        if(strncmp(buff, "bye", 3) == 0) exit(1);
     }
 }
