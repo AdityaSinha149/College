@@ -13,7 +13,7 @@
 
 
 #define PORT 10298
-#define IP "10.52.10.190"
+#define IP "172.16.48.148"
 
 int makeIP4Socket(){
     return socket(AF_INET, SOCK_STREAM, 0);
