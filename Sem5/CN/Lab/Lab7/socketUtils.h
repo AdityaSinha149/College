@@ -12,8 +12,14 @@
 #include <pthread.h>
 
 
-#define PORT 10298
+#define PORT 10200
 #define IP "172.16.48.148"
+
+struct msg {
+    char name[1024];
+    char msg[1024];
+};
+
 
 int makeIP4Socket(){
     return socket(AF_INET, SOCK_STREAM, 0);
