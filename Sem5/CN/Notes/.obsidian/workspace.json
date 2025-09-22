@@ -8,20 +8,6 @@
         "type": "tabs",
         "children": [
           {
-            "id": "a946fb6b942b1038",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "4 Network Layer/4.3 Router.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "4.3 Router"
-            }
-          },
-          {
             "id": "a23eea0fc16422dc",
             "type": "leaf",
             "state": {
@@ -34,33 +20,8 @@
               "icon": "lucide-file",
               "title": "4.3 Router"
             }
-          },
-          {
-            "id": "ecf5259f3d3878c3",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "4 Network Layer/4.4 The Internet Protocol.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "4.4 The Internet Protocol"
-            }
-          },
-          {
-            "id": "849e184e20147713",
-            "type": "leaf",
-            "state": {
-              "type": "empty",
-              "state": {},
-              "icon": "lucide-file",
-              "title": "New tab"
-            }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -219,11 +180,12 @@
   },
   "active": "a23eea0fc16422dc",
   "lastOpenFiles": [
+    "4.8.1.png",
+    "4 Network Layer/4.3 Router.md",
     "4.7.png",
     "44-the-internet-protocol.md",
     "4.4-the-internet-protocol.md",
     "4.4.md",
-    "4 Network Layer/4.3 Router.md",
     "4 Network Layer/4.4 The Internet Protocol.md",
     "4 Network Layer/4.2 Virtual Circuit and Datagram Networks.md",
     "4.4-the-internet.md",
@@ -241,7 +203,6 @@
     "Pasted image 20250919203112.png",
     "4.1.png",
     "Untitled.canvas",
-    "4.2.png",
     "Untitled.base",
     "4 Network Layer/4.4 The Internet Protocol",
     "4 Network Layer/4.2 Virtual Circuits and Datagram Networks",
