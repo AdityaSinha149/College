@@ -36,6 +36,18 @@
             }
           },
           {
+            "id": "a9205cf8d84117de",
+            "type": "leaf",
+            "state": {
+              "type": "image",
+              "state": {
+                "file": "4.8.2.png"
+              },
+              "icon": "lucide-image",
+              "title": "4.8.2"
+            }
+          },
+          {
             "id": "ecf5259f3d3878c3",
             "type": "leaf",
             "state": {
@@ -117,7 +129,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "cfcce8c5abcb7e0d",
@@ -219,11 +232,12 @@
   },
   "active": "a23eea0fc16422dc",
   "lastOpenFiles": [
+    "4.8.2.png",
+    "4 Network Layer/4.3 Router.md",
     "4.7.png",
     "44-the-internet-protocol.md",
     "4.4-the-internet-protocol.md",
     "4.4.md",
-    "4 Network Layer/4.3 Router.md",
     "4 Network Layer/4.4 The Internet Protocol.md",
     "4 Network Layer/4.2 Virtual Circuit and Datagram Networks.md",
     "4.4-the-internet.md",
@@ -241,7 +255,6 @@
     "Pasted image 20250919203112.png",
     "4.1.png",
     "Untitled.canvas",
-    "4.2.png",
     "Untitled.base",
     "4 Network Layer/4.4 The Internet Protocol",
     "4 Network Layer/4.2 Virtual Circuits and Datagram Networks",
