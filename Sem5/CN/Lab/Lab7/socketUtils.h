@@ -13,7 +13,7 @@
 
 
 #define PORT 10200
-#define IP "172.16.48.148"
+#define IP "172.16.48.61"
 
 struct msg {
     char name[1024];
