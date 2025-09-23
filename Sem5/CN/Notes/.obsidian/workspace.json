@@ -8,20 +8,6 @@
         "type": "tabs",
         "children": [
           {
-            "id": "a946fb6b942b1038",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "4 Network Layer/4.3 Router.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "4.3 Router"
-            }
-          },
-          {
             "id": "a23eea0fc16422dc",
             "type": "leaf",
             "state": {
@@ -34,45 +20,8 @@
               "icon": "lucide-file",
               "title": "4.3 Router"
             }
-          },
-          {
-            "id": "a9205cf8d84117de",
-            "type": "leaf",
-            "state": {
-              "type": "image",
-              "state": {
-                "file": "4.8.2.png"
-              },
-              "icon": "lucide-image",
-              "title": "4.8.2"
-            }
-          },
-          {
-            "id": "ecf5259f3d3878c3",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "4 Network Layer/4.4 The Internet Protocol.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "4.4 The Internet Protocol"
-            }
-          },
-          {
-            "id": "849e184e20147713",
-            "type": "leaf",
-            "state": {
-              "type": "empty",
-              "state": {},
-              "icon": "lucide-file",
-              "title": "New tab"
-            }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -129,8 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "right": {
     "id": "cfcce8c5abcb7e0d",
@@ -230,10 +178,12 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "a23eea0fc16422dc",
+  "active": "017a0a63790eb1e7",
   "lastOpenFiles": [
-    "4.8.2.png",
     "4 Network Layer/4.3 Router.md",
+    "conflict-files-obsidian-git.md",
+    "4.8.2.png",
+    "4.8.1.png",
     "4.7.png",
     "44-the-internet-protocol.md",
     "4.4-the-internet-protocol.md",
@@ -253,7 +203,6 @@
     "Untitled.md",
     "nas",
     "Pasted image 20250919203112.png",
-    "4.1.png",
     "Untitled.canvas",
     "Untitled.base",
     "4 Network Layer/4.4 The Internet Protocol",
