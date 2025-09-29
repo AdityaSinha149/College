@@ -4,3 +4,7 @@
 #include <semaphore.h>
 #include <unistd.h>
 #include <math.h>
+
+int main () {
+    
+}
