@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "896429957d88fe5f",
+        "id": "3a6632c8539dee3e",
         "type": "tabs",
         "children": [
           {
-            "id": "a23eea0fc16422dc",
+            "id": "70bc7824dde20d90",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -164,7 +164,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -178,31 +179,33 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "017a0a63790eb1e7",
+  "active": "70bc7824dde20d90",
   "lastOpenFiles": [
+    "4 Network Layer/images/4.11.png",
+    "4 Network Layer/images/4.10.png",
     "4 Network Layer/4.3 Router.md",
+    "4 Network Layer/4.2 Virtual Circuit and Datagram Networks.md",
+    "4 Network Layer/4.1 Introduction.md",
+    "4 Network Layer/images/ex2.png",
+    "4 Network Layer/images/4.1.png",
+    "4 Network Layer/images/4.2.png",
+    "4 Network Layer/images",
+    "4 Network Layer/images/4.6.png",
+    "Untitled",
+    "4 Network Layer/images/4.9.png",
     "conflict-files-obsidian-git.md",
-    "4.8.2.png",
-    "4.8.1.png",
-    "4.7.png",
+    "4 Network Layer/images/4.8.2.png",
+    "4 Network Layer/images/4.8.1.png",
+    "4 Network Layer/images/4.7.png",
     "44-the-internet-protocol.md",
     "4.4-the-internet-protocol.md",
     "4.4.md",
     "4 Network Layer/4.4 The Internet Protocol.md",
-    "4 Network Layer/4.2 Virtual Circuit and Datagram Networks.md",
     "4.4-the-internet.md",
     "4.4-the.md",
     "4.4 The.md",
-    "4 Network Layer/4.1 Introduction.md",
-    "4.6.png",
-    "ex2.png",
-    "ex1.png",
-    "4.3.png",
-    "4.4.png",
-    "4.5.png",
     "Untitled.md",
     "nas",
-    "Pasted image 20250919203112.png",
     "Untitled.canvas",
     "Untitled.base",
     "4 Network Layer/4.4 The Internet Protocol",
@@ -213,7 +216,6 @@
     "4 Network Layer",
     "2 Application Layer",
     "Welcome.md",
-    "1 Intro",
     "create a link.md"
   ]
 }
