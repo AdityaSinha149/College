@@ -1,56 +1,74 @@
-//q4
 #include <stdio.h>
+#include <stdlib.h>
 #include <pthread.h>
 #include <semaphore.h>
 #include <unistd.h>
 
-#define CHAIRS 3
+#define CHAIRS 3   // number of waiting chairs
 
-sem_t customers, barbers;
-pthread_mutex_t mutex;
-int waiting = 0;
+sem_t customers;   // counts waiting customers
+sem_t barbers;     // counts barber's availability
+pthread_mutex_t mutex;  // for mutual exclusion
+
+int waiting = 0;   // count of waiting customers
 
 void *barber(void *arg) {
     while (1) {
-        sem_wait(&customers);             // wait for customer
+        // wait for a customer
+        sem_wait(&customers);
+
+        // barber is ready
         pthread_mutex_lock(&mutex);
-        waiting--;                        // one customer goes to barber
+        waiting--;
+        printf("Barber is cutting hair... (waiting customers: %d)\n", waiting);
         pthread_mutex_unlock(&mutex);
-        sem_post(&barbers);               // barber ready
-        printf("Barber cutting hair\n");
-        sleep(2);                         // haircut time
+
+        sem_post(&barbers); // barber is now ready
+        sleep(5); // simulate haircut
     }
 }
 
 void *customer(void *arg) {
-    int id = *(int*)arg;
     pthread_mutex_lock(&mutex);
     if (waiting < CHAIRS) {
         waiting++;
-        printf("Customer %d waiting\n", id);
+        printf("Customer came and is waiting... (waiting customers: %d)\n", waiting);
         pthread_mutex_unlock(&mutex);
-        sem_post(&customers);             // notify barber
-        sem_wait(&barbers);               // wait for barber
-        printf("Customer %d getting haircut\n", id);
+
+        sem_post(&customers); // notify barber
+        sem_wait(&barbers);   // wait for barber
+        printf("Customer is getting a haircut.\n");
     } else {
-        printf("Customer %d left (no chair)\n", id);
+        // no chair, leave shop
+        printf("Customer left (no chair available).\n");
         pthread_mutex_unlock(&mutex);
     }
-    return 0;
+    return NULL;
 }
 
 int main() {
-    pthread_t b, c[5];
-    int id[5];
-    sem_init(&customers,0,0);
-    sem_init(&barbers,0,0);
-    pthread_mutex_init(&mutex,0);
+    pthread_t barberThread;
+    pthread_t custThread;
+    int id = 1;
 
-    pthread_create(&b,0,barber,0);
-    for(int i=0;i<5;i++){
-        id[i]=i+1;
-        pthread_create(&c[i],0,customer,&id[i]);
-        sleep(1); // customers arriving at different times
+    srand(time(NULL));
+
+    sem_init(&customers, 0, 0);
+    sem_init(&barbers, 0, 0);
+    pthread_mutex_init(&mutex, NULL);
+
+    pthread_create(&barberThread, NULL, barber, NULL);
+
+    // customers keep arriving randomly
+    while (1) {
+        sleep(rand() % 3 + 1);  // random interval between arrivals
+
+        pthread_create(&custThread, NULL, customer, NULL);
+        pthread_detach(custThread); // auto-cleanup, no need for join
+
+        id++;
     }
-    for(int i=0;i<5;i++) pthread_join(c[i],0);
+
+    pthread_join(barberThread, NULL);
+    return 0;
 }
