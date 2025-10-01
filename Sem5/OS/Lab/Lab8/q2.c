@@ -1,49 +1,123 @@
-//q2.c
 #include <stdio.h>
+#include <stdlib.h>
 #include <pthread.h>
-#include <semaphore.h>
 #include <unistd.h>
+#include <semaphore.h>
+#include <time.h>
 
-sem_t wrt;
-pthread_mutex_t mutex;
-int readcount = 0, data = 0;
+// Shared semaphores
+sem_t mutex;        // Protects read_count
+sem_t rw_mutex;     // Ensures writer exclusivity
+sem_t queue_mutex;  // Protects writer_waiting
 
+int read_count = 0;       // Active readers
+int writer_waiting = 0;   // Writers waiting in queue
+
+// ---------------- Reader ----------------
 void *reader(void *arg) {
-    int id = *(int*)arg;
-    while (1) {
-        pthread_mutex_lock(&mutex);
-        if (++readcount == 1) sem_wait(&wrt);
-        pthread_mutex_unlock(&mutex);
+    int id = *(int *)arg;
+    free(arg);
 
-        printf("Reader %d read: %d\n", id, data);
-
-        pthread_mutex_lock(&mutex);
-        if (--readcount == 0) sem_post(&wrt);
-        pthread_mutex_unlock(&mutex);
-
-        sleep(1);
+    // Check if writer is waiting
+    sem_wait(&queue_mutex);
+    if (writer_waiting > 0) {
+        printf("[Reader %d] Declined (writer waiting)\n", id);
+        sem_post(&queue_mutex);
+        return NULL;
     }
+    sem_post(&queue_mutex);
+
+    // Entry section
+    sem_wait(&mutex);
+    read_count++;
+    if (read_count == 1)
+        sem_wait(&rw_mutex);
+    sem_post(&mutex);
+
+    // Reading
+    printf("[Reader %d] Reading...\n", id);
+    sleep(2);
+    printf("[Reader %d] Finished Reading\n", id);
+
+    // Exit section
+    sem_wait(&mutex);
+    read_count--;
+    if (read_count == 0)
+        sem_post(&rw_mutex);
+    sem_post(&mutex);
+
+    return NULL;
 }
 
+/// ---------------- Writer ----------------
 void *writer(void *arg) {
-    int id = *(int*)arg;
-    while (1) {
-        sem_wait(&wrt);
-        printf("Writer %d wrote: %d\n", id, ++data);
-        sem_post(&wrt);
-        sleep(2);
-    }
+    int id = *(int *)arg;
+    free(arg);
+
+    // Indicate writer wants to enter
+    sem_wait(&queue_mutex);
+    writer_waiting++;
+    printf("[Writer %d] Joined writing queue (waiting writers = %d)\n", id, writer_waiting);
+    sem_post(&queue_mutex);
+
+    // Entry section
+    sem_wait(&rw_mutex);
+
+    // Writing
+    printf("[Writer %d] Writing...\n", id);
+    sleep(1);
+    printf("[Writer %d] Finished Writing\n", id);
+
+    // Done
+    sem_wait(&queue_mutex);
+    writer_waiting--;
+    sem_post(&queue_mutex);
+
+    sem_post(&rw_mutex);
+
+    return NULL;
 }
 
+// ---------------- Manager Thread ----------------
+void *manager(void *arg) {
+    int i = 0;
+    while (1) {
+        pthread_t tid;
+        int *id = malloc(sizeof(int));
+        *id = ++i;
+
+        int choice = rand() % 2; // 0 = reader, 1 = writer
+        if (choice == 0) {
+            pthread_create(&tid, NULL, reader, id);
+            pthread_detach(tid); // auto cleanup
+        } else {
+            if(rand()%2 == 1) continue;
+            pthread_create(&tid, NULL, writer, id);
+            pthread_detach(tid);
+        }
+
+        sleep(rand() % 3 + 1); // Wait 1–3 sec before next thread
+    }
+    return NULL;
+}
+
+// ---------------- Main ----------------
 int main() {
-    pthread_t r[3], w[2];
-    int id[5];
-    sem_init(&wrt,0,1);
-    pthread_mutex_init(&mutex,0);
+    srand(time(NULL));
 
-    for(int i=0;i<3;i++){ id[i]=i+1; pthread_create(&r[i],0,reader,&id[i]); }
-    for(int i=0;i<2;i++){ id[3+i]=i+1; pthread_create(&w[i],0,writer,&id[3+i]); }
+    // Init semaphores
+    sem_init(&mutex, 0, 1);
+    sem_init(&rw_mutex, 0, 1);
+    sem_init(&queue_mutex, 0, 1);
 
-    for(int i=0;i<3;i++) pthread_join(r[i],0);
-    for(int i=0;i<2;i++) pthread_join(w[i],0);
+    pthread_t mgr;
+    pthread_create(&mgr, NULL, manager, NULL);
+    pthread_join(mgr, NULL);
+
+    // Cleanup (never reached)
+    sem_destroy(&mutex);
+    sem_destroy(&rw_mutex);
+    sem_destroy(&queue_mutex);
+
+    return 0;
 }
