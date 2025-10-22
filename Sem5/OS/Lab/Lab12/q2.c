@@ -43,3 +43,14 @@ int main() {
     listFiles(".");
     return 0;
 }
+
+// ./a1.c
+// ./q1.c
+// ./q2.c
+// ./q3.png
+// ./q3.sh
+// ./q4.png
+// ./q4.sh
+// ./a1
+// ./q1
+// ./q2
