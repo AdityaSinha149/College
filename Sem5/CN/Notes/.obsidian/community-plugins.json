@@ -1,5 +1,7 @@
 [
   "obsidian-advanced-new-file",
   "obsidian-git",
-  "editing-toolbar"
+  "editing-toolbar",
+  "obsidian-frontmatter-tag-suggest",
+  "github-copilot"
 ]
