@@ -32,3 +32,15 @@ int main(){
     }
     closedir(d);
 }
+
+
+// -rw-r--r--  1 sinhaa sinhaa   1417 Oct 22 18:37 a1.c
+// -rw-r--r--  1 sinhaa sinhaa   1064 Oct 22 18:37 q1.c
+// -rw-r--r--  1 sinhaa sinhaa    977 Oct 22 18:37 q2.c
+// -rw-r--r--  1 sinhaa sinhaa 196272 Oct 22 18:37 q3.png
+// -rw-r--r--  1 sinhaa sinhaa     20 Oct 22 18:37 q3.sh
+// -rw-r--r--  1 sinhaa sinhaa 111557 Oct 22 18:37 q4.png
+// -rw-r--r--  1 sinhaa sinhaa      7 Oct 22 18:37 q4.sh
+// -rwxr-xr-x  1 sinhaa sinhaa  12976 Oct 22 18:38 a1
+// -rwxr-xr-x  1 sinhaa sinhaa  16408 Oct 22 18:38 q1
+// -rwxr-xr-x  1 sinhaa sinhaa  16352 Oct 22 18:38 q2
