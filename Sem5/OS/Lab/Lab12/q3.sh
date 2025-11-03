@@ -1,1 +1,1 @@
-apt list --installed
+dnf list --installed

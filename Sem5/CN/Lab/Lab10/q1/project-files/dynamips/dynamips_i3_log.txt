@@ -1,0 +1,39 @@
+Nov 03 00:37:16.466 HYPERVISOR: Release 0.2.23-amd64/Linux (tag 2023010200)
+Nov 03 00:37:16.466 HYPERVISOR: Started on IP = 127.0.0.1, TCP port = 44063.
+Nov 03 00:37:16.475 HYPERVISOR: exec_cmd: hypervisor version 
+Nov 03 00:37:16.475 HYPERVISOR: exec_cmd: hypervisor working_dir /home/sinhaa/Desktop/College/Sem5/CN/Lab/Lab10/q1/project-files/dynamips 
+Nov 03 00:37:16.475 GENERAL: working_dir=/home/sinhaa/Desktop/College/Sem5/CN/Lab/Lab10/q1/project-files/dynamips
+Nov 03 00:37:16.476 HYPERVISOR: exec_cmd: hypervisor working_dir /home/sinhaa/Desktop/College/Sem5/CN/Lab/Lab10/q1/project-files/dynamips/cdb47540-1147-44a5-a1a2-17ea0f831244 
+Nov 03 00:37:16.476 GENERAL: working_dir=/home/sinhaa/Desktop/College/Sem5/CN/Lab/Lab10/q1/project-files/dynamips/cdb47540-1147-44a5-a1a2-17ea0f831244
+Nov 03 00:37:16.476 HYPERVISOR: exec_cmd: vm create R3 3 c3745 
+Nov 03 00:37:16.476 VM: VM R3 created.
+Nov 03 00:37:16.476 HYPERVISOR: exec_cmd: vm set_con_tcp_port R3 5002 
+Nov 03 00:37:16.476 HYPERVISOR: exec_cmd: c3745 get_mac_addr R3 
+Nov 03 00:37:16.476 HYPERVISOR: exec_cmd: vm set_disk0 R3 0 
+Nov 03 00:37:16.476 HYPERVISOR: exec_cmd: vm get_status R3 
+Nov 03 00:37:16.476 HYPERVISOR: exec_cmd: vm set_idle_pc R3 0x60a80f7c 
+Nov 03 00:37:16.477 HYPERVISOR: exec_cmd: vm set_ios R3 /home/sinhaa/GNS3/images/IOS/c3745-advipservicesk9-mz.124-25d.image 
+Nov 03 00:37:16.477 HYPERVISOR: exec_cmd: c3745 set_mac_addr R3 c403.045f.0000 
+Nov 03 00:37:16.477 HYPERVISOR: exec_cmd: vm set_nvram R3 256 
+Nov 03 00:37:16.477 HYPERVISOR: exec_cmd: vm set_ram R3 256 
+Nov 03 00:37:16.477 HYPERVISOR: exec_cmd: vm get_status R3 
+Nov 03 00:37:16.477 HYPERVISOR: exec_cmd: vm slot_add_binding R3 1 0 NM-1FE-TX 
+Nov 03 00:37:16.477 HYPERVISOR: exec_cmd: vm get_status R3 
+Nov 03 00:37:16.478 HYPERVISOR: exec_cmd: vm slot_add_binding R3 2 0 NM-4T 
+Nov 03 00:37:16.478 HYPERVISOR: exec_cmd: vm get_status R3 
+Nov 03 00:37:16.478 HYPERVISOR: exec_cmd: vm slot_add_binding R3 3 0 NM-16ESW 
+Nov 03 00:37:16.478 HYPERVISOR: exec_cmd: vm get_status R3 
+Nov 03 00:37:16.478 HYPERVISOR: exec_cmd: vm slot_add_binding R3 0 16 WIC-1T 
+Nov 03 00:37:16.478 HYPERVISOR: exec_cmd: vm get_status R3 
+Nov 03 00:37:16.478 HYPERVISOR: exec_cmd: vm slot_add_binding R3 0 32 WIC-2T 
+Nov 03 00:37:17.031 HYPERVISOR: exec_cmd: nio create_udp udp-5907a5e0-5628-4337-ba1a-042af6ea6e32 10010 127.0.0.1 10011 
+Nov 03 00:37:17.236 HYPERVISOR: exec_cmd: vm slot_add_nio_binding R3 0 0 udp-5907a5e0-5628-4337-ba1a-042af6ea6e32 
+Nov 03 00:37:17.236 HYPERVISOR: exec_cmd: vm get_status R3 
+Nov 03 00:37:17.513 HYPERVISOR: exec_cmd: nio create_udp udp-51adc803-2da3-457d-8ed4-4777d8588573 10032 127.0.0.1 10033 
+Nov 03 00:37:17.514 HYPERVISOR: exec_cmd: vm slot_add_nio_binding R3 0 1 udp-51adc803-2da3-457d-8ed4-4777d8588573 
+Nov 03 00:37:17.514 HYPERVISOR: exec_cmd: vm get_status R3 
+Nov 03 00:37:20.797 HYPERVISOR: exec_cmd: vm set_ghost_status R3 2 
+Nov 03 00:37:20.798 HYPERVISOR: exec_cmd: vm set_ghost_file R3 /home/sinhaa/Desktop/College/Sem5/CN/Lab/Lab10/q1/project-files/dynamips/c3745-advipservicesk9-mz.124-25d.image-256.ghost 
+Nov 03 00:37:20.798 HYPERVISOR: exec_cmd: vm get_status R3 
+Nov 03 00:37:20.798 HYPERVISOR: exec_cmd: vm set_config R3 configs/i3_startup-config.cfg 
+Nov 03 00:37:20.798 HYPERVISOR: exec_cmd: vm start R3 

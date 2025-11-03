@@ -78,8 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "right": {
     "id": "cfcce8c5abcb7e0d",
@@ -192,9 +191,10 @@
   },
   "active": "13d61867495a711b",
   "lastOpenFiles": [
+    "Untitled.canvas",
+    "4 Network Layer/4.4 The Internet Protocol.md",
     "Pasted image 20251016151747.png",
     "4 Network Layer/4.5 Routing Algorithms.md",
-    "4 Network Layer/4.4 The Internet Protocol.md",
     "4 Network Layer/4.5 Routing Algorithms",
     "4 Network Layer/images/ex1.png",
     "4 Network Layer/images/ex3.png",
@@ -208,7 +208,6 @@
     "4 Network Layer/4.1 Introduction.md",
     "4 Network Layer/images/ex2.png",
     "4 Network Layer/images/4.1.png",
-    "4 Network Layer/images/4.2.png",
     "4 Network Layer/images",
     "conflict-files-obsidian-git.md",
     "44-the-internet-protocol.md",
@@ -218,7 +217,6 @@
     "4.4-the.md",
     "4.4 The.md",
     "nas",
-    "Untitled.canvas",
     "Untitled.base",
     "4 Network Layer/4.4 The Internet Protocol",
     "4 Network Layer/4.2 Virtual Circuits and Datagram Networks",

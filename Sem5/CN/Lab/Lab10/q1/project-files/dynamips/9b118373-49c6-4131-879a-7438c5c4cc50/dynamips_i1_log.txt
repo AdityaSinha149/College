@@ -1,0 +1,37 @@
+Nov 02 05:21:20.631 HYPERVISOR: Release 0.2.23-amd64/Linux (tag 2023010200)
+Nov 02 05:21:20.631 HYPERVISOR: Started on IP = 127.0.0.1, TCP port = 44423.
+Nov 02 05:21:20.632 HYPERVISOR: exec_cmd: hypervisor version 
+Nov 02 05:21:20.632 HYPERVISOR: exec_cmd: hypervisor working_dir /home/sinhaa/Desktop/College/Sem5/CN/Lab/Lab10/q1/project-files/dynamips 
+Nov 02 05:21:20.632 GENERAL: working_dir=/home/sinhaa/Desktop/College/Sem5/CN/Lab/Lab10/q1/project-files/dynamips
+Nov 02 05:21:20.632 HYPERVISOR: exec_cmd: hypervisor working_dir /home/sinhaa/Desktop/College/Sem5/CN/Lab/Lab10/q1/project-files/dynamips/9b118373-49c6-4131-879a-7438c5c4cc50 
+Nov 02 05:21:20.632 GENERAL: working_dir=/home/sinhaa/Desktop/College/Sem5/CN/Lab/Lab10/q1/project-files/dynamips/9b118373-49c6-4131-879a-7438c5c4cc50
+Nov 02 05:21:20.633 HYPERVISOR: exec_cmd: vm create R1 1 c3745 
+Nov 02 05:21:20.633 VM: VM R1 created.
+Nov 02 05:21:20.633 HYPERVISOR: exec_cmd: vm set_con_tcp_port R1 5000 
+Nov 02 05:21:20.633 HYPERVISOR: exec_cmd: c3745 get_mac_addr R1 
+Nov 02 05:21:20.633 HYPERVISOR: exec_cmd: vm set_ios R1 /home/sinhaa/GNS3/images/IOS/c3745-advipservicesk9-mz.124-25d.image 
+Nov 02 05:21:20.633 HYPERVISOR: exec_cmd: vm get_status R1 
+Nov 02 05:21:20.633 HYPERVISOR: exec_cmd: vm set_idle_pc R1 0x60a80f7c 
+Nov 02 05:21:20.634 HYPERVISOR: exec_cmd: vm set_ram R1 256 
+Nov 02 05:21:20.634 HYPERVISOR: exec_cmd: vm set_nvram R1 256 
+Nov 02 05:21:20.634 HYPERVISOR: exec_cmd: vm set_disk0 R1 0 
+Nov 02 05:21:20.634 HYPERVISOR: exec_cmd: vm get_status R1 
+Nov 02 05:21:20.634 HYPERVISOR: exec_cmd: vm slot_add_binding R1 1 0 NM-1FE-TX 
+Nov 02 05:21:20.634 HYPERVISOR: exec_cmd: vm get_status R1 
+Nov 02 05:21:20.634 HYPERVISOR: exec_cmd: vm slot_add_binding R1 2 0 NM-4T 
+Nov 02 05:21:20.634 HYPERVISOR: exec_cmd: vm get_status R1 
+Nov 02 05:21:20.634 HYPERVISOR: exec_cmd: vm slot_add_binding R1 3 0 NM-16ESW 
+Nov 02 05:21:20.635 HYPERVISOR: exec_cmd: vm get_status R1 
+Nov 02 05:21:20.635 HYPERVISOR: exec_cmd: vm slot_add_binding R1 0 16 WIC-1T 
+Nov 02 05:21:20.635 HYPERVISOR: exec_cmd: vm get_status R1 
+Nov 02 05:21:20.635 HYPERVISOR: exec_cmd: vm slot_add_binding R1 0 32 WIC-2T 
+Nov 02 05:21:20.668 HYPERVISOR: exec_cmd: vm set_ios R1 /home/sinhaa/GNS3/images/IOS/c3745-advipservicesk9-mz.124-25d.image 
+Nov 02 05:22:33.918 HYPERVISOR: exec_cmd: nio create_udp udp-61bebb1d-50b7-4d2b-b491-2e00da0ab3f3 10002 127.0.0.1 10003 
+Nov 02 05:22:34.123 HYPERVISOR: exec_cmd: vm slot_add_nio_binding R1 0 0 udp-61bebb1d-50b7-4d2b-b491-2e00da0ab3f3 
+Nov 02 05:22:34.123 HYPERVISOR: exec_cmd: vm get_status R1 
+Nov 02 05:23:00.202 HYPERVISOR: exec_cmd: nio create_udp udp-b73d1bf1-a3b0-4c4e-a875-7133f0a849a1 10014 127.0.0.1 10015 
+Nov 02 05:23:00.203 HYPERVISOR: exec_cmd: vm slot_add_nio_binding R1 0 1 udp-b73d1bf1-a3b0-4c4e-a875-7133f0a849a1 
+Nov 02 05:23:00.203 HYPERVISOR: exec_cmd: vm get_status R1 
+Nov 02 05:23:07.945 HYPERVISOR: exec_cmd: nio create_udp udp-827a17a1-16ac-4b0f-8610-3f9ae67aad9b 10018 127.0.0.1 10019 
+Nov 02 05:23:07.945 HYPERVISOR: exec_cmd: vm slot_add_nio_binding R1 1 0 udp-827a17a1-16ac-4b0f-8610-3f9ae67aad9b 
+Nov 02 05:23:07.945 HYPERVISOR: exec_cmd: vm get_status R1 
