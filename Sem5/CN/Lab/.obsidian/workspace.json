@@ -1,0 +1,177 @@
+{
+  "main": {
+    "id": "5889be7b01b581f5",
+    "type": "split",
+    "children": [
+      {
+        "id": "210ed728b5e62bad",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "9ea35c3888c908a1",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "GNS3-PacketTracher.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "GNS3-PacketTracher"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "8d46a94298200068",
+    "type": "split",
+    "children": [
+      {
+        "id": "87602de8b2de1003",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "c821f6dc262ebb09",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "d493442b9fe91f75",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "f4ae3610ef40f073",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "a01b3023c6dd9c9e",
+    "type": "split",
+    "children": [
+      {
+        "id": "1e7e27d616bf22be",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "2dc9e52c2f93c542",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "GNS3-PacketTracher.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for GNS3-PacketTracher"
+            }
+          },
+          {
+            "id": "d4d0b8995139ab73",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "GNS3-PacketTracher.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from GNS3-PacketTracher"
+            }
+          },
+          {
+            "id": "c4711ad96bb753be",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "2c803d8f5fb9cbea",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "GNS3-PacketTracher.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline of GNS3-PacketTracher"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false
+    }
+  },
+  "active": "9ea35c3888c908a1",
+  "lastOpenFiles": [
+    "Lab Manual CSE 3143 Computer Networks - Version 1.pdf",
+    "GNS3-PacketTracher.md"
+  ]
+}
