@@ -1,5 +1,5 @@
 - ?, help is the man of gns3
-# PC
+[]()# PC
 ```bash
 > ip <ip-address>/<subnet> <gateway-address>
 ```

@@ -1,0 +1,26 @@
+Nov 03 07:33:38.419 HYPERVISOR: Release 0.2.23-amd64/Linux (tag 2023010200)
+Nov 03 07:33:38.419 HYPERVISOR: Started on IP = 127.0.0.1, TCP port = 47477.
+Nov 03 07:33:38.427 HYPERVISOR: exec_cmd: hypervisor version 
+Nov 03 07:33:38.427 HYPERVISOR: exec_cmd: hypervisor working_dir /home/sinhaa/Desktop/College/Sem5/CN/Lab/Lab10/q1/project-files/dynamips 
+Nov 03 07:33:38.427 GENERAL: working_dir=/home/sinhaa/Desktop/College/Sem5/CN/Lab/Lab10/q1/project-files/dynamips
+Nov 03 07:33:38.427 HYPERVISOR: exec_cmd: ethsw create Switch1 
+Nov 03 07:33:39.240 HYPERVISOR: exec_cmd: nio create_udp udp-e2c31e32-891c-48a1-8114-ecb4990c8ca7 10013 127.0.0.1 10012 
+Nov 03 07:33:39.240 HYPERVISOR: exec_cmd: ethsw add_nio Switch1 udp-e2c31e32-891c-48a1-8114-ecb4990c8ca7 
+Nov 03 07:33:39.242 HYPERVISOR: exec_cmd: ethsw set_access_port Switch1 udp-e2c31e32-891c-48a1-8114-ecb4990c8ca7 1 
+Nov 03 07:33:39.309 HYPERVISOR: exec_cmd: nio create_udp udp-a4224dee-edb6-487e-8a83-3c821ba5f513 10020 127.0.0.1 10021 
+Nov 03 07:33:39.309 HYPERVISOR: exec_cmd: ethsw add_nio Switch1 udp-a4224dee-edb6-487e-8a83-3c821ba5f513 
+Nov 03 07:33:39.323 HYPERVISOR: exec_cmd: ethsw set_access_port Switch1 udp-a4224dee-edb6-487e-8a83-3c821ba5f513 1 
+Nov 03 07:33:39.437 HYPERVISOR: exec_cmd: nio create_udp udp-d2a4b8b6-cce8-40cc-9d15-ec8b7a7ca91a 10026 127.0.0.1 10027 
+Nov 03 07:33:39.437 HYPERVISOR: exec_cmd: ethsw add_nio Switch1 udp-d2a4b8b6-cce8-40cc-9d15-ec8b7a7ca91a 
+Nov 03 07:33:39.443 HYPERVISOR: exec_cmd: ethsw set_access_port Switch1 udp-d2a4b8b6-cce8-40cc-9d15-ec8b7a7ca91a 1 
+Nov 03 07:39:18.900 HYPERVISOR: exec_cmd: nio bind_filter udp-a4224dee-edb6-487e-8a83-3c821ba5f513 2 capture 
+Nov 03 07:39:18.901 HYPERVISOR: exec_cmd: nio setup_filter udp-a4224dee-edb6-487e-8a83-3c821ba5f513 2 en10mb /home/sinhaa/Desktop/College/Sem5/CN/Lab/Lab10/q1/project-files/captures/Switch1_Ethernet1_to_PC1_Ethernet0.pcap 
+Nov 03 07:40:59.869 HYPERVISOR: exec_cmd: nio unbind_filter udp-a4224dee-edb6-487e-8a83-3c821ba5f513 2 
+Nov 03 07:41:13.134 HYPERVISOR: exec_cmd: nio bind_filter udp-a4224dee-edb6-487e-8a83-3c821ba5f513 2 capture 
+Nov 03 07:41:13.134 HYPERVISOR: exec_cmd: nio setup_filter udp-a4224dee-edb6-487e-8a83-3c821ba5f513 2 en10mb /home/sinhaa/Desktop/College/Sem5/CN/Lab/Lab10/q1/project-files/captures/Switch1_Ethernet1_to_PC1_Ethernet0.pcap 
+Nov 03 07:41:25.981 HYPERVISOR: exec_cmd: nio bind_filter udp-e2c31e32-891c-48a1-8114-ecb4990c8ca7 2 capture 
+Nov 03 07:41:25.981 HYPERVISOR: exec_cmd: nio setup_filter udp-e2c31e32-891c-48a1-8114-ecb4990c8ca7 2 en10mb /home/sinhaa/Desktop/College/Sem5/CN/Lab/Lab10/q1/project-files/captures/R1_FastEthernet01_to_Switch1_Ethernet0.pcap 
+Nov 03 07:42:54.279 HYPERVISOR: exec_cmd: nio unbind_filter udp-a4224dee-edb6-487e-8a83-3c821ba5f513 2 
+Nov 03 07:43:47.809 HYPERVISOR: exec_cmd: nio unbind_filter udp-e2c31e32-891c-48a1-8114-ecb4990c8ca7 2 
+Nov 03 07:43:53.975 HYPERVISOR: exec_cmd: nio bind_filter udp-e2c31e32-891c-48a1-8114-ecb4990c8ca7 2 capture 
+Nov 03 07:43:53.976 HYPERVISOR: exec_cmd: nio setup_filter udp-e2c31e32-891c-48a1-8114-ecb4990c8ca7 2 en10mb /home/sinhaa/Desktop/College/Sem5/CN/Lab/Lab10/q1/project-files/captures/R1_FastEthernet01_to_Switch1_Ethernet0.pcap 

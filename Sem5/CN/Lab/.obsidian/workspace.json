@@ -171,7 +171,17 @@
   },
   "active": "9ea35c3888c908a1",
   "lastOpenFiles": [
-    "Lab Manual CSE 3143 Computer Networks - Version 1.pdf",
+    "Lab10/q1.zip",
+    "Lab10/q1/project-files/captures/R1_FastEthernet01_to_Switch1_Ethernet0.pcap",
+    "Lab10/q1/project-files/captures/Switch1_Ethernet1_to_PC1_Ethernet0.pcap",
+    "Lab10/q1/project-files/captures",
+    "Lab10/q1/project-files/dynamips/0f5e575f-bbcb-43f1-ae87-efb614a90fcb/c3745_i2_rommon_vars",
+    "Lab10/q1/project-files/dynamips/cdb47540-1147-44a5-a1a2-17ea0f831244/c3745_i3_rommon_vars",
+    "Lab10/q1/project-files/dynamips/9b118373-49c6-4131-879a-7438c5c4cc50/c3745_i1_rommon_vars",
+    "Lab10/q1/project-files/vpcs/614572b8-e0e3-4db2-922b-45bca7b171c0/ubridge.log",
+    "Lab10/q1/project-files/vpcs/ca115098-8473-448d-b9c4-30eca1496ef7/ubridge.log",
+    "Lab10/q1/project-files/vpcs/bbbdd912-ba33-4e58-87c7-8013c1df797a/ubridge.log",
+    "Lab10/q1/project-files/vpcs/8b8e06c8-4f25-43be-abba-b65196235feb/ubridge.log",
     "GNS3-PacketTracher.md"
   ]
 }

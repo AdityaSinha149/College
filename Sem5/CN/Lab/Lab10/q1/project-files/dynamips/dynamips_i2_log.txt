@@ -1,0 +1,54 @@
+Nov 03 07:33:38.351 HYPERVISOR: Release 0.2.23-amd64/Linux (tag 2023010200)
+Nov 03 07:33:38.352 HYPERVISOR: Started on IP = 127.0.0.1, TCP port = 55333.
+Nov 03 07:33:38.360 HYPERVISOR: exec_cmd: hypervisor version 
+Nov 03 07:33:38.360 HYPERVISOR: exec_cmd: hypervisor working_dir /home/sinhaa/Desktop/College/Sem5/CN/Lab/Lab10/q1/project-files/dynamips 
+Nov 03 07:33:38.360 GENERAL: working_dir=/home/sinhaa/Desktop/College/Sem5/CN/Lab/Lab10/q1/project-files/dynamips
+Nov 03 07:33:38.360 HYPERVISOR: exec_cmd: hypervisor working_dir /home/sinhaa/Desktop/College/Sem5/CN/Lab/Lab10/q1/project-files/dynamips/0f5e575f-bbcb-43f1-ae87-efb614a90fcb 
+Nov 03 07:33:38.360 GENERAL: working_dir=/home/sinhaa/Desktop/College/Sem5/CN/Lab/Lab10/q1/project-files/dynamips/0f5e575f-bbcb-43f1-ae87-efb614a90fcb
+Nov 03 07:33:38.360 HYPERVISOR: exec_cmd: vm create R2 2 c3745 
+Nov 03 07:33:38.360 VM: VM R2 created.
+Nov 03 07:33:38.360 HYPERVISOR: exec_cmd: vm set_con_tcp_port R2 5001 
+Nov 03 07:33:38.360 HYPERVISOR: exec_cmd: c3745 get_mac_addr R2 
+Nov 03 07:33:38.361 HYPERVISOR: exec_cmd: vm set_disk0 R2 0 
+Nov 03 07:33:38.361 HYPERVISOR: exec_cmd: vm get_status R2 
+Nov 03 07:33:38.361 HYPERVISOR: exec_cmd: vm set_idle_pc R2 0x60a80f7c 
+Nov 03 07:33:38.361 HYPERVISOR: exec_cmd: vm set_ios R2 /home/sinhaa/GNS3/images/IOS/c3745-advipservicesk9-mz.124-25d.image 
+Nov 03 07:33:38.362 HYPERVISOR: exec_cmd: c3745 set_mac_addr R2 c402.0442.0000 
+Nov 03 07:33:38.362 HYPERVISOR: exec_cmd: vm set_nvram R2 256 
+Nov 03 07:33:38.362 HYPERVISOR: exec_cmd: vm set_ram R2 256 
+Nov 03 07:33:38.362 HYPERVISOR: exec_cmd: vm get_status R2 
+Nov 03 07:33:38.362 HYPERVISOR: exec_cmd: vm slot_add_binding R2 1 0 NM-1FE-TX 
+Nov 03 07:33:38.363 HYPERVISOR: exec_cmd: vm get_status R2 
+Nov 03 07:33:38.363 HYPERVISOR: exec_cmd: vm slot_add_binding R2 2 0 NM-4T 
+Nov 03 07:33:38.363 HYPERVISOR: exec_cmd: vm get_status R2 
+Nov 03 07:33:38.363 HYPERVISOR: exec_cmd: vm slot_add_binding R2 3 0 NM-16ESW 
+Nov 03 07:33:38.363 HYPERVISOR: exec_cmd: vm get_status R2 
+Nov 03 07:33:38.363 HYPERVISOR: exec_cmd: vm slot_add_binding R2 0 16 WIC-1T 
+Nov 03 07:33:38.363 HYPERVISOR: exec_cmd: vm get_status R2 
+Nov 03 07:33:38.363 HYPERVISOR: exec_cmd: vm slot_add_binding R2 0 32 WIC-2T 
+Nov 03 07:33:38.738 HYPERVISOR: exec_cmd: nio create_udp udp-7669e1be-c57a-404c-94bc-414de6a816d0 10004 127.0.0.1 10005 
+Nov 03 07:33:38.952 HYPERVISOR: exec_cmd: vm slot_add_nio_binding R2 0 0 udp-7669e1be-c57a-404c-94bc-414de6a816d0 
+Nov 03 07:33:38.953 HYPERVISOR: exec_cmd: vm get_status R2 
+Nov 03 07:33:38.982 HYPERVISOR: exec_cmd: nio create_udp udp-a70894de-da4f-41c0-b5ff-29395a2a3966 10008 127.0.0.1 10009 
+Nov 03 07:33:38.983 HYPERVISOR: exec_cmd: vm slot_add_nio_binding R2 0 1 udp-a70894de-da4f-41c0-b5ff-29395a2a3966 
+Nov 03 07:33:38.983 HYPERVISOR: exec_cmd: vm get_status R2 
+Nov 03 07:37:59.326 HYPERVISOR: exec_cmd: vm create Ghost 0 c3745 
+Nov 03 07:37:59.326 VM: VM Ghost created.
+Nov 03 07:37:59.326 HYPERVISOR: exec_cmd: vm set_ios Ghost /home/sinhaa/GNS3/images/IOS/c3745-advipservicesk9-mz.124-25d.image 
+Nov 03 07:37:59.327 HYPERVISOR: exec_cmd: vm set_ghost_status Ghost 1 
+Nov 03 07:37:59.327 HYPERVISOR: exec_cmd: vm set_ghost_file Ghost /home/sinhaa/Desktop/College/Sem5/CN/Lab/Lab10/q1/project-files/dynamips/c3745-advipservicesk9-mz.124-25d.image-256.ghost 
+Nov 03 07:37:59.327 HYPERVISOR: exec_cmd: vm set_ram Ghost 256 
+Nov 03 07:37:59.327 HYPERVISOR: exec_cmd: vm get_status Ghost 
+Nov 03 07:37:59.328 HYPERVISOR: exec_cmd: vm set_config Ghost configs/i0_startup-config.cfg 
+Nov 03 07:37:59.328 HYPERVISOR: exec_cmd: vm start Ghost 
+Nov 03 07:37:59.637 HYPERVISOR: exec_cmd: vm get_status Ghost 
+Nov 03 07:37:59.638 HYPERVISOR: exec_cmd: vm stop Ghost 
+Nov 03 07:37:59.742 VM: VM Ghost shutdown.
+Nov 03 07:37:59.743 HYPERVISOR: exec_cmd: vm extract_config Ghost 
+Nov 03 07:37:59.744 HYPERVISOR: exec_cmd: vm clean_delete Ghost 
+Nov 03 07:37:59.744 VM: VM Ghost destroyed.
+Nov 03 07:37:59.746 HYPERVISOR: exec_cmd: vm set_ghost_status R2 2 
+Nov 03 07:37:59.746 HYPERVISOR: exec_cmd: vm set_ghost_file R2 /home/sinhaa/Desktop/College/Sem5/CN/Lab/Lab10/q1/project-files/dynamips/c3745-advipservicesk9-mz.124-25d.image-256.ghost 
+Nov 03 07:37:59.747 HYPERVISOR: exec_cmd: vm get_status R2 
+Nov 03 07:37:59.747 HYPERVISOR: exec_cmd: vm set_config R2 configs/i2_startup-config.cfg 
+Nov 03 07:37:59.748 HYPERVISOR: exec_cmd: vm start R2 
