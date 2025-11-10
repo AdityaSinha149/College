@@ -1,6 +1,6 @@
 # **Basics**
 
-### 📚 Header Files
+### Header Files
 ```c
 #include <stdio.h>      // Basic input/output
 #include <stdlib.h>     // exit(), malloc(), etc.
@@ -9,7 +9,7 @@
 #include <sys/wait.h>   // wait() function
 ```
 
-### ⚙️ Important Functions
+### Important Functions
 | Function    | Purpose                                        |
 | ----------- | ---------------------------------------------- |
 | `getpid()`  | Returns the current process ID.                |
@@ -19,7 +19,7 @@
 | `exec()`    | Replaces the current program with another.     |
 | `exit()`    | Terminates the current process.                |
 
-### 💡 Example – `fork()` and `wait()`
+### Example – `fork()` and `wait()`
 ```c
 int main() {
     pid_t pid = fork();
