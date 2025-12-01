@@ -112,7 +112,7 @@ This shows two separate programs communicating through a named FIFO.
 
 ---
 
-## ** Message Queues**
+## **Message Queues**
 
 ### Headers for Message Queues
 ```c
