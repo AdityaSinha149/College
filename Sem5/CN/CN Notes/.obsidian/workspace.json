@@ -1,0 +1,243 @@
+{
+  "main": {
+    "id": "3bbb2d306e462973",
+    "type": "split",
+    "children": [
+      {
+        "id": "3a6632c8539dee3e",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "13d61867495a711b",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "4 Network Layer/4.4 The Internet Protocol.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "4.4 The Internet Protocol"
+            }
+          },
+          {
+            "id": "32d220012e670dfc",
+            "type": "leaf",
+            "state": {
+              "type": "image",
+              "state": {
+                "file": "4 Network Layer/images/4.21.png"
+              },
+              "icon": "lucide-image",
+              "title": "4.21"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "a3cab3949d4af32b",
+    "type": "split",
+    "children": [
+      {
+        "id": "d10af35b5d971f91",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "4398cce2c704826d",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "394ab0406919dd6b",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "ff37b5a7c3f4ebf0",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "cfcce8c5abcb7e0d",
+    "type": "split",
+    "children": [
+      {
+        "id": "5a27d1436b273a86",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "0b4788e2be164bf7",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks"
+            }
+          },
+          {
+            "id": "d34e49054591b034",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links"
+            }
+          },
+          {
+            "id": "c569d27cb7082558",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "633bcfe1a38101b3",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "4 Network Layer/4.2 Virtual Circuit and Datagram Networks.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline of 4.2 Virtual Circuit and Datagram Networks"
+            }
+          },
+          {
+            "id": "017a0a63790eb1e7",
+            "type": "leaf",
+            "state": {
+              "type": "git-view",
+              "state": {},
+              "icon": "git-pull-request",
+              "title": "Source Control"
+            }
+          },
+          {
+            "id": "becc918a6b109de3",
+            "type": "leaf",
+            "state": {
+              "type": "github-copilot-chat-view",
+              "state": {},
+              "icon": "bot-message-square",
+              "title": "Copilot Chat"
+            }
+          }
+        ],
+        "currentTab": 5
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false,
+      "obsidian-git:Open Git source control": false
+    }
+  },
+  "active": "13d61867495a711b",
+  "lastOpenFiles": [
+    "4 Network Layer/4.3 Router.md",
+    "4 Network Layer/4.4 The Internet Protocol.md",
+    "4 Network Layer/4.1 Introduction.md",
+    "4 Network Layer/4.2 Virtual Circuit and Datagram Networks.md",
+    "4 Network Layer/images/4.21.png",
+    "Untitled.canvas",
+    "Pasted image 20251016151747.png",
+    "4 Network Layer/4.5 Routing Algorithms.md",
+    "4 Network Layer/4.5 Routing Algorithms",
+    "4 Network Layer/images/ex1.png",
+    "4 Network Layer/images/ex3.png",
+    "4 Network Layer/images/4.14.png",
+    "4 Network Layer/images/4.13.png",
+    "4 Network Layer/images/4.12.png",
+    "4 Network Layer/images/4.11.png",
+    "4 Network Layer/images/4.10.png",
+    "4 Network Layer/images/ex2.png",
+    "4 Network Layer/images",
+    "conflict-files-obsidian-git.md",
+    "44-the-internet-protocol.md",
+    "4.4-the-internet-protocol.md",
+    "4.4.md",
+    "4.4-the-internet.md",
+    "4.4-the.md",
+    "4.4 The.md",
+    "nas",
+    "Untitled.base",
+    "4 Network Layer/4.4 The Internet Protocol",
+    "4 Network Layer/4.2 Virtual Circuits and Datagram Networks",
+    "2 Application Layer/Untitled.md",
+    "5 Link Layer",
+    "3 Transport Layer",
+    "4 Network Layer",
+    "2 Application Layer",
+    "Welcome.md",
+    "create a link.md"
+  ]
+}
