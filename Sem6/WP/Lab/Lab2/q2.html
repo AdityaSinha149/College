@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Q2 — Simple Calculator</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background: #eef3fb;
+        padding: 24px;
+      }
+      .card {
+        width: 380px;
+        margin: 30px auto;
+        background: #fff;
+        padding: 16px;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+        border-radius: 6px;
+      }
+      .row {
+        margin: 8px 0;
+      }
+      input[type="number"] {
+        width: calc(100% - 12px);
+        padding: 6px;
+      }
+      .ops {
+        display: flex;
+        gap: 8px;
+        margin-top: 8px;
+      }
+      button {
+        flex: 1;
+        padding: 8px;
+      }
+      .result {
+        margin-top: 12px;
+        font-weight: bold;
+      }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  </head>
+  <body>
+    <div class="card">
+      <div class="row">
+        <label>Operand A</label>
+        <input id="a" type="number" step="any" value="0" />
+      </div>
+      <div class="row">
+        <label>Operand B</label>
+        <input id="b" type="number" step="any" value="0" />
+      </div>
+      <div class="ops">
+        <button data-op="+">+</button>
+        <button data-op="-">-</button>
+        <button data-op="*">×</button>
+        <button data-op="/">÷</button>
+        <button id="clear">C</button>
+      </div>
+
+      <div class="result">Result: <span id="result">0</span></div>
+    </div>
+
+    <script>
+      $(function () {
+        const $a = $("#a");
+        const $b = $("#b");
+        const $result = $("#result");
+
+        $("button[data-op]").on("click", function () {
+          const op = $(this).data("op");
+          const av = parseFloat($a.val()) || 0;
+          const bv = parseFloat($b.val()) || 0;
+          let res = "";
+          switch (op) {
+            case "+":
+              res = av + bv;
+              break;
+            case "-":
+              res = av - bv;
+              break;
+            case "*":
+              res = av * bv;
+              break;
+            case "/":
+              res = bv === 0 ? "Error (div by 0)" : av / bv;
+              break;
+          }
+          $result.text(res);
+        });
+
+        $("#clear").on("click", function () {
+          $a.val(0);
+          $b.val(0);
+          $result.text("0");
+        });
+
+        $a.add($b).on("keydown", function (e) {
+          if (e.key === "Enter") $('button[data-op="+"]').click();
+        });
+      });
+    </script>
+  </body>
+</html>

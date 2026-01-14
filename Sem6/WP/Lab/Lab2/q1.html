@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background: #f6f8fb;
+        padding: 24px;
+      }
+      h1 {
+        text-align: center;
+      }
+      #stage {
+        width: 90%;
+        max-width: 900px;
+        margin: 24px auto;
+        border: 1px solid #ddd;
+        padding: 16px;
+        overflow: hidden;
+        background: #fff;
+      }
+      #content {
+        display: flex;
+        gap: 24px;
+        align-items: center;
+        justify-content: flex-end;
+        transition: transform 1s ease;
+      }
+      table {
+        border-collapse: collapse;
+      }
+      table td,
+      table th {
+        padding: 8px 12px;
+        border: 1px solid #ccc;
+      }
+      table tr:nth-child(even) {
+        background: #f9f9a6;
+      }
+      table tr:nth-child(odd) {
+        background: #fff;
+      }
+      .controls {
+        text-align: center;
+        margin-top: 12px;
+      }
+      img.sample {
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 6px;
+      }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  </head>
+  <body>
+    <div id="stage">
+      <div id="content">
+        <table>
+          <thead>
+            <tr>
+              <th>Country</th>
+              <th>Year</th>
+              <th>Population</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>India</td>
+              <td>1998</td>
+              <td>85</td>
+            </tr>
+            <tr>
+              <td>USA</td>
+              <td>1999</td>
+              <td>35</td>
+            </tr>
+            <tr>
+              <td>UK</td>
+              <td>2000</td>
+              <td>30</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <img class="sample" src="pics/cake.png" alt="Sample image" />
+      </div>
+    </div>
+
+    <div class="controls">
+      <button id="moveBtn">Move Right → Left</button>
+      <button id="resetBtn">Reset</button>
+    </div>
+
+    <script>
+      $(function () {
+        const $content = $("#content");
+        const $stage = $("#stage");
+        const $moveBtn = $("#moveBtn");
+        const $resetBtn = $("#resetBtn");
+        let moved = false;
+
+        function moveContent() {
+          const max = Math.max(0, $content.outerWidth() - $stage.width() + 380);
+          $content.css("transform", "translateX(-" + max + "px)");
+          moved = true;
+        }
+
+        function resetContent() {
+          $content.css("transform", "translateX(0)");
+          moved = false;
+        }
+
+        $moveBtn.on("click", moveContent);
+        $resetBtn.on("click", resetContent);
+
+        $(window).on("resize", function () {
+          if (moved) moveContent();
+        });
+      });
+    </script>
+  </body>
+</html>
