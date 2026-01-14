@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Population Table</title>
+</head>
+<body>
+
+<h3>Population (in Crores)</h3>
+
+<table border="1" cellpadding="8">
+    <thead bgcolor="red">
+        <tr>
+            <th>Country</th>
+            <th>Year</th>
+            <th>Population</th>
+        </tr>
+    </thead>
+
+    <tbody id="tableBody">
+        <!-- Rows from JavaScript -->
+    </tbody>
+</table>
+
+<script>
+    var data = [
+        { country: "India", year: 1998, population: 85 },
+        { country: "India", year: 1999, population: 90 },
+        { country: "India", year: 2000, population: 100 },
+
+        { country: "USA", year: 1998, population: 30 },
+        { country: "USA", year: 1999, population: 35 },
+        { country: "USA", year: 2000, population: 40 },
+
+        { country: "UK", year: 1998, population: 25 },
+        { country: "UK", year: 1999, population: 30 },
+        { country: "UK", year: 2000, population: 35 }
+    ];
+
+    var table = document.getElementById("tableBody");
+
+    for (var i = 0; i < data.length; i++) {
+
+        var row = "<tr>" +
+                  "<td bgcolor='lightyellow'>" + data[i].country + "</td>" +
+                  "<td bgcolor='lightblue'>" + data[i].year + "</td>" +
+                  "<td bgcolor='lightgreen'>" + data[i].population + "</td>" +
+                  "</tr>";
+
+        table.innerHTML += row;
+    }
+</script>
+
+</body>
+</html>
