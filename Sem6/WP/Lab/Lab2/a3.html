@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image with Sliding Text</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .image-wrapper {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .image-wrapper img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .text-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sliding-text {
+            position: absolute;
+            white-space: nowrap;
+            font-size: 32px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            animation: slide 8s infinite linear;
+        }
+
+        @keyframes slide {
+            0% {
+                left: -100%;
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                left: 100%;
+                opacity: 0;
+            }
+        }
+
+        .sliding-text:nth-child(1) {
+            animation-delay: 0s;
+            top: 20%;
+            font-size: 28px;
+            color: #FFD700;
+        }
+
+        .sliding-text:nth-child(2) {
+            animation-delay: 2.5s;
+            top: 50%;
+            font-size: 32px;
+            color: #00FF88;
+        }
+
+        .sliding-text:nth-child(3) {
+            animation-delay: 5s;
+            top: 80%;
+            font-size: 28px;
+            color: #FF6B9D;
+        }
+
+        .controls {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        button {
+            padding: 12px 25px;
+            margin: 5px;
+            font-size: 14px;
+            background-color: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            background-color: #764ba2;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div style="width: 100%; max-width: 800px;">
+        <h1>Image with Sliding Text</h1>
+        
+        <div class="container">
+            <div class="image-wrapper">
+                <img src="pics/cake.png" alt="Sliding text image">
+                <div class="text-overlay">
+                    <div class="sliding-text">Welcome to Web Page</div>
+                    <div class="sliding-text">Sliding Text Animation</div>
+                    <div class="sliding-text">Enjoy the Animation!</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button onclick="pauseAnimation()">Pause Animation</button>
+            <button onclick="resumeAnimation()">Resume Animation</button>
+        </div>
+    </div>
+
+    <script>
+        function pauseAnimation() {
+            const textElements = document.querySelectorAll('.sliding-text');
+            textElements.forEach(element => {
+                element.style.animationPlayState = 'paused';
+            });
+        }
+
+        function resumeAnimation() {
+            const textElements = document.querySelectorAll('.sliding-text');
+            textElements.forEach(element => {
+                element.style.animationPlayState = 'running';
+            });
+        }
+    </script>
+</body>
+</html>

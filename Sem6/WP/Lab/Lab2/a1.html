@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Product Bill Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        label {
+            display: block;
+            margin-top: 15px;
+            color: #555;
+            font-weight: bold;
+        }
+        select, input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .checkbox-group {
+            margin-top: 15px;
+        }
+        .checkbox-group label {
+            display: inline-block;
+            margin-right: 20px;
+            font-weight: normal;
+        }
+        input[type="checkbox"] {
+            margin-right: 5px;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Product Bill Generator</h1>
+        
+        <form>
+            <label for="brand">Select Brand:</label>
+            <select id="brand" name="brand">
+                <option value="">-- Select a Brand --</option>
+                <option value="HP">HP</option>
+                <option value="Nokia">Nokia</option>
+                <option value="Samsung">Samsung</option>
+                <option value="Motorola">Motorola</option>
+                <option value="Apple">Apple</option>
+            </select>
+
+            <div class="checkbox-group">
+                <label>Device Type:</label>
+                <label>
+                    <input type="checkbox" name="deviceType" value="Mobile"> Mobile
+                </label>
+                <label>
+                    <input type="checkbox" name="deviceType" value="Laptop"> Laptop
+                </label>
+            </div>
+
+            <label for="quantity">Quantity:</label>
+            <input type="number" id="quantity" name="quantity" min="1" placeholder="Enter quantity">
+
+            <button type="button" onclick="produceBill()">Produce Bill</button>
+        </form>
+    </div>
+
+    <script>
+        const brandPrices = {
+            'HP': 45000,
+            'Nokia': 25000,
+            'Samsung': 55000,
+            'Motorola': 35000,
+            'Apple': 95000
+        };
+
+        function produceBill() {
+            const brand = document.getElementById('brand').value;
+            const deviceTypes = [];
+            const checkboxes = document.querySelectorAll('input[name="deviceType"]:checked');
+            checkboxes.forEach(checkbox => {
+                deviceTypes.push(checkbox.value);
+            });
+            const quantity = document.getElementById('quantity').value;
+
+            if (!brand) {
+                alert('Please select a brand');
+                return;
+            }
+            if (deviceTypes.length === 0) {
+                alert('Please select at least one device type');
+                return;
+            }
+            if (!quantity || quantity <= 0) {
+                alert('Please enter a valid quantity');
+                return;
+            }
+
+            const unitPrice = brandPrices[brand];
+            const totalAmount = unitPrice * quantity;
+            const bill = `
+=== BILL ===
+Brand: ${brand}
+Device Type(s): ${deviceTypes.join(', ')}
+Unit Price: ₹${unitPrice}
+Quantity: ${quantity}
+---------------------
+Total Amount: ₹${totalAmount}
+================
+            `;
+
+            alert(bill);
+        }
+    </script>
+</body>
+</html>
