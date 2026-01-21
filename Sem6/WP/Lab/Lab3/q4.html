@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Timetable Carousel</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      defer
+    ></script>
+
+    <style>
+      .day-card {
+        border: 1px solid #dee2e6;
+        border-radius: 10px;
+        padding: 12px;
+        background: #fff;
+      }
+
+      .day-title {
+        font-weight: 600;
+        text-align: center;
+        background: #343a40;
+        color: #fff;
+        border-radius: 6px;
+        padding: 6px;
+        margin-bottom: 10px;
+      }
+
+      .period {
+        font-size: 0.9rem;
+        padding: 6px;
+        border-bottom: 1px solid #e9ecef;
+      }
+
+      .period:last-child {
+        border-bottom: none;
+      }
+    </style>
+  </head>
+
+  <body class="bg-light p-4">
+    <div class="container">
+      <h4 class="mb-3 text-center">Weekly Timetable</h4>
+
+      <div id="timetableCarousel" class="carousel slide" data-bs-ride="false">
+        <div class="carousel-inner">
+          <!-- Slide 1: Mon - Wed -->
+          <div class="carousel-item active">
+            <div class="row g-3">
+              <div class="col-md-4">
+                <div class="day-card">
+                  <div class="day-title">Monday</div>
+                  <div class="period">9:00 - 10:00 → PE-1</div>
+                  <div class="period">10:00 - 11:00 → PCAP</div>
+                  <div class="period">11:30 - 12:30 → CD</div>
+                  <div class="period">12:30 - 1:30 → OE</div>
+                  <div class="period">2:00 - 4:00 → WPL (Lab)</div>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="day-card">
+                  <div class="day-title">Tuesday</div>
+                  <div class="period">9:00 - 10:00 → CD</div>
+                  <div class="period">10:00 - 11:00 → CD</div>
+                  <div class="period">11:30 - 12:30 → PCAP</div>
+                  <div class="period">2:00 - 4:00 → EEPM</div>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="day-card">
+                  <div class="day-title">Wednesday</div>
+                  <div class="period">9:00 - 10:00 → EEPM</div>
+                  <div class="period">10:00 - 11:00 → CD</div>
+                  <div class="period">11:30 - 12:30 → PCAP</div>
+                  <div class="period">2:00 - 4:00 → WPL (Lab)</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 2: Thu - Sat -->
+          <div class="carousel-item">
+            <div class="row g-3">
+              <div class="col-md-4">
+                <div class="day-card">
+                  <div class="day-title">Thursday</div>
+                  <div class="period">9:00 - 10:00 → PPL</div>
+                  <div class="period">10:00 - 11:00 → ASE</div>
+                  <div class="period">11:30 - 12:30 → CD</div>
+                  <div class="period">2:00 - 4:00 → OE</div>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="day-card">
+                  <div class="day-title">Friday</div>
+                  <div class="period">9:00 - 10:00 → CD</div>
+                  <div class="period">10:00 - 11:00 → OE</div>
+                  <div class="period">11:30 - 12:30 → PE-2</div>
+                  <div class="period">12:30 - 1:30 → EEPM</div>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="day-card">
+                  <div class="day-title">Saturday</div>
+                  <div class="period">1:00 - 2:00 → PE-1</div>
+                  <div class="period">2:00 - 4:00 → PCAP</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Controls -->
+        <button
+          class="carousel-control-prev"
+          type="button"
+          data-bs-target="#timetableCarousel"
+          data-bs-slide="prev"
+        >
+          <span class="carousel-control-prev-icon"></span>
+        </button>
+
+        <button
+          class="carousel-control-next"
+          type="button"
+          data-bs-target="#timetableCarousel"
+          data-bs-slide="next"
+        >
+          <span class="carousel-control-next-icon"></span>
+        </button>
+      </div>
+    </div>
+  </body>
+</html>
