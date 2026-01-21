@@ -21,6 +21,7 @@ const char *keywords[] = {
 void removeExtraSpaces(FILE *src, FILE *dst);
 void removePreprocessorDirectives(FILE *src, FILE *dst);
 void removeComments(FILE *src, FILE *dst);
+void removeExtraLines(FILE *src, FILE *dst);
 void copyFile(FILE *src, FILE *dst);
 void lexAnalyse(FILE *src, FILE *dst);
 int isKeyword(char *word);
@@ -48,31 +49,56 @@ int main(){
         return 1;
     }
     removePreprocessorDirectives(src, tmp);
-    rewind(tmp);
+    
+    fclose(tmp);
+    tmp = fopen("tmp.txt", "r");
+    
     removeComments(tmp, dst);
-    rewind(dst);
+    
+    fclose(tmp);
+    fclose(dst);
+    dst = fopen("ans.txt", "r");
+    tmp = fopen("tmp.txt", "w");
+    
     copyFile(dst, tmp);
-    rewind(tmp);
+
+    fclose(dst);
+    fclose(tmp);
+    tmp = fopen("tmp.txt", "r");
+    dst = fopen("ans.txt", "w");
+    
     removeExtraSpaces(tmp, dst);
-    rewind(dst);
+
+    fclose(tmp);
+    fclose(dst);
+    dst = fopen("ans.txt", "r");
+    tmp = fopen("tmp.txt", "w");
+
     copyFile(dst, tmp);
-    rewind(tmp);
+
+    fclose(dst);
+    fclose(tmp);
+    tmp = fopen("tmp.txt", "r");
+    dst = fopen("ans.txt", "w");
+
+    removeExtraLines(tmp, dst);
+
+    fclose(tmp);
+    fclose(dst);
+    dst = fopen("ans.txt", "r");
+    tmp = fopen("tmp.txt", "w");
+    
+    copyFile(dst, tmp);
+
+    fclose(dst);
+    fclose(tmp);
+    tmp = fopen("tmp.txt", "r");
+    dst = fopen("ans.txt", "w");
+
     lexAnalyse(tmp, dst);
-}
-
-void removeExtraSpaces(FILE *src, FILE *dst) {
-    int ch;
-    int state = 0;
-
-    while ((ch = fgetc(src)) != EOF) {
-        if (ch == ' ') {
-            if (state == 0) fputc(ch, dst);
-            state = 1;
-        } else {
-            state = 0;
-            fputc(ch, dst);
-        }
-    }
+    
+    fclose(tmp);
+    fclose(dst);
 }
 
 void removePreprocessorDirectives(FILE *src, FILE *dst) {
@@ -125,6 +151,54 @@ void removeComments(FILE *src, FILE *dst) {
     }
 }
 
+void removeExtraSpaces(FILE *src, FILE *dst) {
+    int ch;
+    int startOfLine = 1;
+
+    while ((ch = fgetc(src)) != EOF) {
+        if(ch == '"'){
+            fputc(ch, dst);
+            while((ch = fgetc(src)) != '"')
+                fputc(ch, dst);
+        }
+        if (ch == ' ') {
+            while ((ch = fgetc(src)) == ' ');
+            if (!startOfLine) fputc(' ', dst);
+            if (ch != EOF) {
+                fputc(ch, dst);
+                startOfLine = 0;
+            }
+        } else {
+            fputc(ch, dst);
+            if (ch == '\n')
+                startOfLine = 1;
+            else
+                startOfLine = 0;
+        }
+    }
+}
+
+void removeExtraLines(FILE *src, FILE *dst){
+    int ch;
+    int newline = 1;
+    while((ch = fgetc(src)) != EOF){
+        if(ch == '\n'){
+            if(newline == 1){
+                while((ch = fgetc(src)) == '\n');
+                fputc(ch, dst);
+            }
+            else{
+                newline = 1;
+                fputc(ch, dst);
+            }
+        }
+        else{
+            newline = 0;
+            fputc(ch, dst);
+        }
+    }
+}
+
 void copyFile(FILE *src, FILE *dst) {
     int ch;
     while ((ch = fgetc(src)) != EOF) {
@@ -138,71 +212,167 @@ void lexAnalyse(FILE *src, FILE *dst){
     state 1 : keyword & identifier
     state 2 : confirm identifier
     state 3 : nums
-    state 4 : operators & symbols
+    state 4 : string literals
+    state 5 : operators & symbols
     */
 
     int ch, i = 0;
     char word[1024];
 
     int state = 0;
+    token curr;
     int row = 1, col = 0;
 
-    token curr;
+    memset(&curr, 0, sizeof(curr));
+    memset(word, 0, sizeof(word));
 
     while ((ch = fgetc(src)) != EOF) {
         col++;
-        /*
-        Token end cases:
-        1. space
-        2. alphabet after num or op or sym
-        3. newline
-        */
-        if(ch == ' ' || (state > 2 && isalpha(ch)) ||
-            ch == '\n' || (state == 5 && ch != '=')){
-            
-            printToken(curr, dst);
-            
-            //clear token
-            while(i) word[i--] = 0;
-            if(ch == '\n') {
-                row++;
-                col = 1;
-                putc('\n', dst);
-                continue;
+printf("char : '%c' (%d), token type : %s, state : %d, word : %s\n",
+       ch, ch, curr.token_name, state, word);
+        if (state == 0) {
+            curr.row = row;
+            curr.col = col;
+
+            if (isalpha(ch)) {
+                word[i++] = ch;
+                state = 1;
+            }
+            else if (isdigit(ch)) {
+                word[i++] = ch;
+                state = 3;
+            }
+            else if (ch == '"') {
+                word[i++] = ch;
+                state = 4;
+            }
+            else if (ch != ' ' && ch != '\n' && ch != '\t') {
+                word[i++] = ch;
+                state = 5;
             }
         }
-        word[i++] = ch;
 
-        curr.col = col;
-        curr. row = row;
+        else if (state == 1) {
+            if (isalpha(ch)) {
+                word[i++] = ch;
+            }
+            else if (isdigit(ch)) {
+                word[i++] = ch;
+                state = 2;
+            }
+            else {
+                word[i] = '\0';
+                if (isKeyword(word))
+                    strcpy(curr.token_name, word);
+                else
+                    strcpy(curr.token_name, "id");
 
-        if(state == 0){
-            if(isalpha(ch)) state = 1;
-            else if(isdigit(ch)) state = 3;
-            else state = 4;
-        }
-        if(state == 1){
-            if(isdigit(ch)) state = 2;
+                printToken(curr, dst);
 
-            if(isKeyword(word)) strcpy(curr.token_name, word);
-            else strcpy(curr.token_name, "id");
+                memset(word, 0, sizeof(word));
+                i = 0;
+                ungetc(ch, src);
+                col--;
+                state = 0;
+            }
         }
-        if(state == 2){
-            strcpy(curr.token_name, "id");
+
+        else if (state == 2) {
+            if (isalnum(ch)) {
+                word[i++] = ch;
+            }
+            else {
+                word[i] = '\0';
+                strcpy(curr.token_name, "id");
+                printToken(curr, dst);
+
+                memset(word, 0, sizeof(word));
+                i = 0;
+                ungetc(ch, src);
+                state = 0;
+            }
         }
-        if(state == 3){
-            strcpy(curr.token_name, "num");
+
+        else if (state == 3) {
+            if (isdigit(ch)) {
+                word[i++] = ch;
+            }
+            else {
+                word[i] = '\0';
+                strcpy(curr.token_name, "num");
+                printToken(curr, dst);
+
+                memset(word, 0, sizeof(word));
+                i = 0;
+                ungetc(ch, src);
+                state = 0;
+            }
         }
-        if(state == 4){
+
+        else if (state == 4) {
+            word[i++] = ch;
+            if (ch == '"') {
+                word[i] = '\0';
+                strcpy(curr.token_name, "string");
+                printToken(curr, dst);
+
+                memset(word, 0, sizeof(word));
+                i = 0;
+                state = 0;
+            }
+        }
+
+        else if (state == 5) {
             char next = fgetc(src);
-            if(isDoubleOp(ch, next)){
+
+            if (isDoubleOp(word[0], next)) {
                 word[i++] = next;
                 col++;
-                curr.col++;
             }
-            else ungetc(next, src);
+            else {
+                ungetc(next, src);
+            }
+
+            word[i] = '\0';
+            strcpy(curr.token_name, word);
+            printToken(curr, dst);
+
+            memset(word, 0, sizeof(word));
+            i = 0;
+            state = 0;
+        }
+
+        if (ch == '\n') {
+            row++;
+            col = 0;
+            fputc(ch, dst);
+        }
+    }
+
+    /* Flush last token if EOF mid-token */
+    if (i > 0) {
+        word[i] = '\0';
+
+        if (state == 1) {
+            if (isKeyword(word))
+                strcpy(curr.token_name, word);
+            else
+                strcpy(curr.token_name, "id");
+        }
+        else if (state == 2) {
+            strcpy(curr.token_name, "id");
+        }
+        else if (state == 3) {
+            strcpy(curr.token_name, "num");
+        }
+        else if (state == 4) {
+            strcpy(curr.token_name, "string");
+        }
+        else {
             strcpy(curr.token_name, word);
         }
+
+        printToken(curr, dst);
     }
 }
 
