@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+#define PI 4
               
 int main(){
-                     if(1) printf("Nothing here\n");
+                     if(PI) printf("Nothing here\n");
 
                      //bcsjhkdvbdsjkh
                      /*vhjskdvk
