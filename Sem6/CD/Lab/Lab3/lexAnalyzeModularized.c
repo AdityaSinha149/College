@@ -547,6 +547,7 @@ token isStringLiteral(int ch, FILE *src, int *row, int *col) {
     curr.col = *col;
     curr.row = *row;
     strcpy(curr.token_name, "stringLit");
+    ch = fgetc(src);
     while (ch != '"') {
         ch = fgetc(src);
         if (ch == '\n') {
