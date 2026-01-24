@@ -74,7 +74,7 @@ int main(){
     fseek(tmp, 0, SEEK_SET);
 
     int ch;
-    int row = 0;
+    int row = 1;
     int col = 1;
     token curr;
     
@@ -91,7 +91,7 @@ int main(){
             continue;
         }
         else {
-            fseek(src, -1, SEEK_CUR);
+            fseek(tmp, -1, SEEK_CUR);
             curr = getNextToken(tmp, &row, &col);
         }
 
