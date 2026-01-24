@@ -256,17 +256,17 @@ token getNextToken(FILE *src, int *row, int *col){
         
         else if (isdigit(ch)) {
             curr = isNumber(ch, src, row, col);
-            if (curr.token_name[0]) return curr;
+            return curr;
         }
         
         else if (ch == '"') {
             curr = isStringLiteral(ch, src, row, col);
-            if (curr.token_name[0]) return curr;
+            return curr;
         }
 
         else if (strchr("+-&|*/%<>!^?", ch)) {
             curr = isOperator(ch, src, row, col);
-            if (curr.token_name[0]) return curr;
+            return curr;
         }
 
         else {//Symbol
