@@ -275,6 +275,7 @@ token getNextToken(FILE *src, int *row, int *col){
             curr.col = *col;
             curr.row = *row;
             curr.token_name[0] = ch;
+            (*col)++;
             return curr;
         }
         ch = fgetc(src);
