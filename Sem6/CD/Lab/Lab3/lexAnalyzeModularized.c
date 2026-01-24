@@ -288,23 +288,22 @@ token getNextToken(FILE *src, int *row, int *col){
 token isKeyword(int ch, FILE *src, int *row, int *col) {
     token curr;
     memset(&curr, 0, sizeof(curr));
-
+    int c = 1;
     curr.col = *col;
     curr.row = *row;
     char word[50];
     int i = 0;
     word[i++] = (char)ch;
-    int c;
 
-    while ((c = fgetc(src)) != EOF) {
-        (*col)++;
-        if (!isalpha(c)) {
+    while ((ch = fgetc(src)) != EOF) {
+        c++;
+        if (!isalpha(ch)) {
             fseek(src, -1, SEEK_CUR);
-            (*col)--;
+            c--;
             break;
         }
         if (i < (int)sizeof(word) - 1)
-            word[i++] = (char)c;
+            word[i++] = ch;
     }
 
     word[i] = '\0';
@@ -312,10 +311,11 @@ token isKeyword(int ch, FILE *src, int *row, int *col) {
     for (int k = 0; k < (int)(sizeof(keywords)/sizeof(keywords[0])); k++) {
         if (strcmp(word, keywords[k]) == 0) {
             strcpy(curr.token_name, word);
+            *col += c;
             return curr;
         }
     }
-
+    fseek(src, -c+1, SEEK_CUR);
     return curr;
 }
 
@@ -327,11 +327,12 @@ token isIdentifier(int ch, FILE *src, int *row, int *col) {
     curr.row = *row;
     char word[50];
     word[0] = ch;
+    (*col)++;
     int i = 1;
     while (ch != EOF) {
         ch = fgetc(src);
         (*col)++;
-        if(isspace(ch) || ch == '\n' || !isalnum(ch)){
+        if(ch != '_' && !isalnum(ch)){
             fseek(src, -1, SEEK_CUR);
             (*col)--;
             strcpy(curr.token_name, "id");
