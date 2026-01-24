@@ -3,7 +3,7 @@
 
               
 int main(){
-                     if(4) printf("Nothing here\n");
+                     if(44e-5) printf("Nothing here\n");
 
                                      
                                

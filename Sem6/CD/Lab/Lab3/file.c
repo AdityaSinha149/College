@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#define PI 4
+#define PI 44e-5
               
 int main(){
                      if(PI) printf("Nothing here\n");

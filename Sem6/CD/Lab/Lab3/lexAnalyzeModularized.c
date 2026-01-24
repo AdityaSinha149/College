@@ -44,8 +44,6 @@ token isBitwiseOperator(int ch, FILE *src, int *row, int *col);
 token isConditionalOperator(int ch, int *row, int *col);
 token isAssignmentOperator(int ch, FILE *src, int *row, int *col);
 
-token isSymbol(int ch, FILE *src, int *row, int *col);
-
 token isStringLiteral(int ch, FILE *src, int *row, int *col);
 
 token isNumber(int ch, FILE *src, int *row, int *col);
@@ -78,8 +76,8 @@ int main(){
     int col = 1;
     token curr;
     
-    while (ch != EOF) {
-        ch = fgetc(tmp);
+    while ((ch = fgetc(tmp)) != EOF) {
+        ;
         if (ch == ' ' || ch == '\t') {
             col++;
             continue;
@@ -271,7 +269,7 @@ token getNextToken(FILE *src, int *row, int *col){
             if (curr.token_name[0]) return curr;
         }
 
-        else {
+        else {//Symbol
             curr.col = *col;
             curr.row = *row;
             curr.token_name[0] = ch;
@@ -550,6 +548,7 @@ token isStringLiteral(int ch, FILE *src, int *row, int *col) {
     curr.row = *row;
     strcpy(curr.token_name, "stringLit");
     ch = fgetc(src);
+    (*col)++;
     while (ch != '"') {
         ch = fgetc(src);
         if (ch == '\n') {
@@ -558,6 +557,7 @@ token isStringLiteral(int ch, FILE *src, int *row, int *col) {
         }
         else (*col)++;
     }
+    (*col)++;
     return curr;
 }
 
@@ -570,10 +570,15 @@ token isNumber(int ch, FILE *src, int *row, int *col) {
 
     int state = 1;
     int prev;
-    while (state != 4){
+
+    while (state != 4) {
         prev = ch;
-        if(ch != EOF) ch = fgetc(src);
-        (*col)++;
+
+        if (ch != EOF) {
+            ch = fgetc(src);
+            (*col)++;
+        }
+
         if (state == 1) {
             curr.token_name[i++] = prev;
             if (isdigit(ch)) continue;
@@ -591,12 +596,6 @@ token isNumber(int ch, FILE *src, int *row, int *col) {
             if (isdigit(ch)) state = 6;
             else if (ch == '+' || ch == '-') state = 7;
             else state = 4;
-        }
-        else if (state == 4) {
-            curr.token_name[i++] = prev;
-            fseek(src, -2, SEEK_CUR);
-            (*col) -= 2;
-            return curr;
         }
         else if (state == 5) {
             curr.token_name[i++] = prev;
@@ -616,6 +615,9 @@ token isNumber(int ch, FILE *src, int *row, int *col) {
         }
     }
 
+    fseek(src, -1, SEEK_CUR);
+
+    curr.token_name[i] = '\0';
     return curr;
 }
 
