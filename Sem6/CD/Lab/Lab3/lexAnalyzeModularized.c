@@ -53,6 +53,8 @@ token getNextToken(FILE *src, int *row, int *col);
 
 //Helpers
 void PrintToken(token t, FILE *dst);
+void copyFile(FILE *src, FILE *dst);
+void postprocess(FILE *src, FILE *dst);
 
 int main(){
     printf ("Enter program to lexical analyse: ");
@@ -96,6 +98,22 @@ int main(){
         PrintToken(curr, dst);    
     }
 
+    fclose(tmp);
+
+    fseek(dst, 0, SEEK_SET);
+    tmp = fopen("tmp.txt", "w+");
+
+    copyFile(dst, tmp);
+
+    fseek(tmp, 0, SEEK_SET);
+    fclose(dst);
+
+    dst = fopen("ans.txt", "w");
+    postprocess(tmp, dst);
+
+    fclose(src);
+    fclose(tmp);
+    fclose(dst);
     return 0;
 }
 
@@ -623,4 +641,25 @@ token isNumber(int ch, FILE *src, int *row, int *col) {
 
 void PrintToken(token t, FILE *dst) {
     fprintf(dst, "<%s,%d,%d>", t.token_name, t.row, t.col);
+}
+
+void copyFile(FILE *src, FILE *dst) {
+    int ch;
+    while((ch = fgetc(src)) != EOF) {
+        putc(ch, dst);
+    }
+}
+
+void postprocess(FILE *src, FILE *dst) {
+    int ch;
+    int newLine = 1;
+    while((ch = fgetc(src)) != EOF){
+        if(newLine && ch == '\n') continue;
+        fputc(ch, dst);
+
+        if (ch == '\n')
+            newLine = 1;
+        else
+            newLine = 0;
+    }
 }
