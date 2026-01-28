@@ -1,6 +1,5 @@
 class TwoSum:
     def __init__(self, nums, target):
-        # instance variables
         self.nums = nums
         self.target = target
 
