@@ -6,10 +6,6 @@ typedef struct symbolTableEntry {
     token token;
     struct symbolTableEntry *nextEntry;
 } symbolTableEntry;
-
-typedef struct globalTable {
-    symbolTableEntry *entry[TABLE_SIZE];
-} globalTable;
 typedef struct localTable {
     symbolTableEntry *entry[TABLE_SIZE];
 } localTable;
@@ -86,6 +82,7 @@ void MakeSymbolTableEntryAndAddInTable(token t) {
 
 symbolTableEntry *MakeSymbol(token t) {
     symbolTableEntry *entry = malloc(sizeof(symbolTableEntry));
+    memset(entry, 0, sizeof(symbolTableEntry));
     entry->token = t;
     entry->nextEntry = NULL;
     return entry;
@@ -138,9 +135,9 @@ int hash(symbolTableEntry *entry) {
 }
 
 void printSymbolTable(localTable *st, FILE *dst) {
-    fprintf(dst, "%-10s %-10s %-6s %-12s\n",
-            "Name", "Type", "Size", "Return Type");
-
+    fprintf(dst, "%-6s %-10s %-10s %-6s %-12s\n",
+            "", "Name", "Type", "Size", "Return Type");
+    int idx = 1;
     for (int i = 0; i < TABLE_SIZE; i++) {
         symbolTableEntry *entry = st->entry[i];
 
@@ -148,11 +145,19 @@ void printSymbolTable(localTable *st, FILE *dst) {
             char *name = entry->token.tokenValue[0] ? entry->token.tokenValue : "-";
             char *type = entry->token.tokenType[0] ? entry->token.tokenType : "-";
             char *ret  = entry->token.tokenReturnType[0] ? entry->token.tokenReturnType : "-";
+            char sizeStr[20];
 
-            fprintf(dst, "%-10s %-10s %-6d %-12s\n",
+            if (entry->token.size != 0) {
+                snprintf(sizeStr, sizeof(sizeStr), "%d", entry->token.size);
+            } else {
+                strcpy(sizeStr, "-");
+            }
+
+            fprintf(dst, "%-6d %-10s %-10s %-6s %-12s\n",
+                    idx++,
                     name,
                     type,
-                    entry->token.size,
+                    sizeStr,
                     ret);
 
             entry = entry->nextEntry;

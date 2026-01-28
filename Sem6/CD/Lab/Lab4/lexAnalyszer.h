@@ -1,5 +1,6 @@
 #include "preprocessing.h"
 
+//structs
 typedef struct token{
     char tokenName [50];
     char tokenValue [50];
@@ -8,6 +9,7 @@ typedef struct token{
     int row,col,size;
 }token;
 
+//global variables
 const char *keywords[] = {
     "auto", "break", "case", "char", "const",
     "continue", "default", "do", "double",
@@ -21,8 +23,10 @@ const char *keywords[] = {
 const char *types[] = {
     "void", "char", "short", "int", "long",
     "float", "double", "signed", "unsigned",
-    "_Bool", "_Complex", "_Imaginary"
+    "_Bool", "_Complex"
 };
+
+char type[50] = "";
 
 //Token identifying
 token isKeyword(int ch, FILE *src, int *row, int *col);
@@ -48,12 +52,10 @@ token getNextToken(FILE *src, int *row, int *col);
 void PrintToken(token t, FILE *dst);
 void copyFile(FILE *src, FILE *dst);
 void postprocess(FILE *src, FILE *dst);
-
+int findSizeOf( char *word );
 int isType(char *s);
 
 //Token Server
-char type [50];
-
 token getNextToken(FILE *src, int *row, int *col){
     token curr;
     memset(&curr, 0, sizeof(curr));
@@ -123,7 +125,7 @@ token isKeyword(int ch, FILE *src, int *row, int *col) {
     }
 
     word[i] = '\0';
-    if ( strcmp( word, "int" ) == 0 ) 
+    if ( isType ( word )) 
         strcpy( type, word );
 
     for (int k = 0; k < (int)(sizeof(keywords)/sizeof(keywords[0])); k++) {
@@ -171,6 +173,7 @@ token isIdentifier(int ch, FILE *src, int *row, int *col) {
             else {
                 strcpy ( curr.tokenType, type );
             }
+            curr.size = findSizeOf( type );
 
             }
             return curr;
@@ -493,5 +496,20 @@ int isType(char *s) {
         if (strcmp(s, types[i]) == 0)
             return 1;
     }
+    return 0;
+}
+
+int findSizeOf(char *word) {
+    if (strcmp(word, "int") == 0) return sizeof(int);
+    if (strcmp(word, "char") == 0) return sizeof(char);
+    if (strcmp(word, "void") == 0) return 0;
+    if (strcmp(word, "short") == 0) return sizeof(short);
+    if (strcmp(word, "long") == 0) return sizeof(long);
+    if (strcmp(word, "float") == 0) return sizeof(float);
+    if (strcmp(word, "double") == 0) return sizeof(double);
+    if (strcmp(word, "signed") == 0) return sizeof(int);
+    if (strcmp(word, "unsigned") == 0) return sizeof(unsigned int);
+    if (strcmp(word, "_Bool") == 0) return sizeof(_Bool);
+
     return 0;
 }
