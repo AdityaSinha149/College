@@ -154,29 +154,30 @@ token isIdentifier(int ch, FILE *src, int *row, int *col) {
             fseek(src, -1, SEEK_CUR);
             (*col)--;
             strcpy(curr.tokenName, "id");
+            
+            word[i] = 0;
+            strcpy ( curr.tokenValue, word );
+            if ( isType ( word ) )
+                strcpy( type, word);
+            else {
+                if ( strcmp ( word, "printf" ) == 0 ||
+                        strcmp ( word, "scanf" ) == 0 )
+                    return curr;
+            ch = fgetc( src );
+            if( ch == '(' ) {
+                strcpy ( curr.tokenReturnType, type );
+                fseek ( src, -1, SEEK_CUR );
+            }
+            else {
+                strcpy ( curr.tokenType, type );
+            }
+
+            }
             return curr;
         }
         word[i++] = ch;
     }
-
-    word[i] = 0;
-
-    strcpy ( curr.tokenValue, word );
-    if ( isType ( word ) )
-        strcmp( type, word);
-    else {
-        if ( strcmp ( word, "printf" ) == 0 ||
-                strcmp ( word, "scanf" ) == 0 )
-            return curr;
-        ch = fgetc( src );
-        if( ch == '(' ) {
-            strcpy ( curr.tokenReturnType, type );
-            fseek ( src, -1, SEEK_CUR );
-        }
-        else {
-            strcpy ( curr.tokenType, type );
-        }
-    }
+   
     return curr;
 }
 
@@ -486,8 +487,11 @@ void postprocess(FILE *src, FILE *dst) {
 }
 
 int isType(char *s) {
-    for ( int i = 0; i < sizeof( types ); i++ )
-        if ( strcmp( s, types[i] ) == 0 )
+    int n = sizeof(types) / sizeof(types[0]);
+
+    for (int i = 0; i < n; i++) {
+        if (strcmp(s, types[i]) == 0)
             return 1;
+    }
     return 0;
 }

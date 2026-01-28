@@ -1,2 +1,7 @@
-Name	Type	Size	Return Type
-		0	
+Name       Type       Size   Return Type 
+main       -          0      int         
+printf     -          0      -           
+a          int        0      -           
+b          int        0      -           
+v          int        0      -           
+k          int        0      -           

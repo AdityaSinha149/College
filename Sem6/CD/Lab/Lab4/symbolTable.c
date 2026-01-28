@@ -1,7 +1,4 @@
 #include "lexAnalyszer.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
 #define TABLE_SIZE 100
 
@@ -10,19 +7,23 @@ typedef struct symbolTableEntry {
     struct symbolTableEntry *nextEntry;
 } symbolTableEntry;
 
-typedef struct symbolTable {
+typedef struct globalTable {
     symbolTableEntry *entry[TABLE_SIZE];
-} symbolTable;
+} globalTable;
+typedef struct localTable {
+    symbolTableEntry *entry[TABLE_SIZE];
+} localTable;
 
-symbolTable st = {0};
+localTable st = {0};
+
 
 void MakeSymbolTableEntryAndAddInTable(token t);
 symbolTableEntry *MakeSymbol(token t);
-void insertToken(symbolTable *st, symbolTableEntry *entry);
-int searchToken(symbolTable *st, symbolTableEntry *entry);
+void insertToken(localTable *st, symbolTableEntry *entry);
+int searchToken(localTable *st, symbolTableEntry *entry);
 int isSame(symbolTableEntry a, symbolTableEntry b);
 int hash(symbolTableEntry *entry);
-void printSymbolTable(symbolTable *st, FILE *dst);
+void printSymbolTable(localTable *st, FILE *dst);
 
 int main() {
     printf("Enter program to make symbol table: ");
@@ -90,7 +91,7 @@ symbolTableEntry *MakeSymbol(token t) {
     return entry;
 }
 
-void insertToken(symbolTable *st, symbolTableEntry *entry) {
+void insertToken(localTable *st, symbolTableEntry *entry) {
     int idx = hash(entry);
 
     symbolTableEntry *curr = st->entry[idx];
@@ -107,7 +108,7 @@ void insertToken(symbolTable *st, symbolTableEntry *entry) {
     curr->nextEntry = entry;
 }
 
-int searchToken(symbolTable *st, symbolTableEntry *entry) {
+int searchToken(localTable *st, symbolTableEntry *entry) {
     int idx = hash(entry);
     symbolTableEntry *curr = st->entry[idx];
 
@@ -121,7 +122,7 @@ int searchToken(symbolTable *st, symbolTableEntry *entry) {
 }
 
 int isSame(symbolTableEntry a, symbolTableEntry b) {
-    if (strcmp(a.token.tokenName, b.token.tokenName) != 0) return 0;
+    if (strcmp(a.token.tokenValue, b.token.tokenValue) != 0) return 0;
     if (strcmp(a.token.tokenType, b.token.tokenType) != 0) return 0;
     if (strcmp(a.token.tokenReturnType, b.token.tokenReturnType) != 0) return 0;
     if (a.token.size != b.token.size) return 0;
@@ -136,21 +137,26 @@ int hash(symbolTableEntry *entry) {
     return h % TABLE_SIZE;
 }
 
-void printSymbolTable(symbolTable *st, FILE *dst) {
-    fprintf(dst, "Name\tType\tSize\tReturn Type\n");
+void printSymbolTable(localTable *st, FILE *dst) {
+    fprintf(dst, "%-10s %-10s %-6s %-12s\n",
+            "Name", "Type", "Size", "Return Type");
 
     for (int i = 0; i < TABLE_SIZE; i++) {
         symbolTableEntry *entry = st->entry[i];
 
         while (entry != NULL) {
-            fprintf(dst,
-                    "%s\t%s\t%d\t%s\n",
-                    entry->token.tokenValue,
-                    entry->token.tokenType,
+            char *name = entry->token.tokenValue[0] ? entry->token.tokenValue : "-";
+            char *type = entry->token.tokenType[0] ? entry->token.tokenType : "-";
+            char *ret  = entry->token.tokenReturnType[0] ? entry->token.tokenReturnType : "-";
+
+            fprintf(dst, "%-10s %-10s %-6d %-12s\n",
+                    name,
+                    type,
                     entry->token.size,
-                    entry->token.tokenReturnType);
+                    ret);
 
             entry = entry->nextEntry;
         }
     }
+
 }
