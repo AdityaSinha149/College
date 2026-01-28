@@ -245,8 +245,8 @@ token isArithmeticOperator(int ch, FILE *src, int *row, int *col) {
     int prev = ch;
     ch = fgetc(src);
 
-    if (prev == '+' && ch == '+' || 
-        prev == '-' && ch == '-'){
+    if ((prev == '+' && ch == '+') || 
+        (prev == '-' && ch == '-')){
         strcpy(curr.tokenName, "ariOp");
         (*col) += 2;
         return curr;
