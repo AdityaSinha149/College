@@ -1,22 +1,24 @@
+#ifndef PREPROCESSING_H
+#define PREPROCESSING_H
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
 #include <string.h>
-
 
 typedef struct {
     char name[100];
     char value[100];
 } Macro;
 
-Macro macros[100];
-int macroCount = 0;
+static Macro macros[100];
+static int macroCount = 0;
 
-void addMacro(const char *name, const char *value);
-const char* getMacroValue(const char *name);
-void preprocess(FILE *src, FILE * dst);
+static void addMacro(const char *name, const char *value);
+static const char* getMacroValue(const char *name);
+static void preprocess(FILE *src, FILE * dst);
 
-void preprocess(FILE *src, FILE *dst) {
+static void preprocess(FILE *src, FILE *dst) {
     int ch;
     char token[256];
     int tlen;
@@ -135,17 +137,19 @@ void preprocess(FILE *src, FILE *dst) {
     }
 }
 
-void addMacro(const char *name, const char *value) {
+static void addMacro(const char *name, const char *value) {
     if (macroCount >= 100) return;
     strcpy(macros[macroCount].name, name);
     strcpy(macros[macroCount].value, value);
     macroCount++;
 }
 
-const char* getMacroValue(const char *name) {
+static const char* getMacroValue(const char *name) {
     for (int i = 0; i < macroCount; i++) {
         if (strcmp(macros[i].name, name) == 0)
             return macros[i].value;
     }
     return NULL;
 }
+
+#endif

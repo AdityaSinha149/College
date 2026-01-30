@@ -1,7 +1,0 @@
-       Name       Type       Size   Return Type 
-1      printf     -          -      -           
-2      main       -          4      int         
-3      b          char       1      -           
-4      a          int        4      -           
-5      v          int        4      -           
-6      k          int        4      -           

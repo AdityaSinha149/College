@@ -1,3 +1,6 @@
+#ifndef LEXANALYSZER_H
+#define LEXANALYSZER_H
+
 #include "preprocessing.h"
 
 //structs
@@ -10,7 +13,7 @@ typedef struct token{
 }token;
 
 //global variables
-const char *keywords[] = {
+static const char *keywords[] = {
     "auto", "break", "case", "char", "const",
     "continue", "default", "do", "double",
     "else", "enum", "extern", "float", "for",
@@ -20,43 +23,43 @@ const char *keywords[] = {
     "union", "unsigned", "void", "volatile", "while"
 };
 
-const char *types[] = {
+static const char *types[] = {
     "void", "char", "short", "int", "long",
     "float", "double", "signed", "unsigned",
     "_Bool", "_Complex"
 };
 
-char type[50] = "";
+static char type[50] = "";
 
 //Token identifying
-token isKeyword(int ch, FILE *src, int *row, int *col);
-token isIdentifier(int ch, FILE *src, int *row, int *col);
+static token isKeyword(int ch, FILE *src, int *row, int *col);
+static token isIdentifier(int ch, FILE *src, int *row, int *col);
 
-token isOperator(int ch, FILE *src, int *row, int *col);
+static token isOperator(int ch, FILE *src, int *row, int *col);
 
-token isRelationalOperator(int ch, FILE *src, int *row, int *col);
-token isArithmeticOperator(int ch, FILE *src, int *row, int *col);
-token isLogicalOperator(int ch, FILE *src, int *row, int *col);
-token isBitwiseOperator(int ch, FILE *src, int *row, int *col);
-token isConditionalOperator(int ch, int *row, int *col);
-token isAssignmentOperator(int ch, FILE *src, int *row, int *col);
+static token isRelationalOperator(int ch, FILE *src, int *row, int *col);
+static token isArithmeticOperator(int ch, FILE *src, int *row, int *col);
+static token isLogicalOperator(int ch, FILE *src, int *row, int *col);
+static token isBitwiseOperator(int ch, FILE *src, int *row, int *col);
+static token isConditionalOperator(int ch, int *row, int *col);
+static token isAssignmentOperator(int ch, FILE *src, int *row, int *col);
 
-token isStringLiteral(int ch, FILE *src, int *row, int *col);
+static token isStringLiteral(int ch, FILE *src, int *row, int *col);
 
-token isNumber(int ch, FILE *src, int *row, int *col);
+static token isNumber(int ch, FILE *src, int *row, int *col);
 
 //Token Server
-token getNextToken(FILE *src, int *row, int *col);
+static token getNextToken(FILE *src, int *row, int *col);
 
 //Helpers
-void PrintToken(token t, FILE *dst);
-void copyFile(FILE *src, FILE *dst);
-void postprocess(FILE *src, FILE *dst);
-int findSizeOf( char *word );
-int isType(char *s);
+static void PrintToken(token t, FILE *dst);
+static void copyFile(FILE *src, FILE *dst);
+static void postprocess(FILE *src, FILE *dst);
+static int findSizeOf( char *word );
+static int isType(char *s);
 
 //Token Server
-token getNextToken(FILE *src, int *row, int *col){
+static token getNextToken(FILE *src, int *row, int *col){
     token curr;
     memset(&curr, 0, sizeof(curr));
 
@@ -93,6 +96,7 @@ token getNextToken(FILE *src, int *row, int *col){
             curr.col = *col;
             curr.row = *row;
             curr.tokenName[0] = ch;
+            strcpy(curr.tokenType, "symbol");
             (*col)++;
             return curr;
         }
@@ -103,7 +107,7 @@ token getNextToken(FILE *src, int *row, int *col){
 
 //Token identifying
 
-token isKeyword(int ch, FILE *src, int *row, int *col) {
+static token isKeyword(int ch, FILE *src, int *row, int *col) {
     token curr;
     memset(&curr, 0, sizeof(curr));
     int c = 1;
@@ -139,7 +143,7 @@ token isKeyword(int ch, FILE *src, int *row, int *col) {
     return curr;
 }
 
-token isIdentifier(int ch, FILE *src, int *row, int *col) {
+static token isIdentifier(int ch, FILE *src, int *row, int *col) {
     token curr;
     memset(&curr, 0, sizeof(curr));
 
@@ -184,7 +188,7 @@ token isIdentifier(int ch, FILE *src, int *row, int *col) {
     return curr;
 }
 
-token isOperator(int ch, FILE *src, int *row, int *col) {
+static token isOperator(int ch, FILE *src, int *row, int *col) {
     token curr;
     memset(&curr, 0, sizeof(curr));
 
@@ -209,7 +213,7 @@ token isOperator(int ch, FILE *src, int *row, int *col) {
     return curr;
 }
 
-token isRelationalOperator(int ch, FILE *src, int *row, int *col) {
+static token isRelationalOperator(int ch, FILE *src, int *row, int *col) {
     token curr;
     memset(&curr, 0, sizeof(curr));
     if(ch != '=' && ch != '<' && ch != '>' && ch != '!')
@@ -235,7 +239,7 @@ token isRelationalOperator(int ch, FILE *src, int *row, int *col) {
     return curr;
 }
 
-token isArithmeticOperator(int ch, FILE *src, int *row, int *col) {
+static token isArithmeticOperator(int ch, FILE *src, int *row, int *col) {
     token curr;
     memset(&curr, 0, sizeof(curr));
     if(ch != '+' && ch != '-' && ch != '*' && ch != '/' && ch != '%')
@@ -260,7 +264,7 @@ token isArithmeticOperator(int ch, FILE *src, int *row, int *col) {
     return curr;
 }
 
-token isLogicalOperator(int ch, FILE *src, int *row, int *col) {
+static token isLogicalOperator(int ch, FILE *src, int *row, int *col) {
     token curr;
     memset(&curr, 0, sizeof(curr));
     if(ch != '&' && ch != '|' && ch != '!')
@@ -289,7 +293,7 @@ token isLogicalOperator(int ch, FILE *src, int *row, int *col) {
     return curr;
 }
 
-token isBitwiseOperator(int ch, FILE *src, int *row, int *col) {
+static token isBitwiseOperator(int ch, FILE *src, int *row, int *col) {
     token curr;
     memset(&curr, 0, sizeof(curr));
     if(ch != '<' && ch != '>' && ch != '|' && ch != '&' && ch != '^' && ch != '~')
@@ -322,7 +326,7 @@ token isBitwiseOperator(int ch, FILE *src, int *row, int *col) {
     return curr;
 }
 
-token isConditionalOperator(int ch, int *row, int *col) {
+static token isConditionalOperator(int ch, int *row, int *col) {
     token curr;
     memset(&curr, 0, sizeof(curr));
 
@@ -336,7 +340,7 @@ token isConditionalOperator(int ch, int *row, int *col) {
     return curr;
 }
 
-token isAssignmentOperator(int ch, FILE *src, int *row, int *col) {
+static token isAssignmentOperator(int ch, FILE *src, int *row, int *col) {
     token curr;
     memset(&curr, 0, sizeof(curr));
 
@@ -385,7 +389,7 @@ token isAssignmentOperator(int ch, FILE *src, int *row, int *col) {
     return curr;
 }
 
-token isStringLiteral(int ch, FILE *src, int *row, int *col) {
+static token isStringLiteral(int ch, FILE *src, int *row, int *col) {
     token curr;
     curr.col = *col;
     curr.row = *row;
@@ -404,7 +408,7 @@ token isStringLiteral(int ch, FILE *src, int *row, int *col) {
     return curr;
 }
 
-token isNumber(int ch, FILE *src, int *row, int *col) {
+static token isNumber(int ch, FILE *src, int *row, int *col) {
     token curr;
     memset(&curr, 0, sizeof(curr));
     curr.col = *col;
@@ -464,18 +468,18 @@ token isNumber(int ch, FILE *src, int *row, int *col) {
     return curr;
 }
 
-void PrintToken(token t, FILE *dst) {
+static void PrintToken(token t, FILE *dst) {
     fprintf(dst, "<%s,%d,%d>", t.tokenName, t.row, t.col);
 }
 
-void copyFile(FILE *src, FILE *dst) {
+static void copyFile(FILE *src, FILE *dst) {
     int ch;
     while((ch = fgetc(src)) != EOF) {
         putc(ch, dst);
     }
 }
 
-void postprocess(FILE *src, FILE *dst) {
+static void postprocess(FILE *src, FILE *dst) {
     int ch;
     int newLine = 1;
     while((ch = fgetc(src)) != EOF){
@@ -489,7 +493,7 @@ void postprocess(FILE *src, FILE *dst) {
     }
 }
 
-int isType(char *s) {
+static int isType(char *s) {
     int n = sizeof(types) / sizeof(types[0]);
 
     for (int i = 0; i < n; i++) {
@@ -499,7 +503,8 @@ int isType(char *s) {
     return 0;
 }
 
-int findSizeOf(char *word) {
+static int findSizeOf(char *word) {
+    
     if (strcmp(word, "int") == 0) return sizeof(int);
     if (strcmp(word, "char") == 0) return sizeof(char);
     if (strcmp(word, "void") == 0) return 0;
@@ -513,3 +518,5 @@ int findSizeOf(char *word) {
 
     return 0;
 }
+
+#endif
