@@ -95,9 +95,11 @@ static token getNextToken(FILE *src, int *row, int *col){
         else {//Symbol
             curr.col = *col;
             curr.row = *row;
-            curr.tokenName[0] = ch;
-            strcpy(curr.tokenType, "symbol");
+            curr.tokenValue[0] = ch;
+            strcpy(curr.tokenName, "symbol");
             (*col)++;
+            if (ch == ';' || ch == '{')
+                type[0] = '\0';
             return curr;
         }
         ch = fgetc(src);
@@ -134,7 +136,8 @@ static token isKeyword(int ch, FILE *src, int *row, int *col) {
 
     for (int k = 0; k < (int)(sizeof(keywords)/sizeof(keywords[0])); k++) {
         if (strcmp(word, keywords[k]) == 0) {
-            strcpy(curr.tokenName, word);
+            strcpy(curr.tokenValue, word);
+            strcpy(curr.tokenName, "keyword");
             *col += c;
             return curr;
         }

@@ -15,8 +15,8 @@ typedef struct symbolTable {
 
 symbolTable globalTable = {0};
 
-symbolTable AddFunctionEntryInGlobalTableAndMakeItsLocalTable (token currToken, stack *scopeStack);
-symbolTableEntry MakeTableEntryAndAddInTable(token t, symbolTable *st);
+symbolTable *AddFunctionEntryInGlobalTableAndMakeItsLocalTable (token currToken, stack *scopeStack);
+symbolTableEntry *MakeTableEntryAndAddInTable(token t, symbolTable *st);
 symbolTableEntry*MakeSymbol(token t);
 void insertToken(symbolTable*st, symbolTableEntry *entry);
 int searchToken(symbolTable*st, symbolTableEntry *entry);
@@ -45,7 +45,8 @@ int main() {
     int row = 1;
     int col = 1;
     token currToken;
-    symbolTable currLocalTable = globalTable;
+    token prevToken = {0};
+    symbolTable *currLocalTable = &globalTable;
     stack scopeStack = {.top = -1};
 
     while ((ch = fgetc(tmp)) != EOF) {
@@ -60,22 +61,31 @@ int main() {
             fseek(tmp, -1, SEEK_CUR);
             currToken = getNextToken(tmp, &row, &col);
 
-            if (strcmp(currToken.tokenType, "symbol") == 0){
-                updateStack(&scopeStack, currToken);
-                if (isEmpty(&scopeStack))
-                    currLocalTable = globalTable;
+            if (strcmp(currToken.tokenName, "symbol") == 0){
+                if (strcmp(currToken.tokenValue, "{") == 0) {
+                    pushStack(&scopeStack, currToken.tokenValue[0]);
+                }
+                else if (strcmp(currToken.tokenValue, "}") == 0) {
+                    popStack(&scopeStack);
+                    if (isEmptyStack(&scopeStack))
+                        currLocalTable = &globalTable;
+                }
                 continue;
             }
             if (strcmp(currToken.tokenName, "id") == 0) {
+                long pos = ftell(tmp);
                 token nextToken = getNextToken(tmp, &row, &col);
-                if (nextToken.tokenName[0] == '{')
+                if (nextToken.tokenValue[0] == '(' && strcmp(prevToken.tokenName, "keyword") == 0){
+                    strcpy(currToken.tokenName, "Func");
                     currLocalTable = AddFunctionEntryInGlobalTableAndMakeItsLocalTable (currToken, &scopeStack);
+                }
                 else {
-                    fseek(tmp, -1, SEEK_CUR);
-                    MakeTableEntryAndAddInTable(currToken, &currLocalTable);
+                    fseek(tmp, pos, SEEK_SET);
+                    MakeTableEntryAndAddInTable(currToken, currLocalTable);
                 }
             }
         }
+        prevToken = currToken;
     }
 
     printGlobalSymbolTable(&globalTable, dst);
@@ -86,14 +96,14 @@ int main() {
     return 0;
 }
 
-symbolTable AddFunctionEntryInGlobalTableAndMakeItsLocalTable (token currToken, stack *scopeStack) {
-    updateStack(scopeStack, currToken);
-    symbolTableEntry currGlobalEntry = MakeTableEntryAndAddInTable (currToken, &globalTable);
-    currGlobalEntry.local = (symbolTable*)malloc(sizeof(symbolTable));
-    return *(currGlobalEntry.local);
+symbolTable *AddFunctionEntryInGlobalTableAndMakeItsLocalTable (token currToken, stack *scopeStack) {
+    symbolTableEntry *currGlobalEntry = MakeTableEntryAndAddInTable (currToken, &globalTable);
+    currGlobalEntry->local = (symbolTable*)calloc(1, sizeof(symbolTable));
+    MakeTableEntryAndAddInTable(currToken, currGlobalEntry->local);
+    return currGlobalEntry->local;
 }
 
-symbolTableEntry MakeTableEntryAndAddInTable(token t, symbolTable *st) {
+symbolTableEntry *MakeTableEntryAndAddInTable(token t, symbolTable *st) {
     symbolTableEntry*entry = MakeSymbol(t);
 
     if (!searchToken(st, entry)) {
@@ -101,7 +111,7 @@ symbolTableEntry MakeTableEntryAndAddInTable(token t, symbolTable *st) {
     } else {
         free(entry);
     }
-    return *entry;
+    return entry;
 }
 
 symbolTableEntry*MakeSymbol(token t) {
@@ -169,7 +179,7 @@ void printGlobalSymbolTable(symbolTable *st, FILE *dst) {
 
         while (entry != NULL) {
             char *name = entry->token.tokenValue[0] ? entry->token.tokenValue : "-";
-            char *type = entry->token.tokenType[0] ? entry->token.tokenType : "-";
+            char *type = entry->token.tokenName[0] ? entry->token.tokenName : "-";
             char *ret  = entry->token.tokenReturnType[0] ? entry->token.tokenReturnType : "-";
 
             char sizeStr[20];
@@ -195,12 +205,16 @@ void printGlobalSymbolTable(symbolTable *st, FILE *dst) {
             entry = entry->nextTokenEntry;
         }
     }
+    fprintf(dst, "\n");
     idx = 1;
     for (int i = 0; i < TABLE_SIZE; i++) {
         symbolTableEntry *entry = st->entry[i];
 
         while (entry != NULL) {
-            if(entry->local != NULL) printLocalSymbolTable(entry->local, dst);
+            if(entry->local != NULL) {
+                fprintf(dst, "%s's Local Table:\n", entry->token.tokenValue);
+                printLocalSymbolTable(entry->local, dst);
+            }
             entry = entry->nextTokenEntry;
         }
     }
@@ -216,7 +230,7 @@ void printLocalSymbolTable(symbolTable*st, FILE *dst) {
 
         while (entry != NULL) {
             char *name = entry->token.tokenValue[0] ? entry->token.tokenValue : "-";
-            char *type = entry->token.tokenType[0] ? entry->token.tokenType : "-";
+            char *type = entry->token.tokenType[0] ? entry->token.tokenType : entry->token.tokenName;
             char *ret  = entry->token.tokenReturnType[0] ? entry->token.tokenReturnType : "-";
             char sizeStr[20];
 

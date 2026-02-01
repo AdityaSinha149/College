@@ -3,7 +3,8 @@
 #define PI 44e-5
 
 
-int func1(int ch){
+int ahbs;
+char func1(int ch, char* s){
     int c = 0;
     int x = 9;
     return 4;

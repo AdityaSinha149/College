@@ -12,26 +12,7 @@ typedef struct stack{
 // prototypes
 static void pushStack(stack *s, char c);
 static char popStack(stack *s);
-static char peekStack(stack *s);
-static int isEmpty(stack *s);
-
-static void updateStack(stack *scopeStack, token currToken) {
-    char symbol = currToken.tokenName[0];
-
-    if (symbol == '{' || symbol == '(' || symbol == '[') {
-        pushStack(scopeStack, symbol);
-    }
-    else if (symbol == '}' || symbol == ')' || symbol == ']') {
-        char top = peekStack(scopeStack);
-
-        if ((symbol == '}' && top == '{') ||
-            (symbol == ')' && top == '(') ||
-            (symbol == ']' && top == '[')) {
-            popStack(scopeStack);
-        }
-    }
-}
-
+static int isEmptyStack(stack *s);
 
 static void pushStack(stack *s, char c) {
     if (s->top == STACK_SIZE - 1)
@@ -47,14 +28,7 @@ static char popStack(stack *s) {
     return s->arr[(s->top)--];
 }
 
-static char peekStack(stack *s) {
-    if (s->top == -1)
-        return '\0';
-
-    return s->arr[s->top];
-}
-
-static int isEmpty(stack *s) {
+static int isEmptyStack(stack *s) {
     return s->top == -1;
 }
 
