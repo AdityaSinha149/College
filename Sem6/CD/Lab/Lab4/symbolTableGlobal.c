@@ -179,7 +179,7 @@ void printGlobalSymbolTable(symbolTable *st, FILE *dst) {
 
         while (entry != NULL) {
             char *name = entry->token.tokenValue[0] ? entry->token.tokenValue : "-";
-            char *type = entry->token.tokenName[0] ? entry->token.tokenName : "-";
+            char *type = strcmp(entry->token.tokenName, "id") != 0 ? entry->token.tokenName[0] ? entry->token.tokenName : "-" : entry->token.tokenType;
             char *ret  = entry->token.tokenReturnType[0] ? entry->token.tokenReturnType : "-";
 
             char sizeStr[20];

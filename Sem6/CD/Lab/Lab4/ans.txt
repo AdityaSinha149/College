@@ -1,7 +1,7 @@
        Name       Type       Size   Return Type  Ptr to Local Table
-1      func1      Func       1      char         0x2f8dee50        
-2      main       Func       4      int          0x2f8df720        
-3      ahbs       id         4      -            -                 
+1      func1      Func       1      char         0x3b235e50        
+2      main       Func       4      int          0x3b236720        
+3      ahbs       int        4      -            -                 
 
 func1's Local Table:
        Name       Type       Size   Return Type 
