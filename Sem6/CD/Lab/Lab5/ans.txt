@@ -1,0 +1,25 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define pi 44e-5
+
+
+int ahbs;
+char func1(int ch, char* s){
+    int c = 0;
+    int x = 9;
+    return 4;
+}
+
+int main(){
+                     if(pi) printf("nothing here\n");
+                     int a = 5;
+                     char b = 7;
+                     int v,k;
+                    scanf("%d", &v);
+                     //bcsVFEDGBERTbdsjkh
+                     /*vhjskdvk
+                     SFGDFHDF
+                     bdfgbnfgdn*/
+    printf          ("demo fi                 le\n");
+        return 0;
+}
