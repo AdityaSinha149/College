@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Details Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            margin: 0;
+            padding: 24px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        }
+        h1 {
+            margin-top: 0;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+        label {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 6px;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #d7dbe7;
+            border-radius: 8px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        textarea {
+            min-height: 90px;
+            resize: vertical;
+        }
+        .full {
+            grid-column: 1 / -1;
+        }
+        .actions {
+            margin-top: 16px;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+        button {
+            background: #3a6cf4;
+            color: #fff;
+            border: 0;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .label {
+            font-weight: 700;
+        }
+        .result {
+            margin-top: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Student Details</h1>
+        <form id="studentForm">
+            <div class="grid">
+                <div>
+                    <label for="studentName">Name</label>
+                    <input id="studentName" type="text" required />
+                </div>
+                <div>
+                    <label for="dob">Date of Birth</label>
+                    <input id="dob" type="date" required />
+                </div>
+                <div class="full">
+                    <label for="address">Address</label>
+                    <textarea id="address" required></textarea>
+                </div>
+                <div>
+                    <label for="contact">Contact Number</label>
+                    <input id="contact" type="tel" required />
+                </div>
+                <div>
+                    <label for="email">Email ID</label>
+                    <input id="email" type="email" required />
+                </div>
+                <div>
+                    <label for="english">English Marks</label>
+                    <input id="english" type="number" min="0" max="100" required />
+                </div>
+                <div>
+                    <label for="physics">Physics Marks</label>
+                    <input id="physics" type="number" min="0" max="100" required />
+                </div>
+                <div>
+                    <label for="chemistry">Chemistry Marks</label>
+                    <input id="chemistry" type="number" min="0" max="100" required />
+                </div>
+            </div>
+            <div class="actions">
+                <button type="submit">Submit</button>
+                <span class="label">Percentage: <span id="percentage">0</span>%</span>
+            </div>
+            <div class="result">
+                <label for="details">Submitted Details</label>
+                <textarea id="details" readonly></textarea>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        const form = document.getElementById('studentForm');
+        const detailsBox = document.getElementById('details');
+        const percentageLabel = document.getElementById('percentage');
+
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            const name = document.getElementById('studentName').value.trim();
+            const dob = document.getElementById('dob').value;
+            const address = document.getElementById('address').value.trim();
+            const contact = document.getElementById('contact').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const english = Number(document.getElementById('english').value);
+            const physics = Number(document.getElementById('physics').value);
+            const chemistry = Number(document.getElementById('chemistry').value);
+
+            const total = english + physics + chemistry;
+            const percentage = (total / 3).toFixed(2);
+            percentageLabel.textContent = percentage;
+
+            const block = [
+                `Name: ${name}`,
+                `DOB: ${dob}`,
+                `Address: ${address}`,
+                `Contact: ${contact}`,
+                `Email: ${email}`,
+                `English: ${english}`,
+                `Physics: ${physics}`,
+                `Chemistry: ${chemistry}`,
+                `Percentage: ${percentage}%`,
+                '------------------------',
+            ].join('\n');
+
+            form.reset();
+            detailsBox.value = detailsBox.value ? `${detailsBox.value}\n${block}` : block;
+        });
+    </script>
+</body>
+</html>

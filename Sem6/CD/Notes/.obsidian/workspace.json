@@ -1,38 +1,38 @@
 {
   "main": {
-    "id": "0ee8c7848eb75b7b",
+    "id": "16ad2685907f3d3c",
     "type": "split",
     "children": [
       {
-        "id": "58620373caff4aee",
+        "id": "8334798a67097d56",
         "type": "tabs",
         "children": [
           {
-            "id": "4e9618f1fd6ba72f",
+            "id": "55002a65781cbc2a",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "MPI.md",
+                "file": "Syntax Analysis.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "MPI"
+              "title": "Syntax Analysis"
             }
           },
           {
-            "id": "1677065b625a99b5",
+            "id": "b0537b634c309026",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "CUDA.md",
+                "file": "Syntax Analysis.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "CUDA"
+              "title": "Syntax Analysis"
             }
           }
         ],
@@ -42,15 +42,15 @@
     "direction": "vertical"
   },
   "left": {
-    "id": "a1d25c794a605051",
+    "id": "ae09e87a1addbc35",
     "type": "split",
     "children": [
       {
-        "id": "bf777cc5bdea6374",
+        "id": "3c17a7723676a412",
         "type": "tabs",
         "children": [
           {
-            "id": "03b3ecab7ead5adc",
+            "id": "9990d13087a61808",
             "type": "leaf",
             "state": {
               "type": "file-explorer",
@@ -63,7 +63,7 @@
             }
           },
           {
-            "id": "1533745f0a4fb458",
+            "id": "3a0f6294d61e1e44",
             "type": "leaf",
             "state": {
               "type": "search",
@@ -80,7 +80,7 @@
             }
           },
           {
-            "id": "0bd8a53f01fd1efd",
+            "id": "4aedcbea3a5cb3f6",
             "type": "leaf",
             "state": {
               "type": "bookmarks",
@@ -96,20 +96,20 @@
     "width": 300
   },
   "right": {
-    "id": "42c207993e020923",
+    "id": "3ebe4de4957778a0",
     "type": "split",
     "children": [
       {
-        "id": "01340c0bc4a4a629",
+        "id": "91e7274556afb237",
         "type": "tabs",
         "children": [
           {
-            "id": "c805620cc126a68a",
+            "id": "1b9007cf2f65a63b",
             "type": "leaf",
             "state": {
               "type": "backlink",
               "state": {
-                "file": "MPI.md",
+                "file": "Syntax Analysis.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -119,25 +119,25 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for MPI"
+              "title": "Backlinks for Syntax Analysis"
             }
           },
           {
-            "id": "92f8e6b6878b121b",
+            "id": "8349127b12a51edc",
             "type": "leaf",
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "MPI.md",
+                "file": "Syntax Analysis.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Outgoing links from MPI"
+              "title": "Outgoing links from Syntax Analysis"
             }
           },
           {
-            "id": "8ea48081dcc0f3d1",
+            "id": "68a5d04f7898a4c3",
             "type": "leaf",
             "state": {
               "type": "tag",
@@ -152,7 +152,7 @@
             }
           },
           {
-            "id": "1d3b1dd73085dbfe",
+            "id": "c362d9d550bbb607",
             "type": "leaf",
             "state": {
               "type": "all-properties",
@@ -166,18 +166,18 @@
             }
           },
           {
-            "id": "2c18cae17d7d46c4",
+            "id": "2ac073719d67bce1",
             "type": "leaf",
             "state": {
               "type": "outline",
               "state": {
-                "file": "MPI.md",
+                "file": "Syntax Analysis.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of MPI"
+              "title": "Outline of Syntax Analysis"
             }
           }
         ]
@@ -198,16 +198,9 @@
       "bases:Create new base": false
     }
   },
-  "active": "1677065b625a99b5",
+  "active": "b0537b634c309026",
   "lastOpenFiles": [
-    "Pasted image 20260211121251.png",
-    "Pasted image 20260211114743.png",
-    "Pasted image 20260211114448.png",
-    "MPI.md",
-    "CUDA.md",
-    "mpi.2.png",
-    "mpi.1.png",
-    "Welcome.md",
-    "Untitled"
+    "Syntax Analysis.md",
+    "Welcome.md"
   ]
 }

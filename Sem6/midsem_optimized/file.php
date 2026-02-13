@@ -1,0 +1,20 @@
+// say if this was the code 
+<?php
+
+/* This is example
+ input file */
+if (assert($a > 0)) {
+    $b = $a + 1;
+}
+
+for ($i = 0; $i < 5; $i++) {
+    for ($j = 0; $j < 3; $j++) {
+        break;
+    }
+}
+
+$c = 10;
+
+echo "some string";
+
+?>

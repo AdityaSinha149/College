@@ -10,7 +10,7 @@ char func1(int ch, char* s){
     return 4;
 }
 
-int main(){
+int main( h){
                      if(44e-5) printf("Nothing here\n");
                      int a = 5;
                      char b = 7;

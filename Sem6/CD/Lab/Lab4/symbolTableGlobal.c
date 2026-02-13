@@ -24,6 +24,8 @@ int isSame(symbolTableEntry a, symbolTableEntry b);
 int hash(symbolTableEntry*entry);
 void printLocalSymbolTable(symbolTable*st, FILE *dst);
 void printGlobalSymbolTable(symbolTable *st, FILE *dst);
+static void collectFunctionArguments(FILE *src, int row, int col,
+                                     char *buf, size_t bufSize);
 
 int main() {
     char file[100];
@@ -77,6 +79,11 @@ int main() {
                 token nextToken = getNextToken(tmp, &row, &col);
                 if (nextToken.tokenValue[0] == '(' && strcmp(prevToken.tokenName, "keyword") == 0){
                     strcpy(currToken.tokenName, "Func");
+                    // Fill the arguments field for this function token
+                    memset(currToken.arguments, 0, sizeof(currToken.arguments));
+                    collectFunctionArguments(tmp, row, col,
+                                             currToken.arguments,
+                                             sizeof(currToken.arguments));
                     currLocalTable = AddFunctionEntryInGlobalTableAndMakeItsLocalTable (currToken, &scopeStack);
                 }
                 else {
@@ -169,8 +176,8 @@ int hash(symbolTableEntry*entry) {
 }
 
 void printGlobalSymbolTable(symbolTable *st, FILE *dst) {
-    fprintf(dst, "%-6s %-10s %-10s %-6s %-12s %-18s\n",
-            "", "Name", "Type", "Size", "Return Type", "Ptr to Local Table");
+    fprintf(dst, "%-6s %-10s %-10s %-6s %-12s %-20s %-18s\n",
+            "", "Name", "Type", "Size", "Return Type", "Arguments", "Ptr to Local Table");
 
     int idx = 1;
 
@@ -181,6 +188,8 @@ void printGlobalSymbolTable(symbolTable *st, FILE *dst) {
             char *name = entry->token.tokenValue[0] ? entry->token.tokenValue : "-";
             char *type = strcmp(entry->token.tokenName, "id") != 0 ? entry->token.tokenName[0] ? entry->token.tokenName : "-" : entry->token.tokenType;
             char *ret  = entry->token.tokenReturnType[0] ? entry->token.tokenReturnType : "-";
+
+            char *args = entry->token.arguments[0] ? entry->token.arguments : "-";
 
             char sizeStr[20];
             if (entry->token.size != 0)
@@ -194,12 +203,13 @@ void printGlobalSymbolTable(symbolTable *st, FILE *dst) {
             else
                 strcpy(localPtrStr, "-");
 
-            fprintf(dst, "%-6d %-10s %-10s %-6s %-12s %-18s\n",
+                fprintf(dst, "%-6d %-10s %-10s %-6s %-12s %-20s %-18s\n",
                     idx++,
                     name,
                     type,
                     sizeStr,
                     ret,
+                    args,
                     localPtrStr);
 
             entry = entry->nextTokenEntry;
@@ -218,6 +228,52 @@ void printGlobalSymbolTable(symbolTable *st, FILE *dst) {
             entry = entry->nextTokenEntry;
         }
     }
+}
+
+// Collect the textual argument list for a function.
+// We start scanning from the position *after* the opening '('.
+// This version works at the character level so that we only
+// capture text up to the matching ')', not the whole body.
+static void collectFunctionArguments(FILE *src, int row, int col,
+                                     char *buf, size_t bufSize) {
+    long startPos = ftell(src);      // position just after '('
+    size_t idx = 0;
+    int depth = 1;                   // we are already inside one '('
+
+    int ch;
+    while ((ch = fgetc(src)) != EOF && depth > 0) {
+        if (ch == '\n') {
+            row++;
+            col = 1;
+        } else {
+            col++;
+        }
+
+        if (ch == '(') {
+            depth++;
+            // still inside argument list of nested parentheses
+            if (idx + 1 < bufSize) buf[idx++] = (char)ch;
+            continue;
+        }
+
+        if (ch == ')') {
+            depth--;
+            if (depth == 0) {
+                // do not store the closing ')'
+                break;
+            }
+            if (idx + 1 < bufSize) buf[idx++] = (char)ch;
+            continue;
+        }
+
+        // Normal character inside argument list
+        if (idx + 1 < bufSize) buf[idx++] = (char)ch;
+    }
+
+    buf[idx] = '\0';
+
+    // Restore original stream position for the main scanner
+    fseek(src, startPos, SEEK_SET);
 }
 
 

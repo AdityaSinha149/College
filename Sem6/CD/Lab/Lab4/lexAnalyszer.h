@@ -9,6 +9,9 @@ typedef struct token{
     char tokenValue [50];
     char tokenType [50];
     char tokenReturnType [50];
+    // For function identifiers, this can store the
+    // argument list as a string (e.g. "int a, char b").
+    char arguments[100];
     int row,col,size;
 }token;
 

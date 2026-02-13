@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Captcha Validation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            margin: 0;
+            padding: 24px;
+        }
+        .card {
+            max-width: 520px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        }
+        .captcha-box {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 16px 0;
+        }
+        #captchaText {
+            font-family: "Courier New", monospace;
+            font-size: 22px;
+            letter-spacing: 3px;
+            padding: 8px 12px;
+            background: #eef2ff;
+            border: 1px dashed #8aa0ff;
+            border-radius: 8px;
+            user-select: none;
+        }
+        input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #d7dbe7;
+            border-radius: 8px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        button {
+            margin-top: 12px;
+            background: #3a6cf4;
+            color: #fff;
+            border: 0;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .message {
+            margin-top: 12px;
+            font-weight: 700;
+        }
+        .error {
+            color: #c62828;
+        }
+        .success {
+            color: #2e7d32;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>Captcha Validation</h1>
+        <p>Type the captcha shown below. After 3 mismatches, the textbox will be disabled.</p>
+
+        <div class="captcha-box">
+            <div id="captchaText">AB12C</div>
+            <button type="button" id="refreshBtn">Refresh</button>
+        </div>
+
+        <label for="captchaInput">Enter Captcha</label>
+        <input id="captchaInput" type="text" autocomplete="off" />
+
+        <button type="button" id="checkBtn">Check</button>
+        <div class="message" id="message">&nbsp;</div>
+    </div>
+
+    <script>
+        const captchaText = document.getElementById('captchaText');
+        const captchaInput = document.getElementById('captchaInput');
+        const message = document.getElementById('message');
+        const refreshBtn = document.getElementById('refreshBtn');
+        const checkBtn = document.getElementById('checkBtn');
+
+        let attempts = 0;
+
+        function generateCaptcha() {
+            const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+            let result = '';
+            for (let i = 0; i < 5; i++) {
+                result += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            captchaText.textContent = result;
+        }
+
+        function setMessage(text, isSuccess) {
+            message.textContent = text;
+            message.className = `message ${isSuccess ? 'success' : 'error'}`;
+        }
+
+        refreshBtn.addEventListener('click', () => {
+            generateCaptcha();
+            setMessage('', false);
+            captchaInput.value = '';
+        });
+
+        checkBtn.addEventListener('click', () => {
+            const entered = captchaInput.value.trim();
+            const actual = captchaText.textContent.trim();
+
+            if (!entered) {
+                setMessage('Please enter the captcha.', false);
+                return;
+            }
+
+            if (entered === actual) {
+                setMessage('Captcha matched.', true);
+                attempts = 0;
+                captchaInput.value = '';
+                generateCaptcha();
+                return;
+            }
+
+            attempts += 1;
+            if (attempts >= 3) {
+                captchaInput.disabled = true;
+                setMessage('Captcha mismatched 3 times. Input disabled.', false);
+                return;
+            }
+
+            setMessage(`Captcha mismatch. Attempts left: ${3 - attempts}`, false);
+        });
+
+        generateCaptcha();
+    </script>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Promotion Eligibility</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f7f8fc;
+            margin: 0;
+            padding: 24px;
+        }
+        .card {
+            max-width: 640px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        }
+        label {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 6px;
+        }
+        select, input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #d7dbe7;
+            border-radius: 8px;
+            font-size: 14px;
+            box-sizing: border-box;
+            margin-bottom: 14px;
+        }
+        button {
+            background: #2f7d32;
+            color: #fff;
+            border: 0;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .result {
+            margin-top: 16px;
+            font-size: 18px;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>Promotion Eligibility</h1>
+        <form id="promoForm">
+            <label for="employeeId">Employee ID</label>
+            <select id="employeeId" required>
+                <option value="">Select ID</option>
+                <option value="EMP001">EMP001</option>
+                <option value="EMP002">EMP002</option>
+                <option value="EMP003">EMP003</option>
+                <option value="EMP004">EMP004</option>
+            </select>
+
+            <label for="doj">Date of Joining</label>
+            <input id="doj" type="date" required />
+
+            <button type="submit">Am I Eligible for Promotion</button>
+            <div class="result">Eligibility: <span id="eligibility">-</span></div>
+        </form>
+    </div>
+
+    <script>
+        const form = document.getElementById('promoForm');
+        const eligibilityLabel = document.getElementById('eligibility');
+
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            const dojValue = document.getElementById('doj').value;
+            if (!dojValue) {
+                eligibilityLabel.textContent = '-';
+                return;
+            }
+
+            const doj = new Date(dojValue);
+            const now = new Date();
+            const years = (now - doj) / (1000 * 60 * 60 * 24 * 365.25);
+
+            eligibilityLabel.textContent = years >= 5 ? 'YES' : 'NO';
+        });
+    </script>
+</body>
+</html>
