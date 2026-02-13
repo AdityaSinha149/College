@@ -1,0 +1,8 @@
+Token Name      Token Type   Argument
+ready           FUNC         
+#submit         Identifier   
+split           FUNC         (/\s+/)
+filter          FUNC         num => !isNaN(num) && num % 3 == 0
+On              FUNC         
+#numbers        Identifier   
+map             FUNC         Number
