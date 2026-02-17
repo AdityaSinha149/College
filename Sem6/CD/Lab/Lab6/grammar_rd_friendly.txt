@@ -1,0 +1,31 @@
+Original Grammar:
+================
+S → a | > | (T)
+T → T, S | S
+
+-----------
+
+S → a | > | (T)
+T → S T'
+T' → , S T' | ε
+
+------------
+
+First Sets:
+-----------
+FIRST(S) = {a, >, (}
+FIRST(T) = {a, >, (}
+FIRST(T') = {,, ε}
+
+Follow Sets:
+------------
+FOLLOW(S) = {,, )}
+FOLLOW(T) = {)}
+FOLLOW(T') = {)}
+
+Parsing Table (LL(1)):
+-----------------------
+        a       >       (       ,       )       $
+S       S→a     S→>     S→(T)   -       -       -
+T       T→ST'   T→ST'   T→ST'   -       -       -
+T'      -       -       -       T'→,ST' T'→ε    -

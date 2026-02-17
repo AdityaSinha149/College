@@ -1,0 +1,25 @@
+Grammar:
+========
+E  → TE'
+E' → +TE' | ε
+T  → FT'
+T' → *FT' | ε
+F  → (E) | i
+
+
+FIRST Sets:
+===========
+FIRST(E)  = {(, i}
+FIRST(E') = {+, ε}
+FIRST(T)  = {(, i}
+FIRST(T') = {*, ε}
+FIRST(F)  = {(, i}
+
+
+FOLLOW Sets:
+============
+FOLLOW(E)  = {), $}
+FOLLOW(E') = {), $}
+FOLLOW(T)  = {+, ), $}
+FOLLOW(T') = {+, ), $}
+FOLLOW(F)  = {*, +, ), $}

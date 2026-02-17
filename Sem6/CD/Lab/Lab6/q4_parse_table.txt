@@ -1,0 +1,38 @@
+LL(1 Grammar (Left Recursion Removed):
+======================================
+S  → ( L ) | a
+L  → S L'
+L' → , S L' | ε
+
+FIRST Sets:
+===========
+FIRST(S)  = {(, a}
+FIRST(L)  = {(, a}
+FIRST(L') = {,, ε}
+
+FOLLOW Sets:
+============
+FOLLOW(S)  = {,, ), $}
+FOLLOW(L)  = {)}
+FOLLOW(L') = {)}
+
+LL(1 Predictive Parse Table:
+============================
+Columns: a  ,  (  )  $
+
+S:
+  a : S → a
+  ( : S → ( L )
+
+L:
+  a : L → S L'
+  ( : L → S L'
+
+L':
+  , : L' → , S L'
+  ) : L' → ε
+
+Original Grammar (for reference):
+=================================
+S → ( L ) | a
+L → L , S | S  ← left recursive (not LL(1))

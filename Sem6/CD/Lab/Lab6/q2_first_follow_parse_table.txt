@@ -1,0 +1,54 @@
+Grammar:
+========
+S → U V W
+U → ( S ) | a S b | d
+V → a V | ε
+W → c W | ε
+
+FIRST Sets:
+===========
+FIRST(S) = {(, a, d}
+FIRST(U) = {(, a, d}
+FIRST(V) = {a, ε}
+FIRST(W) = {c, ε}
+
+FOLLOW Sets:
+============
+FOLLOW(S) = {), b, $}
+FOLLOW(U) = {a, b, c, $}
+FOLLOW(V) = {c, ), b, $}
+FOLLOW(W) = {), b, $}
+
+Predictive Parse Table (LL(1)):
+===============================
+Columns: a  b  c  d  (  )  $
+
+S:
+  a : S → U V W
+  d : S → U V W
+  ( : S → U V W
+
+U:
+  a : U → a S b
+  d : U → d
+  ( : U → ( S )
+
+V:
+  a : V → a V
+  b : V → ε
+  c : V → ε
+  ) : V → ε
+  $ : V → ε
+
+W:
+  c : W → c W
+  b : W → ε
+  ) : W → ε
+  $ : W → ε
+
+LL(1) Status:
+=============
+No conflicts after correcting FOLLOW sets.
+
+
+

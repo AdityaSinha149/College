@@ -1,0 +1,37 @@
+Grammar (Left Recursion Removed):
+=================================
+S  → a A c B e
+A  → b A'
+A' → b A' | ε
+B  → d
+
+FIRST Sets:
+===========
+FIRST(S)  = {a}
+FIRST(A)  = {b}
+FIRST(A') = {b, ε}
+FIRST(B)  = {d}
+
+FOLLOW Sets:
+============
+FOLLOW(S)  = {$}
+FOLLOW(A)  = {c}
+FOLLOW(A') = {c}
+FOLLOW(B)  = {e}
+
+Predictive Parse Table (LL(1)):
+===============================
+Columns: a  b  c  d  e  $
+
+S:
+  a : S → a A c B e
+
+A:
+  b : A → b A'
+
+A':
+  b : A' → b A'
+  c : A' → ε
+
+B:
+  d : B → d
