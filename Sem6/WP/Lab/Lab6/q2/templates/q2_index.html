@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Magazine Cover Builder</title>
+    <link rel="stylesheet" href="/static/q2.css" />
+</head>
+<body>
+    <div class="layout">
+        <form method="post" class="panel">
+            {% csrf_token %}
+            <h1>Front Cover Form</h1>
+            <label>Title</label>
+            <input type="text" name="title" value="{{ title }}" />
+
+            <label>Subtitle</label>
+            <input type="text" name="subtitle" value="{{ subtitle }}" />
+
+            <label>Tagline / Message</label>
+            <input type="text" name="tagline" value="{{ tagline }}" />
+
+            <label>Cover Image</label>
+            <select name="cover_image">
+                {% for img in images %}
+                    <option value="{{ img }}" {% if img == cover_image %}selected{% endif %}>Image {{ forloop.counter }}</option>
+                {% endfor %}
+            </select>
+
+            <label>Background Color</label>
+            <input type="color" name="bg_color" value="{{ bg_color }}" />
+
+            <label>Text Color</label>
+            <input type="color" name="text_color" value="{{ text_color }}" />
+
+            <label>Font Size (px)</label>
+            <input type="number" name="font_size" min="12" max="48" value="{{ font_size }}" />
+
+            <label>Font Family</label>
+            <select name="font_family">
+                <option value="'Segoe UI', Arial, sans-serif" {% if font_family == "'Segoe UI', Arial, sans-serif" %}selected{% endif %}>Segoe UI</option>
+                <option value="'Georgia', serif" {% if font_family == "'Georgia', serif" %}selected{% endif %}>Georgia</option>
+                <option value="'Courier New', monospace" {% if font_family == "'Courier New', monospace" %}selected{% endif %}>Courier New</option>
+            </select>
+
+            <button type="submit">Update Cover</button>
+        </form>
+
+        <div class="preview" style="background: {{ bg_color }}; font-family: {{ font_family }}; color: {{ text_color }};">
+            <div class="cover">
+                <img src="{{ cover_image }}" alt="Cover" />
+                <div class="text" style="font-size: {{ font_size }}px;">
+                    <div class="title">{{ title }}</div>
+                    <div class="subtitle">{{ subtitle }}</div>
+                    <div class="tagline">{{ tagline }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

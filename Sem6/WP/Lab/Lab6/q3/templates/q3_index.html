@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Book Info</title>
+    <link rel="stylesheet" href="/static/q3.css" />
+</head>
+<body>
+    <div class="shell">
+        <header>
+            <h1>{{ book.title }}</h1>
+            <nav>
+                <a href="/?page=home">Home</a>
+                <a href="/?page=metadata">Metadata</a>
+                <a href="/?page=reviews">Reviews</a>
+                <a href="/?page=publisher">Publisher Info</a>
+            </nav>
+        </header>
+
+        {% if page == "home" %}
+            <section class="panel">
+                <img class="cover" src="{{ book.cover }}" alt="Cover" />
+                <div class="meta">
+                    <p><strong>Author:</strong> {{ book.author }}</p>
+                    <p><strong>Year:</strong> {{ book.year }}</p>
+                    <p><strong>ISBN:</strong> {{ book.isbn }}</p>
+                    <p>{{ book.summary }}</p>
+                </div>
+            </section>
+        {% elif page == "metadata" %}
+            <section class="panel">
+                <h2>Metadata</h2>
+                <ul>
+                    <li><strong>Title:</strong> {{ book.title }}</li>
+                    <li><strong>Author:</strong> {{ book.author }}</li>
+                    <li><strong>Year:</strong> {{ book.year }}</li>
+                    <li><strong>ISBN:</strong> {{ book.isbn }}</li>
+                </ul>
+                <a class="back" href="/?page=home">Back to Home</a>
+            </section>
+        {% elif page == "reviews" %}
+            <section class="panel">
+                <h2>Reviews</h2>
+                <ul>
+                    {% for review in book.reviews %}
+                        <li>{{ review }}</li>
+                    {% endfor %}
+                </ul>
+                <a class="back" href="/?page=home">Back to Home</a>
+            </section>
+        {% elif page == "publisher" %}
+            <section class="panel">
+                <h2>Publisher Info</h2>
+                <p><strong>Name:</strong> {{ book.publisher }}</p>
+                <p><strong>Address:</strong> 123 Campus Road, City</p>
+                <p><strong>Contact:</strong> publisher@example.com</p>
+                <a class="back" href="/?page=home">Back to Home</a>
+            </section>
+        {% endif %}
+    </div>
+</body>
+</html>

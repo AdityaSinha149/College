@@ -1,0 +1,9 @@
+body { font-family: Arial, sans-serif; background: #f6f6f6; margin: 0; padding: 24px; }
+.card { max-width: 420px; margin: 0 auto; background: #fff; padding: 16px; border: 1px solid #ccc; }
+h1 { margin: 0 0 12px; font-size: 20px; }
+form { display: grid; gap: 8px; }
+input, select { padding: 8px; border: 1px solid #999; }
+button { padding: 8px 12px; border: 1px solid #666; background: #e6e6e6; cursor: pointer; }
+.output { margin-top: 12px; min-height: 24px; }
+.error { color: #c00; font-weight: 700; }
+.result { font-weight: 700; }

@@ -1,0 +1,9 @@
+body { margin:0; padding:16px; font-family: Arial, sans-serif; background:#f7f7f7; }
+.shell { max-width: 800px; margin: 0 auto; background:#fff; border:1px solid #ccc; padding:16px; }
+header { display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; }
+nav a { margin-right:12px; text-decoration:none; color:#0645ad; font-weight:600; }
+.panel { margin-top:12px; display:grid; gap:12px; }
+.cover { width:100%; max-height:380px; object-fit:cover; border:1px solid #999; }
+.meta p { margin:4px 0; }
+ul { padding-left:18px; }
+.back { display:inline-block; margin-top:8px; color:#0645ad; }

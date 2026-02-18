@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Arithmetic Operations</title>
+    <link rel="stylesheet" href="/static/q1.css" />
+</head>
+<body>
+    <div class="card">
+        <h1>Arithmetic Operations</h1>
+        <form method="post">
+            {% csrf_token %}
+            <label>First Integer</label>
+            <input type="text" name="a" value="{{ a }}" />
+
+            <label>Second Integer</label>
+            <input type="text" name="b" value="{{ b }}" />
+
+            <label>Operation</label>
+            <select name="operation">
+                <option value="add" {% if op == "add" %}selected{% endif %}>Add</option>
+                <option value="sub" {% if op == "sub" %}selected{% endif %}>Subtract</option>
+                <option value="mul" {% if op == "mul" %}selected{% endif %}>Multiply</option>
+                <option value="div" {% if op == "div" %}selected{% endif %}>Divide</option>
+            </select>
+
+            <button type="submit">Calculate</button>
+        </form>
+
+        <div class="output">
+            {% if error %}
+                <div class="error">{{ error }}</div>
+            {% elif result is not None %}
+                <div class="result">Result: {{ result }}</div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
