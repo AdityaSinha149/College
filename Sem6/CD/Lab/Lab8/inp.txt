@@ -1,0 +1,14 @@
+main() {
+    int x = 7;
+    char c;
+    x = 10;
+    y = x + 5 * 2;
+    if (x < y) {
+        x = y;
+    } else {
+        y = x;
+    }
+    while (x < 20) {
+        x = x + 1;
+    }
+}
