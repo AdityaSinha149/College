@@ -1,0 +1,5 @@
+body { font-family: Arial, sans-serif; background: #f6f6f6; margin: 0; padding: 24px; }
+.card { max-width: 480px; margin: 0 auto; background: #fff; padding: 16px; border: 1px solid #ccc; }
+label { display:block; margin-top:8px; }
+input, select { width:100%; padding:8px; margin-top:4px; }
+button { padding:8px 12px; margin-top:12px; }
