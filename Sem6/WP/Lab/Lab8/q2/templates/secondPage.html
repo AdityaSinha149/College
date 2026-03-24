@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Second Page</title>
+  <link rel="stylesheet" href="/static/q2.css">
+</head>
+<body>
+  <div class="card">
+    <h1>Submitted Data</h1>
+    <p><strong>Name:</strong> {{ data.name }}</p>
+    <p><strong>Roll:</strong> {{ data.roll }}</p>
+    <p><strong>Subject:</strong> {{ data.subject }}</p>
+
+    <form method="post">
+      {% csrf_token %}
+      <button type="submit">Back to First Page</button>
+    </form>
+  </div>
+</body>
+</html>

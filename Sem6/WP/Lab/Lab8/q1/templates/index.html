@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Select Car</title>
+    <link rel="stylesheet" href="/static/q1.css" />
+</head>
+<body>
+  <div class="card">
+    <h1>Select Car Manufacturer & Model</h1>
+    <form method="post">
+      {% csrf_token %}
+      <label>Manufacturer</label>
+      <select name="manufacturer">
+        {% for m in manufacturers %}
+          <option value="{{ m }}">{{ m }}</option>
+        {% endfor %}
+      </select>
+
+      <label>Model Name</label>
+      <input type="text" name="model" />
+
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+</body>
+</html>
