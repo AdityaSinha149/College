@@ -1,4 +1,4 @@
-# Lab 5 — Developing Web Application using Django-Part II
+# Lab 6 — Developing Web Application using Django-Part II
 
 **Name:** Aditya Sinha  
 **Reg. No:** 230905218  
