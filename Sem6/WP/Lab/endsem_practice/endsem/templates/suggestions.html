@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suggestions</title>
+    
+</head>
+<body>
+    <div class="card">
+        <h1>Suggestion Form</h1>
+        <form method="post" action="{% url 'suggestions' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Submit</button>
+        </form>
+        <div class="links">
+            <a href="{% url 'home' %}">Back to Home</a> |
+            <a href="{% url 'view_suggestions' %}">View Suggestions</a>
+        </div>
+    </div>
+</body>
+</html>

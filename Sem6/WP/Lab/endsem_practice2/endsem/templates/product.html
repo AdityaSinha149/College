@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Product Page
+        </title>
+    </head>
+    <body>
+        <form id="productForm" method="POST" action="{% url 'product' %}" novalidate>
+            {% csrf_token %}
+            {{ form.as_p }}
+            <p id="formError" style="color: red;"></p>
+            <button type="submit">Submit</button>
+        </form>
+
+        <script>
+            const form = document.getElementById("productForm");
+            const errorBox = document.getElementById("formError");
+
+            form.addEventListener("submit", function (event) {
+                const title = document.getElementById("id_title").value.trim();
+                const priceValue = document.getElementById("id_price").value.trim();
+
+                if (!title) {
+                    event.preventDefault();
+                    errorBox.textContent = "Title cannot be empty.";
+                    return;
+                }
+
+                if (!priceValue) {
+                    event.preventDefault();
+                    errorBox.textContent = "Price cannot be empty.";
+                    return;
+                }
+
+                errorBox.textContent = "";
+            });
+        </script>
+    </body>
+</html>

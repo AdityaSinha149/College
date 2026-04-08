@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Suggestions</title>
+</head>
+<body>
+    <div class="wrap">
+        <h1>Submitted Suggestions</h1>
+
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Rating</th>
+            </tr>
+            {% for item in suggestions %}
+            <tr>
+                <td>{{ item.name }}</td>
+                <td>{{ item.rating }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="2">No suggestions submitted yet.</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <h2>Average Rating</h2>
+        <table class="avg">
+            <tr>
+                <th>Average</th>
+            </tr>
+            <tr>
+                <td>{{ average_rating }}</td>
+            </tr>
+        </table>
+
+        <div class="links">
+            <a href="{% url 'home' %}">Back to Home</a> |
+            <a href="{% url 'suggestions' %}">Add Suggestion</a>
+        </div>
+    </div>
+</body>
+</html>
